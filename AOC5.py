@@ -1,3 +1,5 @@
+import numpy as np
+
 def find_seat(_input, range_length):
     '''This solves the problem using a 'distance travelled' approach
     to the problem. 
@@ -48,8 +50,6 @@ def elimination_process(_input):
     return np.mean(solution)
 
 if __name__ == "__main__":
-    import numpy as np
-
     _input = open("aoc_5.txt").read().splitlines()
     
     print("PART 1")

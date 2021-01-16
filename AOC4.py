@@ -1,3 +1,5 @@
+from operator import itemgetter
+
 def check_passport_fields(passport):
     passport_fields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
     validity_check = [1 if field in passport else 0 for field in passport_fields]
@@ -82,8 +84,6 @@ def check_passport_values(passport):
 
 
 if __name__ == "__main__":
-    from operator import itemgetter
-
     _input = open("aoc_4.txt").read()
     _input = [i.replace('\n', ' ') for i in _input.split('\n\n')] # split by passport (double break) & clean input
     
