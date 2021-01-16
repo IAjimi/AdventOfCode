@@ -27,7 +27,7 @@ def check_passport_values(passport):
             if numbers == 4 and int(val) >= 1920 and int(val) <= 2002:
                 score += 1
             else:
-                return 0
+                return 0 # uses return to end function execution as soon as we know passport won't be valid
 
         if field == 'iyr':
             if numbers == 4 and int(val) >= 2010 and int(val) <= 2020:
@@ -82,7 +82,6 @@ def check_passport_values(passport):
 
 
 if __name__ == "__main__":
-
     from operator import itemgetter
 
     _input = open("aoc_4.txt").read()
