@@ -25,7 +25,6 @@ def testing_out_slopes(slope_combinations):
 
 if __name__ == "__main__":
     _input = open("aoc_3.txt").read().splitlines()
-    slope_combinations = [(1,1), (3,1), (5,1), (7,1), (1,2)]
     
     print("PART 1")
     sloped_collision_count(_input, 3, 1)
