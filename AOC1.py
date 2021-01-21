@@ -1,3 +1,5 @@
+import itertools
+
 def part1_solution1(_input):
     solution = [i for i in _input if 2020 - i in _input]
     return solution[0] * solution[1]
@@ -10,7 +12,7 @@ def part1_solution2(_input):
 
 def part2_solution(_input):
     all_combinations = list(itertools.combinations(_input, 3))
-    solution = [(i[0], i[1], i[2]) for i in all_combinations if i[0] + i[1] + i[2] == 2020][0]
+    solution = [(i[0], i[1], i[2]) for i in all_combinations if sum(i) == 2020][0]
     return solution[0] * solution[1] * solution[2]
 
 if __name__ == "__main__":

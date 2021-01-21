@@ -18,6 +18,10 @@ def find_neighbors(_input, i, j):
     return neighbors
 
 def find_first_seen(_input, i, j, x, y):
+    ''' Increases i and j by x and y respectively until either
+    the new point is outside the seating chart or a seat (not '.')
+    is found.'''
+
     found = False
     n = len(_input)
     m = len(_input[0])
@@ -29,9 +33,7 @@ def find_first_seen(_input, i, j, x, y):
         if (i < 0) or (i >= n) or (j < 0) or (j >= m):
             break
         else:
-            neighbors = _input[i][j]
-
-            if neighbors != '.':
+            if _input[i][j] != '.':
                 return i,j
 
 def find_line_of_view_neighbors(_input, i, j):
@@ -68,6 +70,7 @@ def wait_for_convergence(_input, seats, neighbor_dict, switch):
 
         _input = temp_map
                 
+        # If no more change in seats
         if n == 0:
             flattened_input = ''.join(_input)
             final_occupied_seats = sum([1 if seat == '#' else 0 for seat in flattened_input])

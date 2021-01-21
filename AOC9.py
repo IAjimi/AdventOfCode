@@ -1,4 +1,5 @@
 import numpy as np
+import itertools
 
 def check_sum(_input):
     for i,v in enumerate(_input):
