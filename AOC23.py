@@ -96,8 +96,9 @@ def move_alotta_cups(_input):
     
 
 if __name__ == "__main__":
+    _input = '538914762'
     print("PART 1")
-    move_cups('538914762') # 54327968
+    move_cups(_input) # 54327968
     print("")
     print("PART 2")
     move_alotta_cups(_input) # 157410423276
