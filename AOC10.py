@@ -1,3 +1,5 @@
+''' Only part 1. '''
+
 import numpy as np
 from collections import Counter
 
@@ -12,37 +14,7 @@ def chain_adapters(_input):
     solution = Counter(solution)
     return solution[1] * solution[3]
 
-def create_path_dict(_input):
-    travel_dict = {}
-
-    for i in _input:
-        dest = []
-
-        if i + 1 in _input:
-            dest.append(i + 1)
-        if i + 2 in _input:
-            dest.append(i + 2)
-        if i + 3 in _input:
-            dest.append(i + 3)
-
-        travel_dict[i] = dest
-
-    return travel_dict
-
-def find_n_paths(graph, start, end, path=[], n = 0):
-    '''In progress, adapted graph traversal function from somewhere online.'''
-    path = path + [start]
-    if start == end:
-        n += 1
-        return n
-    if start not in graph.keys():
-        return None
-    for node in graph[start]:
-        if node not in path:
-            n = find_n_paths(graph, node, end, path, n)
-    return n
-
-def find_n_paths(_input):
+def find_valid_arrangements(_input):
     ''' Not my answer, trying to get dynamic programming
     found at https://dev.to/rpalo/advent-of-code-2020-solution-megathread-day-10-adapter-array-33ea'''
     adapters = _input
