@@ -25,7 +25,7 @@ def modify_polymer(_input, matches):
     return min(lengths)
 
 if __name__ == "__main__":
-    _input = open("2018/aoc_5.txt").read()
+    _input = open("aoc_5.txt").read()
 
     ascii_lowercase = 'abcdefghijklmnopqrstuvwxyz'
     matches = [l + l.title() for l in ascii_lowercase]
