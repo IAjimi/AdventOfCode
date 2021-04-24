@@ -1,6 +1,7 @@
 # Advent of Code
 This repository contains Python solutions to [Advent of Code puzzles](https://adventofcode.com/). 
 
+
  Year | Days Completed | Total Stars |
 | --- | -------| -----| 
 | [2017](https://adventofcode.com/2017)   | 1-2, 4-7, 10-13, 15-18 | [28 :star:](https://github.com/IAjimi/AdventOfCode2020/tree/master/2017) | 
