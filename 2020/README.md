@@ -3,7 +3,7 @@ This repository contains Python solutions to the 2020 edition of [Advent of Code
 
 | Day | Description | Solution |
 | --- | -------| -----| 
-| 1   | | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2020/AOC1.py) | 
+| [1](https://adventofcode.com/2020/day/1)   | | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2020/AOC1.py) | 
 | [2](https://adventofcode.com/2020/day/2) | Check the validity of passport based on a series of rules. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2020/AOC2.py) |
 | [3](https://adventofcode.com/2020/day/3) | Find the number of collisions for a skier going down a slope. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2020/AOC3.py) |
 | [4](https://adventofcode.com/2020/day/4) | Find valid passports based on a series of rules surrounding field names and values. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2020/AOC4.py) |

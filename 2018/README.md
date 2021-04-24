@@ -1,4 +1,4 @@
-# Advent of Code
+# Advent of Code (2018)
 This repository contains Python solutions to the 2018 edition of [Advent of Code](https://adventofcode.com/2018). 
 
 | Day | Description | Solution |
