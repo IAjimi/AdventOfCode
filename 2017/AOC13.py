@@ -42,19 +42,3 @@ if __name__ == "__main__":
     sol1 = calculate_severity(depths, _max)  # 3184
     sol2 = calculate_intercepts(depths, _max, _len)
     print(f"PART 1: {sol1} \n PART 2: {sol2}")
-
-    # _max = 6
-    # for _ in range(20):
-    #     n = _ % _max
-    #     if n in depths.keys():
-    #         r = depths[n]
-    #         _sum = _ % (2 * (r - 1))
-    #         _sum = 1 if _sum != 0 else 0
-    #         print(_sum)
-
-
-    ## SEQUENCE OF LENGTH _max
-    ## convert to 1 if not 0
-    ## create stopgap vectors for the things in between that are just 1
-    ## sum em
-    ## find earliest sum of vectors of length n that matches
