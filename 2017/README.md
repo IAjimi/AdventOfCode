@@ -18,6 +18,8 @@ This repository contains Python solutions to the 2017 edition of [Advent of Code
 | [13](https://adventofcode.com/2017/day/13) | Mostly remainders. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC13.py) |
 | [14](https://adventofcode.com/2017/day/14) |  |  |
 | [15](https://adventofcode.com/2017/day/15) | While loops and conversion to binary. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC15.py) |
-| [16](https://adventofcode.com/2017/day/16) |  | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC16.py) |
-| [17](https://adventofcode.com/2017/day/17) |  | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC17.py) |
-| [18](https://adventofcode.com/2017/day/18) | Processing instructions. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC18.py) |
+| [16](https://adventofcode.com/2017/day/16) | Processing instructions. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC16.py) |
+| [17](https://adventofcode.com/2017/day/17) | Spinlock algorithm. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC17.py) |
+| [18](https://adventofcode.com/2017/day/18) | Processing instructions (again). | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC18.py) |
+| [19](https://adventofcode.com/2017/day/19) | Follow the path through a routing diagram. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC19.py) |
+| [20](https://adventofcode.com/2017/day/20) | Track particles through space. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC20.py) |
