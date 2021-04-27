@@ -1,4 +1,4 @@
-# Advent of Code
+# Advent of Code (2020)
 This repository contains Python solutions to the 2020 edition of [Advent of Code](https://adventofcode.com/2020). 
 
 | Day | Description | Solution |
