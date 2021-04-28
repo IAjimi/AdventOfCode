@@ -23,7 +23,7 @@ This repository contains Python solutions to the 2017 edition of [Advent of Code
 | [18](https://adventofcode.com/2017/day/18) | Processing instructions (again). | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC18.py) |
 | [19](https://adventofcode.com/2017/day/19) | Follow a path through a routing diagram. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC19.py) |
 | [20](https://adventofcode.com/2017/day/20) | Track particles speeding through space. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC20.py) |
-| [21](https://adventofcode.com/2017/day/21) | | |
+| [21](https://adventofcode.com/2017/day/21) | Square transformations. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC21.py) |
 | [22](https://adventofcode.com/2017/day/22) | Track a virus through an infinite grid. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC22.py) |
 | [23](https://adventofcode.com/2017/day/23) | Re-create assembly code of the instruction processor from Day 18. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC23.py) |
 | [24](https://adventofcode.com/2017/day/24) | | |
