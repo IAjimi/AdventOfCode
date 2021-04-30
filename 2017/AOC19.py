@@ -1,6 +1,3 @@
-# go thru priority up down left right
-# != prev
-
 def parse_input(_input):
     grid = {}
 
@@ -13,11 +10,6 @@ def parse_input(_input):
 
     return grid
 
-def find_neighbors(grid, i,j):
-    neighbors_list = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
-    neighbors_list = [neigh for neigh in neighbors_list if neigh in grid.keys()]
-    return neighbors_list
-
 def walk_path(grid, start):
     path = []
     letters = []
@@ -26,7 +18,8 @@ def walk_path(grid, start):
     prev = 0,0
 
     while len(letters) < 10:
-        ## CONTINUE GOING THE SAME DIRECTION
+        # Continue going the same direction by changing the order of neighbors to
+        # visit in neighbors_list depending on direction
         direction = (neigh[0] - prev[0], neigh[1] - prev[1])
         if direction in [(0, 1), (0, -1)]:
             neighbors_list = [(i, j + 1), (i, j - 1), (i + 1, j), (i - 1, j)]
@@ -34,9 +27,9 @@ def walk_path(grid, start):
             neighbors_list = [(i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)]
 
         for neigh in neighbors_list:
-            if neigh in grid.keys() and neigh != prev:
+            if neigh in grid.keys() and neigh != prev: # move forward
                 prev = i, j
-                i, j = neigh  # moving forward
+                i, j = neigh
 
                 path.append(grid[(i, j)])
                 break

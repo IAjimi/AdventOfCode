@@ -40,5 +40,5 @@ if __name__ == "__main__":
     depths, _max, _len = process_input(_input)
 
     sol1 = calculate_severity(depths, _max)  # 3184
-    sol2 = calculate_intercepts(depths, _max, _len)
+    sol2 = calculate_intercepts(depths, _max, _len)  # 3878062
     print(f"PART 1: {sol1} \n PART 2: {sol2}")
