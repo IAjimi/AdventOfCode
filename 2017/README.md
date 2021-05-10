@@ -26,5 +26,5 @@ This repository contains Python solutions to the 2017 edition of [Advent of Code
 | [21](https://adventofcode.com/2017/day/21) | Square transformations. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC21.py) |
 | [22](https://adventofcode.com/2017/day/22) | Track a virus through an infinite grid. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC22.py) |
 | [23](https://adventofcode.com/2017/day/23) | Re-create assembly code of the instruction processor from Day 18. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC23.py) |
-| [24](https://adventofcode.com/2017/day/24) | Building strong bridges (recursion). | [:star::star::grey_question:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC23.py) |
+| [24](https://adventofcode.com/2017/day/24) | Building strong bridges (recursion). | [:star::star::grey_question:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC24.py) |
 | [25](https://adventofcode.com/2017/day/25) | Turing Machine (simple if/else logic). | [:star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2017/AOC25.py) |
