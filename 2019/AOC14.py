@@ -1,25 +1,3 @@
-# 157 ORE => 5 NZVS
-# 165 ORE => 6 DCFZ
-# 44 XJWVT, 5 KHKGT, 1 QDVJ, 29 NZVS, 9 GPVTF, 48 HKGWZ => 1 FUEL
-# 12 HKGWZ, 1 GPVTF, 8 PSHF => 9 QDVJ
-# 179 ORE => 7 PSHF
-# 177 ORE => 5 HKGWZ
-# 7 DCFZ, 7 PSHF => 2 XJWVT
-# 165 ORE => 2 GPVTF
-# 3 DCFZ, 7 NZVS, 5 HKGWZ, 10 PSHF => 8 KHKGT
-
-# FUEL, 44 XJWVT
-# 2 XJWVT = 7 DCFZ, 7 PSHF -> (2, [('DCFZ', 7), ('PSHF', 7)]) -> 44 / 2 = 22
-# 22 * 7 DCFZ = 154
-# 6 DCFZ = 165 ORE -> ceil(154 / 6) = 26
-# 26 * 154 ORE = 4004
-
-
-
-
-
-
-
 import math
 
 def get_num_and_letter(string):
@@ -33,8 +11,7 @@ def get_transform_mapping(_input):
         _from, _to = line.split(' => ')
         letter_to, q_to = get_num_and_letter(_to)
         _from = [get_num_and_letter(val) for val in _from.split(', ')]
-        _from = [(num, val / q_to) for num, val in _from]
-        transform_mapping[letter_to] = _from
+        transform_mapping[letter_to] = (q_to, _from)
 
     return transform_mapping
 
@@ -53,12 +30,11 @@ def get_ore_repo(_input):
 
 
 def traverse_nodes(_input, used={}, material='FUEL', quantity=1):
-    next_nodes = _input[material]
-    print(material, next_nodes, used)
+    inc, next_nodes = _input[material]
+    print(material, quantity, _input[material], used)
 
     for nn in next_nodes:
         new_m, new_q = nn
-        #import pdb; pdb.set_trace()
 
         if new_m == 'ORE':
             if material in used.keys():
@@ -68,37 +44,25 @@ def traverse_nodes(_input, used={}, material='FUEL', quantity=1):
 
             return used
         else:
-            used = traverse_nodes(_input, used, new_m, new_q * quantity)
+            used = traverse_nodes(_input, used, new_m, new_q * math.ceil(quantity / inc))
             print(material, quantity, used)
 
     print('\n')
     return used
 
 if __name__ == '__main__':
-    _input = '''10 ORE => 10 A
-1 ORE => 1 B
-7 A, 1 B => 1 C
-7 A, 1 C => 1 D
-7 A, 1 D => 1 E
-7 A, 1 E => 1 FUEL'''.splitlines()
-
-    _input = '''9 ORE => 2 A
-8 ORE => 3 B
-7 ORE => 5 C
-3 A, 4 B => 1 AB
-5 B, 7 C => 1 BC
-4 C, 1 A => 1 CA
-2 AB, 3 BC, 4 CA => 1 FUEL'''.splitlines()
-
-    _input = '''157 ORE => 5 NZVS
-165 ORE => 6 DCFZ
-44 XJWVT, 5 KHKGT, 1 QDVJ, 29 NZVS, 9 GPVTF, 48 HKGWZ => 1 FUEL
-12 HKGWZ, 1 GPVTF, 8 PSHF => 9 QDVJ
-179 ORE => 7 PSHF
-177 ORE => 5 HKGWZ
-7 DCFZ, 7 PSHF => 2 XJWVT
-165 ORE => 2 GPVTF
-3 DCFZ, 7 NZVS, 5 HKGWZ, 10 PSHF => 8 KHKGT'''.splitlines()
+    _input = '''2 VPVL, 7 FWMGM, 2 CXFTF, 11 MNCFX => 1 STKFG
+17 NVRVD, 3 JNWZP => 8 VPVL
+53 STKFG, 6 MNCFX, 46 VJHF, 81 HVMC, 68 CXFTF, 25 GNMV => 1 FUEL
+22 VJHF, 37 MNCFX => 5 FWMGM
+139 ORE => 4 NVRVD
+144 ORE => 7 JNWZP
+5 MNCFX, 7 RFSQX, 2 FWMGM, 2 VPVL, 19 CXFTF => 3 HVMC
+5 VJHF, 7 MNCFX, 9 VPVL, 37 CXFTF => 6 GNMV
+145 ORE => 6 MNCFX
+1 NVRVD => 8 CXFTF
+1 VJHF, 6 MNCFX => 4 RFSQX
+176 ORE => 6 VJHF'''.splitlines()
 
     transform_mapping = get_transform_mapping(_input)
     ore_repo = get_ore_repo(_input)
@@ -113,3 +77,6 @@ if __name__ == '__main__':
         print(m,q, math.ceil(math.ceil(q) / not_ore) * ore)
 
     print(total_ore)
+
+# {'MNCFX': 4192, 'VJHF': 1989, 'NVRVD': 551, 'JNWZP': 78} ## CORRECT
+# {'NVRVD': 571, 'JNWZP': 81, 'VJHF': 2011, 'MNCFX': 4229} ## CURRENT
