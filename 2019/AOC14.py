@@ -30,8 +30,11 @@ def get_ore_repo(_input):
 
 
 def traverse_nodes(_input, used={}, material='FUEL', quantity=1):
+    if material not in used.keys():
+        used[material] = 0
+
     inc, next_nodes = _input[material]
-    print(material, quantity, _input[material], used)
+    used[material] += quantity
 
     for nn in next_nodes:
         new_m, new_q = nn
@@ -41,13 +44,10 @@ def traverse_nodes(_input, used={}, material='FUEL', quantity=1):
                 used[material] += quantity
             else:
                 used[material] = quantity
-
             return used
         else:
             used = traverse_nodes(_input, used, new_m, new_q * math.ceil(quantity / inc))
-            print(material, quantity, used)
 
-    print('\n')
     return used
 
 if __name__ == '__main__':
@@ -77,6 +77,3 @@ if __name__ == '__main__':
         print(m,q, math.ceil(math.ceil(q) / not_ore) * ore)
 
     print(total_ore)
-
-# {'MNCFX': 4192, 'VJHF': 1989, 'NVRVD': 551, 'JNWZP': 78} ## CORRECT
-# {'NVRVD': 571, 'JNWZP': 81, 'VJHF': 2011, 'MNCFX': 4229} ## CURRENT
