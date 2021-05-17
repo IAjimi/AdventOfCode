@@ -1,3 +1,11 @@
+'''Initial solution iterated through the nodes like a graph traversal problem. To work properly
+for larger examples, would have needed to keep track of remaining quantity of material over time.
+
+This solution borrows from https://github.com/jcisio/adventofcode2019/blob/master/day14/d14.py
+Every ingredient is visited by order of increasing distance from FUEL. All ingredients used to
+create this material are added to the running total.
+'''
+
 import math
 
 def get_num_and_letter(string):
@@ -15,65 +23,61 @@ def get_transform_mapping(_input):
 
     return transform_mapping
 
-def get_ore_repo(_input):
-    ore_repo = {}
+def traverse_nodes(_input, distance={}, material='FUEL', n = 0):
+    if material not in distance.keys():
+        distance[material] = n
+    else:
+        distance[material] = max(n, distance[material])
 
-    for line in _input:
-        if 'ORE' in line:
-            _from, _to = line.split(' => ')
-            letter_from, q_from = get_num_and_letter(_from)
-            letter_to, q_to = get_num_and_letter(_to)
+    if material in _input.keys():
+        inc, next_nodes = _input[material]
 
-            ore_repo[letter_to] = (q_from, q_to)
+        for new_m, new_q in next_nodes:
+            distance = traverse_nodes(_input, distance, new_m, n + 1)
 
-    return ore_repo
+    return distance
+
+def compute_ore_requirement(transform_mapping,n_fuel=1):
+    needed = {'FUEL': n_fuel}
+    while len(needed) > 1 or 'ORE' not in needed.keys():
+        material = min(needed, key=lambda x: distance[x])
+        quantity = needed[material]
+        del needed[material]
+        inc, ingredients = transform_mapping[material]
+        for new_m, new_q in ingredients:
+            if new_m not in needed:
+                needed[new_m] = 0
+            needed[new_m] += math.ceil(quantity / inc) * new_q
+
+    return needed['ORE']
 
 
-def traverse_nodes(_input, used={}, material='FUEL', quantity=1):
-    if material not in used.keys():
-        used[material] = 0
+def guess_sol2(first_guess):
+    min_guess, max_guess = int(1000000000000 / first_guess), 2 * int(1000000000000 / first_guess)
+    guess = min_guess
+    found = False
 
-    inc, next_nodes = _input[material]
-    used[material] += quantity
+    while not found:
+        sol2 = compute_ore_requirement(transform_mapping, guess)
 
-    for nn in next_nodes:
-        new_m, new_q = nn
+        if (sol2 == 1000000000000) or (max_guess - min_guess == 1):
+            return guess
+        elif sol2 > 1000000000000:  # guess is too high
+            max_guess = guess
+        elif sol2 < 1000000000000:  # guess is too low
+            min_guess = guess
 
-        if new_m == 'ORE':
-            if material in used.keys():
-                used[material] += quantity
-            else:
-                used[material] = quantity
-            return used
-        else:
-            used = traverse_nodes(_input, used, new_m, new_q * math.ceil(quantity / inc))
-
-    return used
+        guess = int((min_guess + max_guess) / 2)
 
 if __name__ == '__main__':
-    _input = '''2 VPVL, 7 FWMGM, 2 CXFTF, 11 MNCFX => 1 STKFG
-17 NVRVD, 3 JNWZP => 8 VPVL
-53 STKFG, 6 MNCFX, 46 VJHF, 81 HVMC, 68 CXFTF, 25 GNMV => 1 FUEL
-22 VJHF, 37 MNCFX => 5 FWMGM
-139 ORE => 4 NVRVD
-144 ORE => 7 JNWZP
-5 MNCFX, 7 RFSQX, 2 FWMGM, 2 VPVL, 19 CXFTF => 3 HVMC
-5 VJHF, 7 MNCFX, 9 VPVL, 37 CXFTF => 6 GNMV
-145 ORE => 6 MNCFX
-1 NVRVD => 8 CXFTF
-1 VJHF, 6 MNCFX => 4 RFSQX
-176 ORE => 6 VJHF'''.splitlines()
-
+    _input = open("2019/aoc14.txt").read().splitlines()
     transform_mapping = get_transform_mapping(_input)
-    ore_repo = get_ore_repo(_input)
+    distance = traverse_nodes(transform_mapping, distance={}, material='FUEL')
 
-    used = traverse_nodes(transform_mapping, used={}, material='FUEL', quantity=1)
+    sol1 = compute_ore_requirement(transform_mapping)  # 1590844
+    print(f'PART 1: {sol1}')
 
-    total_ore = 0
+    sol2 = guess_sol2(sol1)
+    print(f'PART 2: {sol2}')  # 1184209
 
-    for m,q in used.items():
-        ore, not_ore = ore_repo[m]
-        total_ore += math.ceil(math.ceil(q) / not_ore) * ore
-        print(m,q, math.ceil(math.ceil(q) / not_ore) * ore)
 
-    print(total_ore)
