@@ -30,18 +30,36 @@ def trace_steps(grid, pos, visited=[], paths={}, steps=0):
 
     return paths, visited
 
-def find_nodes(keypaths, current_node='@0', path=[], steps=0):
+def find_nodes(keypaths, cache, current_node='@0', path=[], steps=0):
     while len(path) != len(keypaths.keys()):
         path.append(current_node)
         possible_paths = [k for k, v in keypaths[current_node].items() if k != current_node and k not in path and v['doors'].difference(set(path)) == set()]
-        print(current_node, path, possible_paths, steps)
+        #print(current_node, path, possible_paths, steps)
 
         if not possible_paths:
             return steps, path
         elif len(possible_paths) == 1:
             node = possible_paths[0]
         else:  # use recursion to determine best of multiple steps
-            all_steps = {poss_node: find_nodes(keypaths, poss_node, path.copy(), steps)[0] for poss_node in possible_paths}
+            all_steps = {}
+            print('considering multiple paths', current_node, path, possible_paths)
+
+            for poss_node in possible_paths:
+                # current_keys = path + [poss_node]
+                # current_keys.sort() # messes up results slightly
+                cachekey = str(set(path)) + '-' + ''.join(poss_node)
+                #cachekey = ''.join(path + [poss_node]) # works but inefficient
+
+                if cachekey in cache:
+                    new_steps = cache[cachekey]
+                    print('used cache', len(cache))
+                else:
+                    new_steps, new_path = find_nodes(keypaths, cache, poss_node, path.copy(), steps)
+                    cache[cachekey] = new_steps
+                    print(f'current_node: {current_node}, path: {path}, poss_node:{poss_node}, {new_steps, new_path}')
+
+                all_steps[poss_node] = new_steps
+
             node = [k for k, v in all_steps.items() if v == min(all_steps.values())][0]
 
         steps += keypaths[current_node][node]['steps']
@@ -55,11 +73,11 @@ if __name__ == '__main__':
 ######################.#
 #d.....................#
 ########################'''.splitlines()
-#     _input = '''########################
-# #...............b.C.D.f#
-# #.######################
-# #.....@.a.B.c.d.A.e.F.g#
-# ########################'''.splitlines()
+    _input = '''########################
+#...............b.C.D.f#
+#.######################
+#.....@.a.B.c.d.A.e.F.g#
+########################'''.splitlines()
 #     _input = '''#################
 # #i.G..c...e..H.p#
 # ########.########
@@ -69,19 +87,22 @@ if __name__ == '__main__':
 # ########.########
 # #l.F..d...h..C.m#
 # #################'''.splitlines()
-    _input = '''########################
-#@..............ac.GI.b#
-###d#e#f################
-###A#B#C################
-###g#h#i################
-########################'''.splitlines()
+#     _input = '''########################
+# #@..............ac.GI.b#
+# ###d#e#f################
+# ###A#B#C################
+# ###g#h#i################
+# ########################'''.splitlines()
+
+    #_input = open("2019/aoc18.txt").read().splitlines()
+
     grid, keys, starts = parse_grid(_input)
     keypaths = {key: trace_steps(grid, key_pos, visited=[], paths={}, steps=0)[0] for key, key_pos in keys.items()}
 
     for start in range(len(starts)):
         keypaths['@' + str(start)] = trace_steps(grid, starts[start], visited=[], paths={}, steps=0)[0]
 
-    print('completed keypaths:', keypaths)
-    steps, path = find_nodes(keypaths, current_node='@0', path=[], steps=0)
+    print('completed keypaths')
+    steps, path = find_nodes(keypaths, cache={}, current_node='@0', path=[], steps=0)
     print(f'number of steps: {steps}, path: {" ".join(path)}')
 
