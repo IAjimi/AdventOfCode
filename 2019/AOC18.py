@@ -97,7 +97,7 @@ def find_nodes(keypaths, cache, current_node="@0", found_keys=set(), path=[]):
     while len(found_keys) != len(keypaths.keys()):
         if current_node not in path:
             path.append(current_node)
-        found_keys.add(current_node)
+            found_keys.add(current_node)
 
         possible_paths = [
             k
@@ -105,13 +105,13 @@ def find_nodes(keypaths, cache, current_node="@0", found_keys=set(), path=[]):
             if k not in found_keys and v["doors"].difference(found_keys) == set()
         ]
 
-        if not possible_paths:
+        if not possible_paths or len(found_keys) == len(keypaths.keys()):
             return path
         elif len(possible_paths) == 1:
             node = possible_paths[0]
         else:  # use recursion to determine best of multiple steps
             all_steps = []
-            missing_keys = "".join(set(keys.keys()).difference(found_keys))
+            missing_keys = "".join(set(keypaths.keys()).difference(found_keys))
 
             for poss_node in possible_paths:
                 cachekey = poss_node + missing_keys
@@ -171,7 +171,7 @@ def bot_collection(keypaths, starts):
     return total_steps
 
 if __name__ == "__main__":
-    _input = open("2019/aoc18.txt").read().splitlines()
+    _input = open("aoc18.txt").read().splitlines()
     grid, keys, starts = parse_grid(_input)
 
     t0 = time.time()
