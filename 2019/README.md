@@ -1,6 +1,6 @@
-# Advent of Code (2019)
-This repository contains Python solutions to the 2019 edition of [Advent of Code](https://adventofcode.com/2019). I had
-already completed a number of these puzzles in 2020 so this repo will mostly contains problems I either hadn't tackled 
+# :christmas_tree: Advent of Code (2019) :christmas_tree:
+This repository contains Python solutions to the 2019 edition of [Advent of Code](https://adventofcode.com/2019). Given that I had
+already completed a number of these puzzles in 2020, this repository will mostly contain problems I either hadn't tackled 
 or wanted to revisit.
 
 | Day | Description | Solution |
@@ -15,5 +15,8 @@ or wanted to revisit.
 | [15](https://adventofcode.com/2019/day/15)  | Intcode puzzle, find oxygen location in unknown room using remotely controlled robot. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC15.py) |
 | [17](https://adventofcode.com/2019/day/17)  | Intcode puzzle, walking robot through scaffolding. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC17.py) |
 | [18](https://adventofcode.com/2019/day/18) | Key maze. Path finding with requirements (need to collect keys to open doors). | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC18.py) |
+| [19](https://adventofcode.com/2019/day/19) | Intcode puzzle. Fitting a square between two lines. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC19.py) |
 | [20](https://adventofcode.com/2019/day/20) | "Donut maze". Path finding through a recursive maze. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC20.py) |
-
+| [21](https://adventofcode.com/2019/day/21) | Intcode puzzle. Creating a series of instructions so the springdroid doesn't fall in a hole in the ground. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC21.py) |
+| [23](https://adventofcode.com/2019/day/23) | Intcode puzzle. Computer network. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC23.py) |
+| [25](https://adventofcode.com/2019/day/25) | Intcode puzzle. Text-based adventure, with a specific set of items needed to solve part 1. | [:star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC21.py) |

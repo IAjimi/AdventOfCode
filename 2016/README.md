@@ -1,4 +1,4 @@
-# Advent of Code (2016)
+# :christmas_tree: Advent of Code (2016) :christmas_tree:
 This repository contains Python solutions to the 2016 edition of [Advent of Code](https://adventofcode.com/2016). 
 
 | Day | Description | Solution |
