@@ -17,4 +17,9 @@ This repository contains Python solutions to the 2016 edition of [Advent of Code
 | [12](https://adventofcode.com/2016/day/12) | Intcode stuff.  | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2016/AOC12.py) |
 | [13](https://adventofcode.com/2016/day/13) |   |  |
 | [14](https://adventofcode.com/2016/day/14) | Generate keys using MD5 hash.  | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2016/AOC14.py) |
-
+| [15](https://adventofcode.com/2016/day/15) |   |  |
+| [16](https://adventofcode.com/2016/day/16) | Checksums. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2016/AOC14.py) |
+| [17](https://adventofcode.com/2016/day/17) |   |  |
+| [18](https://adventofcode.com/2016/day/18) |   |  |
+| [19](https://adventofcode.com/2016/day/19) | Elves passing each other gifts.  | [:star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2016/AOC14.py) |
+| [20](https://adventofcode.com/2016/day/20) | Checking validity of IP addresses.  | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2016/AOC14.py) |
