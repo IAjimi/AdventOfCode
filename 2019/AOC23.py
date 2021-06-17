@@ -110,17 +110,21 @@ class Intcode():
 
 
 if __name__ == '__main__':
-	_input = open("2019/aoc23.txt").read().rstrip().split(',')  # 17949
+	_input = open("2019/aoc23.txt").read().rstrip().split(',')  # 17949, 12326
 
-	network = {r: (Intcode(_input), [r]) for r in range(50)}
+	network = {r: [Intcode(_input), [r]] for r in range(50)}
 	searching = True
+	delivered = []
 
 	while searching:
+		idle = 0
+
 		for address, v in network.items():
 			computer, packets = v
 
 			if not packets:
 				packets = [-1]
+				idle += 1
 
 			computer = computer.run(packets)
 
@@ -130,14 +134,18 @@ if __name__ == '__main__':
 				y = computer._output.pop(0)
 
 				if dest == 255:
-					print(f'PART 1: {dest, x, y}')
-					searching = False
-					break
+					if not delivered:
+						print(f'PART 1: {y}')
+					nat = [x, y]
+				else:
+					network[dest][1].extend([x, y])
 
-				network[dest][1].extend([x, y])
+			network[address] = [computer, packets]
 
-			network[address] = computer, packets
-
-
-
+		if idle == 50:
+			network[0][1] = nat
+			if nat[1] in delivered:
+				print(f'PART 2: {nat[1]}')
+				break
+			delivered.append(nat[1])
 
