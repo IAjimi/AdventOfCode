@@ -19,4 +19,4 @@ or wanted to revisit.
 | [20](https://adventofcode.com/2019/day/20) | "Donut maze". Path finding through a recursive maze. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC20.py) |
 | [21](https://adventofcode.com/2019/day/21) | Intcode puzzle. Creating a series of instructions so the springdroid doesn't fall in a hole in the ground. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC21.py) |
 | [23](https://adventofcode.com/2019/day/23) | Intcode puzzle. Computer network. | [:star::star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC23.py) |
-| [25](https://adventofcode.com/2019/day/25) | Intcode puzzle. Text-based adventure, with a specific set of items needed to solve part 1. | [:star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC21.py) |
+| [25](https://adventofcode.com/2019/day/25) | Intcode puzzle. Text-based adventure, with a specific set of items needed to solve part 1. | [:star:](https://github.com/IAjimi/AdventOfCode2020/blob/master/2019/AOC25.py) |
