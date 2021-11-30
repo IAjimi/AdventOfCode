@@ -1,5 +1,1 @@
-*.csv
-*.jl
-*.json
-*_user_*.py
-movie_rec.py
+.idea
