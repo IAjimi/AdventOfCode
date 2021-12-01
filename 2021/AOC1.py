@@ -1,9 +1,16 @@
-def read_input(filepath):
+def read_input(filepath: str):
+    """
+    Open and read file at filepath, return list of integers.
+    """
     with open(filepath) as _input:
         return [int(i) for i in _input.read().splitlines()]
 
 
-def count_increase(_input):
+def count_increase(_input: list):
+    """
+    Returns the number of times a number in the _input
+    list is bigger than its predecessor.
+    """
     counter = 0
 
     for i in range(1, len(_input)):
@@ -16,7 +23,20 @@ def count_increase(_input):
     return counter
 
 
-def count_sliding_window_increase(_input):
+def count_sliding_window_increase(_input: list):
+    """
+    Returns the number of times a sequence of 3 integers
+    in the _input list is bigger than the previous sequence.
+
+    Because such a list always has one number in common, this
+    is equivalent to comparing the 1st number of the previous
+    sequence to the last number of the new sequence.
+
+    Those numbers are shown in parenthesis below:
+     0  1  2  3
+    (x) x  x
+        x  x (x)
+    """
     counter = 0
 
     for i in range(1, len(_input) - 2):
