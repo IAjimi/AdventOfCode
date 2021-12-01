@@ -1,14 +1,15 @@
 def read_input(filepath):
-    _input = open(filepath).read().splitlines()
-    _input = [int(i) for i in _input]
-    return _input
+    with open(filepath) as _input:
+        return [int(i) for i in _input.read().splitlines()]
 
 
 def count_increase(_input):
     counter = 0
 
     for i in range(1, len(_input)):
-        curr, prev = _input[i], _input[i - 1]
+        curr = _input[i]
+        prev = _input[i - 1]
+
         if curr > prev:
             counter += 1
 
@@ -17,15 +18,13 @@ def count_increase(_input):
 
 def count_sliding_window_increase(_input):
     counter = 0
-    prev = _input[0] + _input[1] + _input[2]
 
     for i in range(1, len(_input) - 2):
-        curr = prev - _input[i - 1] + _input[i + 2]
+        curr = _input[i + 2]
+        prev = _input[i - 1]
 
         if curr > prev:
             counter += 1
-
-        prev = curr
 
     return counter
 
