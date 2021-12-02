@@ -28,7 +28,7 @@ def count_sliding_window_increase(_input: list):
     Returns the number of times a sequence of 3 integers
     in the _input list is bigger than the previous sequence.
 
-    Because such a list always has one number in common, this
+    Because such a list always has two numbers in common, this
     is equivalent to comparing the 1st number of the previous
     sequence to the last number of the new sequence.
 
