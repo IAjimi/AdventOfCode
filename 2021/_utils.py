@@ -1,5 +1,6 @@
 import os
 
+
 def read_input(filepath: str):
     """
     Open and read file at filepath, return list of integers.

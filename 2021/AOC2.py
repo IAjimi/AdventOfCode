@@ -1,12 +1,13 @@
 from _utils import read_input
 
-def parse_instructions(i: str):
+
+def parse_instructions(full_instruction_str: str):
     """
     Parse a string and return a tuple of ints.
     In part 1, the tuple represents (horizontal pos change, depth change).
     In part 2, the tuple represents (special forward value change, aim change).
     """
-    instruction, value = i.split(" ")
+    instruction, value = full_instruction_str.split(" ")
     value = int(value)
 
     if "forward" in instruction:

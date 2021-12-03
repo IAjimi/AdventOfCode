@@ -1,5 +1,6 @@
 from _utils import read_input
 
+
 def process_input(filepath: str):
     """
     Open and read file at filepath, return list of integers.
@@ -52,7 +53,7 @@ def count_sliding_window_increase(_input: list):
 
 
 if __name__ == "__main__":
-    _input = read_input("2021/aoc1.txt")
+    _input = read_input("aoc1.txt")
 
     counter = count_increase(_input)
     print(f"PART 1: {counter}")  # 1233
