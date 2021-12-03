@@ -1,10 +1,4 @@
-def read_input(filepath: str):
-    """
-    Open and read file at filepath, return list of integers.
-    """
-    with open(filepath) as _input:
-        return _input.read().splitlines()
-
+from _utils import read_input
 
 def most_common_bit(bin_list: list, ix: int):
     """
@@ -14,9 +8,7 @@ def most_common_bit(bin_list: list, ix: int):
     n = len(bin_list)
     most_common = sum([int(row[ix]) for row in bin_list])
 
-    if most_common == n / 2:  # setting 1 as tie-breaker
-        return "1"
-    elif most_common > n // 2:
+    if most_common >= n / 2:  # 1 is tie-breaker
         return "1"
     else:
         return "0"
@@ -24,9 +16,10 @@ def most_common_bit(bin_list: list, ix: int):
 
 def find_rating(_input: list, most_common: bool):
     rating = _input[:]  # create copy of input to avoid changing the original
+    max_ix = len(_input[0])
     ix = 0
 
-    while ix < len(gamma_rate):
+    while ix < max_ix:
         bit = most_common_bit(rating, ix)
 
         if most_common:
@@ -50,16 +43,21 @@ def compute_answer(bin_1: str, bin_2: str):
     bin_to_int_2 = int(bin_2, 2)
     return bin_to_int_1 * bin_to_int_2
 
-
-if __name__ == "__main__":
-    _input = read_input("2021/aoc3.txt")
-
+def part_1(_input: list):
     gamma_rate = "".join([most_common_bit(_input, i) for i in range(len(_input[0]))])
     epsilon_rate = "".join(
         ["0" if bit == "1" else "1" for bit in gamma_rate]
     )  # flip gamma_rate
-    print(f"PART 1: {compute_answer(gamma_rate, epsilon_rate)}")  # 3958484
+    return compute_answer(gamma_rate, epsilon_rate)
 
+def part_2(_input: list):
     oxy_gen_rating = find_rating(_input, most_common=True)
     co2_rating = find_rating(_input, most_common=False)
-    print(f"PART 2: {compute_answer(oxy_gen_rating, co2_rating)}")  # 1613181
+    return compute_answer(oxy_gen_rating, co2_rating)
+
+
+if __name__ == "__main__":
+    _input = read_input("2021/aoc3.txt")
+
+    print(f"PART 1: {part_1(_input)}")  # 3958484
+    print(f"PART 2: {part_2(_input)}")  # 1613181

@@ -1,9 +1,11 @@
-def read_input(filepath: str):
+from _utils import read_input
+
+def process_input(filepath: str):
     """
     Open and read file at filepath, return list of integers.
     """
-    with open(filepath) as _input:
-        return [int(i) for i in _input.read().splitlines()]
+    _input = read_input(filepath)
+    return [int(i) for i in _input]
 
 
 def count_increase(_input: list):

@@ -1,3 +1,5 @@
+from _utils import read_input
+
 def parse_instructions(i: str):
     """
     Parse a string and return a tuple of ints.
@@ -17,12 +19,12 @@ def parse_instructions(i: str):
         raise Exception("Unrecognized instruction.")
 
 
-def read_input(filepath: str):
+def process_input(filepath: str):
     """
     Open and read file at filepath, return list of tuples.
     """
-    with open(filepath) as _input:
-        return [parse_instructions(i) for i in _input.read().splitlines()]
+    _input = read_input(filepath)
+    return [parse_instructions(i) for i in _input]
 
 
 def part_1(_input: list):
@@ -51,7 +53,7 @@ def part_2(_input: list):
 
 
 if __name__ == "__main__":
-    _input = read_input("2021/aoc2.txt")
+    _input = process_input("aoc2.txt")
 
     print(f"PART 1: {part_1(_input)}")  # 1746616
     print(f"PART 2: {part_2(_input)}")  # 1741971043
