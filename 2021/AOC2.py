@@ -1,4 +1,4 @@
-from _utils import read_input
+from _utils import read_input, timer
 
 
 def parse_instructions(full_instruction_str: str):
@@ -53,8 +53,15 @@ def part_2(_input: list):
     return hor_pos * depth
 
 
-if __name__ == "__main__":
-    _input = process_input("aoc2.txt")
+@timer
+def main(filename: str):
+    _input = process_input(filename)
+    part_1_score = part_1(_input)
+    part_2_score = part_2(_input)
+    return part_1_score, part_2_score
 
-    print(f"PART 1: {part_1(_input)}")  # 1746616
-    print(f"PART 2: {part_2(_input)}")  # 1741971043
+
+if __name__ == "__main__":
+    part_1_score, part_2_score = main("aoc2.txt")
+    print(f"PART 1: {part_1_score}")  # 1746616
+    print(f"PART 2: {part_2_score}")  # 1741971043

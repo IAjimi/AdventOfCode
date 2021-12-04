@@ -1,4 +1,11 @@
-from _utils import read_input
+"""
+Thought iterating over the whole board to check that the number is there would
+be slow so tried to use different data structure to speed that check + verifying
+whether a board is complete or not. Runs in about 0.009 seconds locally.
+"""
+
+
+from _utils import read_input, timer
 
 import re
 
@@ -88,6 +95,7 @@ def play_bingo(bingo_numbers: list, all_boards: dict, bingo_grid: dict):
     return part_1_score, part_2_score
 
 
+@timer
 def main(filepath: str):
     """
     Returns solution for AOC day 4 from filepath.

@@ -1,4 +1,4 @@
-from _utils import read_input
+from _utils import read_input, timer
 
 
 def most_common_bit(bin_list: list, ix: int):
@@ -78,8 +78,15 @@ def part_2(_input: list):
     return compute_answer(oxy_gen_rating, co2_rating)
 
 
-if __name__ == "__main__":
-    _input = read_input("aoc3.txt")
+@timer
+def main(filename: str):
+    _input = read_input(filename)
+    part_1_score = part_1(_input)
+    part_2_score = part_2(_input)
+    return part_1_score, part_2_score
 
-    print(f"PART 1: {part_1(_input)}")  # 3958484
-    print(f"PART 2: {part_2(_input)}")  # 1613181
+
+if __name__ == "__main__":
+    part_1_score, part_2_score = main("aoc3.txt")
+    print(f"PART 1: {part_1_score}")  # 3958484
+    print(f"PART 2: {part_2_score}")  # 1613181
