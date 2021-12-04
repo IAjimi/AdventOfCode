@@ -49,11 +49,9 @@ def parse_input(_input: list):
     return bingo_numbers, all_boards, bingo_grid
 
 
-def get_bingo_score(all_boards: dict, board_number: int, bingo_numbers: list, ix: int):
-    winning_sum = sum(
-        [k for k in all_boards[board_number].keys() if k not in bingo_numbers[: ix + 1]]
-    )
-    return bingo_numbers[ix] * winning_sum
+def get_bingo_score(all_boards: dict, board_number: int, called: set, bingo_num: int):
+    winning_sum = sum([k for k in all_boards[board_number].keys() if k not in called])
+    return bingo_num * winning_sum
 
 
 def play_bingo(bingo_numbers: list, all_boards: dict, bingo_grid: dict):
@@ -62,8 +60,11 @@ def play_bingo(bingo_numbers: list, all_boards: dict, bingo_grid: dict):
     (score from last completed score).
     """
     won = set()  # set for fast membership checks in while loop
+    called = set()  # all 'called' bingo numbers so far
 
     for ix, bingo_num in enumerate(bingo_numbers):
+        called.add(bingo_num)
+
         # for every board
         for board_number in all_boards:
             # if number in board & board not 'won' yet, update grid
@@ -79,12 +80,12 @@ def play_bingo(bingo_numbers: list, all_boards: dict, bingo_grid: dict):
                     won.add(board_number)
                     if len(won) == 1:
                         part_1_score = get_bingo_score(
-                            all_boards, board_number, bingo_numbers, ix
+                            all_boards, board_number, called, bingo_num
                         )
 
                     # last score will be returned by func - better way to do this?
                     part_2_score = get_bingo_score(
-                        all_boards, board_number, bingo_numbers, ix
+                        all_boards, board_number, called, bingo_num
                     )
 
     return part_1_score, part_2_score
