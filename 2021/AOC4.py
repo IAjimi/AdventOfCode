@@ -61,12 +61,9 @@ def play_bingo(bingo_numbers: list, all_boards: dict, bingo_grid: dict):
     Returns part 1 score (score from 1st completed board) and part 2 score
     (score from last completed score).
     """
-    ix = 0
     won = set()  # set for fast membership checks in while loop
 
-    while ix < len(bingo_numbers):
-        bingo_num = bingo_numbers[ix]
-
+    for ix, bingo_num in enumerate(bingo_numbers):
         # for every board
         for board_number in all_boards:
             # if number in board & board not 'won' yet, update grid
@@ -89,8 +86,6 @@ def play_bingo(bingo_numbers: list, all_boards: dict, bingo_grid: dict):
                     part_2_score = get_bingo_score(
                         all_boards, board_number, bingo_numbers, ix
                     )
-
-        ix += 1
 
     return part_1_score, part_2_score
 
