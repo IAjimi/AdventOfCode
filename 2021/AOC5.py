@@ -1,4 +1,4 @@
-from _utils import read_input, timer
+from _utils import read_input, sign, timer
 
 from collections import defaultdict
 
@@ -19,31 +19,22 @@ def process_input(line):
 
 def turn_lines_to_points(line):
     """
-    Return all the lines between two points, start and end points included.
+    Return all the points on the segment between an end and start points, including the latter.
+    Handles vertical, horizontal, and diagonal (45 degree) lines.
     """
     coords1, coords2 = line
     x1, y1 = coords1
     x2, y2 = coords2
 
-    if x1 == x2:
-        abs_dist = abs(y2 - y1)
-        y_dir = 1 if y2 > y1 else -1
-        return [(x1, y1 + r * y_dir) for r in range(abs_dist + 1)]
-    elif y1 == y2:
-        abs_dist = abs(x2 - x1)
-        x_dir = 1 if x2 > x1 else -1
-        return [(x1 + r * x_dir, y1) for r in range(abs_dist + 1)]
-    else:
-        # Diagonal lines, always at 45 degree angle
-        abs_dist = abs(x2 - x1)
-        x_dir = 1 if x2 > x1 else -1
-        y_dir = 1 if y2 > y1 else -1
-        return [(x1 + r * x_dir, y1 + r * y_dir) for r in range(abs_dist + 1)]
+    abs_dist = max(abs(x2 - x1), abs(y2 - y1))
+    x_dir = sign(x2 - x1)
+    y_dir = sign(y2 - y1)
+    return ((x1 + r * x_dir, y1 + r * y_dir) for r in range(abs_dist + 1))
 
 
 def count_overlapping_lines(_input: list):
     """
-    Returns the number of points that have 2 lines
+    Returns the number of points that have 2 segments
     going through them or more.
     """
     counter = defaultdict(int)
