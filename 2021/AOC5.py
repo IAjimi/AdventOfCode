@@ -26,15 +26,13 @@ def turn_lines_to_points(line):
     x2, y2 = coords2
 
     if x1 == x2:
-        if y2 - y1 >= 0:
-            return [(x1, y) for y in range(y1, y2 + 1)]
-        else:
-            return [(x1, y) for y in range(y2, y1 + 1)]
+        abs_dist = abs(y2 - y1)
+        y_dir = 1 if y2 > y1 else -1
+        return [(x1, y1 + r * y_dir) for r in range(abs_dist + 1)]
     elif y1 == y2:
-        if x2 - x1 >= 0:
-            return [(x, y1) for x in range(x1, x2 + 1)]
-        else:
-            return [(x, y1) for x in range(x2, x1 + 1)]
+        abs_dist = abs(x2 - x1)
+        x_dir = 1 if x2 > x1 else -1
+        return [(x1 + r * x_dir, y1) for r in range(abs_dist + 1)]
     else:
         # Diagonal lines, always at 45 degree angle
         abs_dist = abs(x2 - x1)
