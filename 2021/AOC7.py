@@ -5,41 +5,29 @@ than list).
 
 from _utils import read_input, timer
 
-
-def part_1(_input):
-    max_position = max(_input)
-
-    fuel_needed = {}
-
-    for target_pos in range(max_position):
-        total = sum([abs(cur_pos - target_pos) for cur_pos in _input])
-        fuel_needed[target_pos] = total
-
-    return min(fuel_needed.values())
-
-
 def total_sum(n):
     return n * (n + 1) // 2
 
-
-def part_2(_input):
+def solver(_input:list, part_1:bool):
     max_position = max(_input)
 
     fuel_needed = {}
 
     for target_pos in range(max_position):
-        total = [total_sum(abs(1 + cur_pos - target_pos)) for cur_pos in _input]
+        if part_1:
+            total = [abs(cur_pos - target_pos) for cur_pos in _input]
+        else:
+            total = [total_sum(abs(1 + cur_pos - target_pos)) for cur_pos in _input]
         fuel_needed[target_pos] = sum(total)
 
     return min(fuel_needed.values())
-
 
 @timer
 def main(filepath: str):
     _input = read_input(filepath)
     _input = [int(i) for i in _input[0].split(",")]
-    part_1_score = part_1(_input)
-    part_2_score = part_2(_input)
+    part_1_score = solver(_input, part_1=True)
+    part_2_score = solver(_input, part_1=False)
     return part_1_score, part_2_score
 
 
