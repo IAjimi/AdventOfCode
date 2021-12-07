@@ -8,3 +8,5 @@ This repository contains Python solutions to the 2021 edition of [Advent of Code
 | [3](https://adventofcode.com/2021/day/3) | Manipulating a list of binary numbers. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC3.py) | 
 | [4](https://adventofcode.com/2021/day/4) | Playing bingo (finding numbers across list of 5x5 grids). | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC4.py) | 
 | [5](https://adventofcode.com/2021/day/5) | Counting overlap between lines in 2D space. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC5.py) |
+| [6](https://adventofcode.com/2021/day/6) | Simulating the exponential growth of lanternship. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC6.py) |
+| [7](https://adventofcode.com/2021/day/7) | Finding min fuel to move between 2 points. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC7.py) |

@@ -1,6 +1,7 @@
 import os
 import time
 
+from collections import defaultdict
 
 def read_input(filepath: str):
     """
@@ -35,3 +36,13 @@ def sign(num):
         return -1
     elif num > 0:
         return 1
+
+def count_occurences(_input):
+    """
+    Return number of occurrences of all values in
+    _input.
+    """
+    counter = defaultdict(int)
+    for num in _input:
+        counter[num] += 1
+    return counter
