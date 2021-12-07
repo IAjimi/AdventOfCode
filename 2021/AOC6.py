@@ -10,7 +10,7 @@ part 1 or 2, which allowed me to complete part 2 without having to
 change my code at all (besides adjusting the max number of turns).
 """
 
-from _utils import read_input, timer
+from _utils import read_input, count_occurences, timer
 from collections import defaultdict
 
 
@@ -20,9 +20,7 @@ def parse_input(_input: list):
     the number of lanternfish of a certain age.
     """
     _input = (int(i) for i in _input[0].split(","))  # only one line in input
-    counter = defaultdict(int)
-    for num in _input:
-        counter[num] += 1
+    counter = count_occurences(_input)
     return counter
 
 
