@@ -3,6 +3,7 @@ import time
 
 from collections import defaultdict
 
+
 def read_input(filepath: str):
     """
     Open and read file at filepath, return list of integers.
@@ -36,6 +37,7 @@ def sign(num):
         return -1
     elif num > 0:
         return 1
+
 
 def count_occurences(_input):
     """

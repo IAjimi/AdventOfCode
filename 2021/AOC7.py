@@ -4,6 +4,7 @@ Completed in <10 minutes
 
 from _utils import read_input, timer, count_occurences
 
+
 def total_sum(n):
     """
     Sum of all numbers from 0 to n.
@@ -13,19 +14,28 @@ def total_sum(n):
     """
     return n * (n + 1) // 2
 
-def solver(counter:dict, part_1:bool):
-    fuel_needed = 10**16
+
+def solver(counter: dict, part_1: bool):
+    fuel_needed = 10 ** 16
     max_position = max(counter.keys())
 
     for target_pos in range(max_position):
         if part_1:
-            total = sum([n * abs(cur_pos - target_pos) for cur_pos, n in counter.items()])
+            total = sum(
+                [n * abs(cur_pos - target_pos) for cur_pos, n in counter.items()]
+            )
         else:
-            total = sum([n * total_sum(abs(1 + cur_pos - target_pos)) for cur_pos, n in counter.items()])
+            total = sum(
+                [
+                    n * total_sum(abs(1 + cur_pos - target_pos))
+                    for cur_pos, n in counter.items()
+                ]
+            )
 
         fuel_needed = min(fuel_needed, total)
 
     return fuel_needed
+
 
 @timer
 def main(filepath: str):
