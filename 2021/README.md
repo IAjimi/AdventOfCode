@@ -10,3 +10,5 @@ This repository contains Python solutions to the 2021 edition of [Advent of Code
 | [5](https://adventofcode.com/2021/day/5) | Counting overlap between lines in 2D space. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC5.py) |
 | [6](https://adventofcode.com/2021/day/6) | Simulating the exponential growth of lanternship. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC6.py) |
 | [7](https://adventofcode.com/2021/day/7) | Finding min fuel to move between 2 points. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC7.py) |
+| [8](https://adventofcode.com/2021/day/8) | Decode signal patterns. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC8.py) |
+| [9](https://adventofcode.com/2021/day/9) | Finding low point in map and size of adjacent bassin. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC9.py) |
