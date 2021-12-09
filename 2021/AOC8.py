@@ -1,6 +1,5 @@
 """
-Needs serious cleaning. Slower to do than previous days because required
-more involved logic, especially in part 2.
+Slower to do than previous days because required more involved logic, especially in part 2.
 """
 
 
@@ -14,11 +13,9 @@ def part_1(_input: list):
     """
     output_lines = [i.split(" | ")[1] for i in _input]
     output_lines_len = [
-        [len(i) for i in line.split(" ") if len(i) in {2, 3, 4, 7}]
-        for line in output_lines
+        1 for line in output_lines for i in line.split(" ") if len(i) in {2, 3, 4, 7}
     ]
-    output_lines_len = [i for sublist in output_lines_len for i in sublist]
-    part_1_score = len(output_lines_len)
+    part_1_score = sum(output_lines_len)
     return part_1_score
 
 
@@ -42,20 +39,20 @@ def deduce_signals(full_line: list):
     for signal in full_line:
         signal = set(signal)
         if len(signal) == 5:
-            if potential[4] and len(potential[4].difference(signal)) == 2:
+            if len(potential[4].difference(signal)) == 2:
                 potential[2] = signal
-            elif potential[1] and len(potential[1].difference(signal)) == 1:
+            elif len(potential[1].difference(signal)) == 1:
                 potential[5] = signal
-            elif potential[1] and len(potential[1].difference(signal)) == 0:
+            elif len(potential[1].difference(signal)) == 0:
                 potential[3] = signal
             else:
                 raise Exception("Missing logic to detect len 5 signal code.")
         elif len(signal) == 6:
-            if potential[1] and len(potential[1].difference(signal)) == 1:
+            if len(potential[1].difference(signal)) == 1:
                 potential[6] = signal
-            elif potential[4] and len(potential[4].difference(signal)) == 1:
+            elif len(potential[4].difference(signal)) == 1:
                 potential[0] = signal
-            elif potential[4] and len(potential[4].difference(signal)) == 0:
+            elif len(potential[4].difference(signal)) == 0:
                 potential[9] = signal
             else:
                 raise Exception("Missing logic to detect len 6 signal code.")
