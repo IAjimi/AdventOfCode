@@ -2,7 +2,7 @@
 Completed in <10 minutes
 """
 
-from _utils import read_input, timer, count_occurences
+from _utils import read_input, timer, count_occurrences
 
 
 def total_sum(n):
@@ -41,7 +41,7 @@ def solver(counter: dict, part_1: bool):
 def main(filepath: str):
     _input = read_input(filepath)
     _input = [int(i) for i in _input[0].split(",")]
-    counter = count_occurences(_input)
+    counter = count_occurrences(_input)
     part_1_score = solver(counter, part_1=True)
     part_2_score = solver(counter, part_1=False)
     return part_1_score, part_2_score

@@ -39,7 +39,7 @@ def sign(num):
         return 1
 
 
-def count_occurences(_input):
+def count_occurrences(_input):
     """
     Return number of occurrences of all values in
     _input.
@@ -48,3 +48,11 @@ def count_occurences(_input):
     for num in _input:
         counter[num] += 1
     return counter
+
+
+def get_median(lst: list):
+    """
+    Return median value of an unsorted list.
+    """
+    lst.sort()
+    return lst[len(lst) // 2]

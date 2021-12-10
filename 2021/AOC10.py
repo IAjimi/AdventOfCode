@@ -1,4 +1,4 @@
-from _utils import read_input, timer
+from _utils import read_input, timer, get_median
 
 
 def spell_checker(line: str):
@@ -33,12 +33,12 @@ def main(filepath: str):
     _input = read_input(filepath)
 
     scores = [spell_checker(line) for line in _input]
+    part_1_score, part_2_score = zip(*scores)
 
-    part_1_score = sum([pt1_score for pt1_score, pt2_score in scores])
+    part_1_score = sum(part_1_score)
 
-    part_2_score = [pt2_score for pt1_score, pt2_score in scores if pt2_score > 0]
-    part_2_score.sort()
-    part_2_score = part_2_score[len(part_2_score) // 2]
+    part_2_score = [s for s in part_2_score if s > 0]
+    part_2_score = get_median(part_2_score)
 
     return part_1_score, part_2_score
 
