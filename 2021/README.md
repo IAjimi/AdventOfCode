@@ -1,6 +1,8 @@
 # Advent of Code (2021)
 This repository contains Python solutions to the 2021 edition of [Advent of Code](https://adventofcode.com/2021). 
 
+This is my first year completing the puzzles "live" (sometimes at midnight, always during the day of the puzzle's release).
+
 | Day | Description | Solution |
 | --- | -------| -----| 
 | [1](https://adventofcode.com/2021/day/1) | Cumulative sum over an array. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC1.py) | 
@@ -12,3 +14,4 @@ This repository contains Python solutions to the 2021 edition of [Advent of Code
 | [7](https://adventofcode.com/2021/day/7) | Finding min fuel to move between 2 points. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC7.py) |
 | [8](https://adventofcode.com/2021/day/8) | Decode signal patterns. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC8.py) |
 | [9](https://adventofcode.com/2021/day/9) | Finding low point in map and size of adjacent bassin. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC9.py) |
+| [10](https://adventofcode.com/2021/day/10) | Spotting open/closed character mismatch and correcting it. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC10.py) |
