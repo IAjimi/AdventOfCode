@@ -39,6 +39,17 @@ def sign(num):
         return 1
 
 
+def create_grid(_input: list):
+    """
+    Turns raw input into a grid dict (key: position).
+    """
+    _input = [[int(char) for char in line] for line in _input]
+    grid = {
+        (x, y): _input[y][x] for y in range(len(_input)) for x in range(len(_input[0]))
+    }
+    return grid
+
+
 def count_occurrences(_input):
     """
     Return number of occurrences of all values in

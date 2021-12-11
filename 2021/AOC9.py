@@ -1,4 +1,4 @@
-from _utils import read_input, timer
+from _utils import read_input, timer, create_grid
 
 
 def get_neighbors(grid: dict, pos: tuple):
@@ -61,11 +61,7 @@ def part_2(grid: dict, low_points: list):
 @timer
 def main(filepath: str):
     _input = read_input(filepath)
-    _input = [[int(char) for char in line] for line in _input]
-    grid = {
-        (x, y): _input[y][x] for y in range(len(_input)) for x in range(len(_input[0]))
-    }
-
+    grid = create_grid(_input)
     part_1_score, low_points = part_1(grid)
     part_2_score = part_2(grid, low_points)
 

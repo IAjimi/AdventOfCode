@@ -4,7 +4,7 @@ Was able to reuse some code from day 9 for the grid + get_neighbors function.
 Using a queue to keep track of 'flashing' octopi.
 """
 
-from _utils import read_input, timer
+from _utils import read_input, timer, create_grid
 
 
 def get_neighbors(grid: dict, pos: tuple):
@@ -60,13 +60,8 @@ def simulate_octopi(grid):
 @timer
 def main(filepath: str):
     _input = read_input(filepath)
-    _input = [[int(char) for char in line] for line in _input]
-    grid = {
-        (x, y): _input[y][x] for y in range(len(_input)) for x in range(len(_input[0]))
-    }
-
+    grid = create_grid(_input)
     part_1_score, part_2_score = simulate_octopi(grid)
-
     return part_1_score, part_2_score
 
 
