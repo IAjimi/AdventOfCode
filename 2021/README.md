@@ -15,3 +15,4 @@ This is my first year completing the puzzles "live" (sometimes at midnight, alwa
 | [8](https://adventofcode.com/2021/day/8) | Decode signal patterns. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC8.py) |
 | [9](https://adventofcode.com/2021/day/9) | Finding low point in map and size of adjacent bassin. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC9.py) |
 | [10](https://adventofcode.com/2021/day/10) | Spotting open/closed character mismatch and correcting it. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC10.py) |
+| [11](https://adventofcode.com/2021/day/11) | Tracking flashing octopi. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC11.py) |
