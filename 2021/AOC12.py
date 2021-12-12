@@ -4,15 +4,18 @@ Part 2 completed at 00:32:24, rank 1384.
 
 Both handled with BFS.
 
-Code still needs to be cleaned up and optimized - runs in 0.83s
-for both parts (slowest AOC solution yet).
+Code still needs to be cleaned up and optimized - runs in 0.64s
+for both parts (slowest AOC solution yet) after 1st cleanup.
 """
 
 from collections import defaultdict
 from _utils import read_input, timer
 
+START = "start"
+END = "end"
 
-def parse_input(_input):
+
+def parse_input(_input: list):
     """
     Return dictionary, with key as node name and value the list
     of nodes that can be reached through the key node.
@@ -25,60 +28,63 @@ def parse_input(_input):
     return connections
 
 
-def part_1(connections):
+def part_1(connections: dict):
     """
     Counts the number of unique paths that connect the
     start to the end. Nodes with uppercase names can be
     visited as much as needed. Nodes with lowercase names can
     only be visited once.
     """
-    queue = [("start", [])]
+    queue = [(START, set())]
     valid_paths_counter = 0
 
     while queue:
         current_node, visited = queue.pop()
 
-        if current_node == "end":
+        if current_node == END:
             valid_paths_counter += 1
-        elif current_node.isupper() or current_node not in set(visited):
+        elif current_node.isupper() or current_node not in visited:
+            visited.add(current_node)
             next_nodes = connections[current_node]
 
             for node in next_nodes:
-                queue.append((node, visited.copy() + [current_node]))
+                queue.append((node, visited.copy()))
 
     return valid_paths_counter
 
 
-def part_2(connections):
+def part_2(connections: dict):
     """
     Same as part 1, except a single small cave (lowercase name, not "start"
     or "end") can be visited twice. This is handled with a boolean passed on
     to the queue.
     """
-    queue = [("start", [], False)]
+    queue = [(START, set(), False)]
     valid_paths_counter = 0
 
     while queue:
         current_node, visited, small_twice = queue.pop()
 
-        if current_node == "end":
+        if current_node == END:
             valid_paths_counter += 1
-
-        elif current_node.isupper() or current_node not in set(visited):
+        # Big cave or unvisited small cave
+        elif current_node.isupper() or current_node not in visited:
             next_nodes = connections[current_node]
+            visited.add(current_node)
 
             for node in next_nodes:
-                queue.append((node, visited.copy() + [current_node], small_twice))
-
+                queue.append((node, visited.copy(), small_twice))
+        # 1st small cave to be visited 2x
         elif (
             current_node.islower()
-            and current_node not in {"start", "end"}
+            and current_node not in {START, END}
             and not small_twice
         ):
             next_nodes = connections[current_node]
+            small_twice = True
 
             for node in next_nodes:
-                queue.append((node, visited.copy() + [current_node], True))
+                queue.append((node, visited.copy(), small_twice))
 
     return valid_paths_counter
 
