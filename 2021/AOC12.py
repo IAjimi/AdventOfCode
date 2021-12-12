@@ -28,35 +28,15 @@ def parse_input(_input: list):
     return connections
 
 
-def part_1(connections: dict):
+def count_unique_paths(connections: dict, part_2: bool):
     """
     Counts the number of unique paths that connect the
     start to the end. Nodes with uppercase names can be
-    visited as much as needed. Nodes with lowercase names can
-    only be visited once.
-    """
-    queue = [(START, set())]
-    valid_paths_counter = 0
+    visited as much as needed.
 
-    while queue:
-        current_node, visited = queue.pop()
-
-        if current_node == END:
-            valid_paths_counter += 1
-        elif current_node.isupper() or current_node not in visited:
-            visited.add(current_node)
-            next_nodes = connections[current_node]
-
-            for node in next_nodes:
-                queue.append((node, visited.copy()))
-
-    return valid_paths_counter
-
-
-def part_2(connections: dict):
-    """
-    Same as part 1, except a single small cave (lowercase name, not "start"
-    or "end") can be visited twice. This is handled with a boolean passed on
+    In part 1, nodes with lowercase names can only be visited once.
+    In part 2, a single small cave (lowercase name, not "start" or "end")
+    can be visited twice. This is handled by keeping track of a boolean passed on
     to the queue.
     """
     queue = [(START, set(), False)]
@@ -65,26 +45,32 @@ def part_2(connections: dict):
     while queue:
         current_node, visited, small_twice = queue.pop()
 
+        # Reached end
         if current_node == END:
+            next_nodes = []
             valid_paths_counter += 1
-        # Big cave or unvisited small cave
-        elif current_node.isupper() or current_node not in visited:
+        # Reached big cave
+        elif current_node.isupper():
+            next_nodes = connections[current_node]
+        # Reached unvisited small cave
+        elif current_node not in visited:
             next_nodes = connections[current_node]
             visited.add(current_node)
-
-            for node in next_nodes:
-                queue.append((node, visited.copy(), small_twice))
-        # 1st small cave to be visited 2x
+        # If in part 2, reach 1st small cave to be visited 2x
         elif (
-            current_node.islower()
+            part_2
+            and current_node.islower()
             and current_node not in {START, END}
             and not small_twice
         ):
             next_nodes = connections[current_node]
             small_twice = True
+        # Reached dead end (e.g., visited small cave)
+        else:
+            next_nodes = []
 
-            for node in next_nodes:
-                queue.append((node, visited.copy(), small_twice))
+        for node in next_nodes:
+            queue.append((node, visited.copy(), small_twice))
 
     return valid_paths_counter
 
@@ -93,8 +79,8 @@ def part_2(connections: dict):
 def main(filepath: str):
     _input = read_input(filepath)
     connections = parse_input(_input)
-    part_1_score = part_1(connections)
-    part_2_score = part_2(connections)
+    part_1_score = count_unique_paths(connections, part_2=False)
+    part_2_score = count_unique_paths(connections, part_2=True)
     return part_1_score, part_2_score
 
 
