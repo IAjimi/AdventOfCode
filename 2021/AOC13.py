@@ -1,22 +1,23 @@
 from _utils import read_input, timer
 
+
 def parse_input(_input: list):
     grid = set()
     instructions = []
 
     for line in _input:
-        if ',' in line:
-            x, y = line.split(',')
-            x, y = int(x), int(y)
-            grid.add((x,y))
-        elif 'fold along' in line:
+        if "," in line:
+            x, y = line.split(",")
+            grid.add((int(x), int(y)))
+        elif "fold along" in line:
             instructions.append(line)
 
     return grid, instructions
 
-def vertical_flip(grid: set, flip_val:int):
+
+def vertical_flip(grid: set, flip_val: int):
     new_grid = set()
-    for x,y in grid:
+    for x, y in grid:
         if y > flip_val:
             new_y = 2 * flip_val - y
             new_grid.add((x, new_y))
@@ -25,9 +26,9 @@ def vertical_flip(grid: set, flip_val:int):
     return new_grid
 
 
-def horizontal_flip(grid: set, flip_val:int):
+def horizontal_flip(grid: set, flip_val: int):
     new_grid = set()
-    for x,y in grid:
+    for x, y in grid:
         if x > flip_val:
             new_x = 2 * flip_val - x
             new_grid.add((new_x, y))
@@ -35,22 +36,19 @@ def horizontal_flip(grid: set, flip_val:int):
             new_grid.add((x, y))
     return new_grid
 
-def print_grid(grid:set):
-    grid_str = ''
+
+def print_grid(grid: set):
+    grid_str = ""
     max_x = 1 + max((pos[0] for pos in grid))
     max_y = 1 + max((pos[1] for pos in grid))
 
     for y in range(max_y):
-        line = []
-        for x in range(max_x):
-            if (x,y) in grid:
-                line.append('#')
-            else:
-                line.append('.')
-        grid_str += ' '.join(line)
-        grid_str += '\n'
+        line = ["#" if (x, y) in grid else "." for x in range(max_x)]
+        grid_str += " ".join(line)
+        grid_str += "\n"
 
     return grid_str
+
 
 @timer
 def main(filepath: str):
@@ -58,12 +56,12 @@ def main(filepath: str):
     grid, instructions = parse_input(_input)
 
     for ix, instr in enumerate(instructions):
-        _, flip_val = instr.split('=')
+        _, flip_val = instr.split("=")
         flip_val = int(flip_val)
 
-        if 'x' in instr:
+        if "x" in instr:
             grid = horizontal_flip(grid, flip_val)
-        elif 'y' in instr:
+        elif "y" in instr:
             grid = vertical_flip(grid, flip_val)
 
         if ix == 0:
