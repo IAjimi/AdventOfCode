@@ -13,33 +13,6 @@ from _utils import read_input, timer
 from collections import defaultdict
 
 
-def refactored_code(template: str, rules: dict, steps: int):
-    template = {pos: letter for pos, letter in enumerate(template)}
-
-    for step in range(1, steps + 1):
-        new_template = {}
-        jx = 0
-
-        for ix in range(max(template.keys())):
-            pair = template[ix] + template[ix + 1]
-            new_val = rules[pair]
-
-            new_template[jx] = template[ix]
-            new_template[jx + 1] = new_val
-            new_template[jx + 2] = template[ix + 1]
-
-            jx += 2
-
-        template = new_template
-
-    from collections import Counter
-
-    counter = Counter(template.values())
-    most_common_count = counter.most_common(1)[0][1]
-    least_common_count = counter.most_common()[-1][1]
-    return most_common_count - least_common_count
-
-
 def parse_rules(_input: list):
     rules = {}
     for line in _input:
