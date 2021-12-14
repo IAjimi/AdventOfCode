@@ -21,68 +21,78 @@ def parse_rules(_input: list):
     return rules
 
 
-def create_pairs_counter(template: str):
-    pairs_counter = defaultdict(int)
+def create_counters(template: str):
+    """
+    Creates letter and pair counter dicts.
+    Holds the counts of pairs and individual letters respectively.
+    """
+    pair_counter = defaultdict(int)
+    letter_counter = defaultdict(int)
+    letter_counter[template[0]] = 1  # for loop only counts 2nd letter
+
     for ix in range(len(template) - 1):
         letter1, letter2 = template[ix], template[ix + 1]
         pair = letter1 + letter2
-        pairs_counter[pair] += 1
-
-    return pairs_counter
+        pair_counter[pair] += 1
+        letter_counter[letter2] += 1
+    return pair_counter, letter_counter
 
 
 def parse_input(_input: list):
     template, _input = _input[0], _input[2:]
     rules = parse_rules(_input)
-    pairs_counter = create_pairs_counter(template)
-    return rules, pairs_counter
+    pair_counter, letter_counter = create_counters(template)
+    return rules, pair_counter, letter_counter
 
 
-def get_solution(pairs_counter: dict):
+def get_solution(letter_counter: dict):
     """
     Returns difference in count between most and least
     common letter.
-
-    Currently divides by 2 to get estimated number (since pair
-    grouping means most letters get double-counted).
     """
-    # Count letters
-    counter = defaultdict(int)
-    for pair, count in pairs_counter.items():
-        counter[pair[0]] += count
-        counter[pair[1]] += count
-
-    # Do math (divide by 2 because storing pairs means same letter appears 2x)
-    most_common_count = max(counter.values()) / 2
-    least_common_count = min(counter.values()) / 2
+    most_common_count = max(letter_counter.values())
+    least_common_count = min(letter_counter.values())
     return most_common_count - least_common_count
 
 
-def run_pair_insertion_program(rules: dict, pairs_counter: dict, steps: int):
+def run_pair_insertion_program(
+    rules: dict,
+    pair_counter: dict,
+    letter_counter: dict,
+    part_1_steps: int,
+    part_2_steps: int,
+):
     # Simulate pair insertion process for n steps
-    for step in range(1, steps + 1):
-        new_pairs = defaultdict(int)
+    for step in range(1, part_2_steps + 1):
+        new_pair_counter = defaultdict(int)
 
-        for pair, count in pairs_counter.items():
+        for pair, n in pair_counter.items():
             new_letter = rules[pair]
 
             first_new_pair = pair[0] + new_letter
             second_new_pair = new_letter + pair[1]
 
-            new_pairs[first_new_pair] += count
-            new_pairs[second_new_pair] += count
+            new_pair_counter[first_new_pair] += n
+            new_pair_counter[second_new_pair] += n
 
-        pairs_counter = new_pairs
+            letter_counter[new_letter] += n
 
-    return get_solution(pairs_counter)
+        pair_counter = new_pair_counter
+        if step == part_1_steps:
+            part_1_score = get_solution(letter_counter)
+
+    part_2_score = get_solution(letter_counter)
+
+    return part_1_score, part_2_score
 
 
 @timer
 def main(filepath: str):
     _input = read_input(filepath)
-    rules, pairs_counter = parse_input(_input)
-    part_1_score = run_pair_insertion_program(rules, pairs_counter, steps=10)
-    part_2_score = run_pair_insertion_program(rules, pairs_counter, steps=40)
+    rules, pair_counter, letter_counter = parse_input(_input)
+    part_1_score, part_2_score = run_pair_insertion_program(
+        rules, pair_counter, letter_counter, part_1_steps=10, part_2_steps=40
+    )
     return part_1_score, part_2_score
 
 
