@@ -18,3 +18,4 @@ This is my first year completing the puzzles "live" (sometimes at midnight, alwa
 | [11](https://adventofcode.com/2021/day/11) | Tracking flashing octopi. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC11.py) |
 | [12](https://adventofcode.com/2021/day/12) | Counting the number of unique paths between 2 points. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC12.py) |
 | [13](https://adventofcode.com/2021/day/13) | Folding paper. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC13.py) |
+| [14](https://adventofcode.com/2021/day/14) | Count elements in rapidly growing sequence. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC14.py) |
