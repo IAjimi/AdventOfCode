@@ -66,6 +66,13 @@ def parse_input(_input: list):
 
 
 def get_solution(pairs_counter: dict):
+    """
+    Returns difference in count between most and least
+    common letter.
+
+    Currently divides by 2 to get estimated number (since pair
+    grouping means most letters get double-counted).
+    """
     # Count letters
     counter = defaultdict(int)
     for pair, count in pairs_counter.items():
@@ -107,6 +114,6 @@ def main(filepath: str):
 
 
 if __name__ == "__main__":
-    part_1_score, part_2_score = main("test_aoc14.txt")
+    part_1_score, part_2_score = main("aoc14.txt")
     print(f"PART 1: {part_1_score}")  # 2223
     print(f"PART 2: {part_2_score}")  # 2566282754493
