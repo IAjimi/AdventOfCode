@@ -1,3 +1,9 @@
+"""
+Spent most of the time figuring out how to properly expand
+the grid in part 2. Currently running a bit slow (+- 6s for
+both parts).
+"""
+
 from _utils import read_input, timer
 
 
@@ -52,6 +58,8 @@ def create_tiles(grid: dict):
 
 
 def expand_grid(tiles: dict, grid: dict, grid_size: int):
+    grid_size -= 1
+
     for dx in range(5):
         for dy in range(5):
             key = dx + dy
@@ -62,13 +70,14 @@ def expand_grid(tiles: dict, grid: dict, grid_size: int):
     return grid
 
 
+@timer
 def main(filepath: str):
     _input = read_input(filepath)
 
-    grid_size = len(_input) - 1
+    grid_size = len(_input)
     grid = create_grid(_input, grid_size)
 
-    end = grid_size, grid_size
+    end = grid_size - 1, grid_size - 1
     part_1_score = least_risky_path(grid, start=(0, 0), end=end)
 
     # each position appears 25 times, 1x per tile
@@ -83,8 +92,6 @@ def main(filepath: str):
 
 
 if __name__ == "__main__":
-    # 12:44-12:58
-    # 12:58-2:04
     part_1_score, part_2_score = main("aoc15.txt")
     print(f"PART 1: {part_1_score}")  # 811
     print(f"PART 2: {part_2_score}")  # 3012
