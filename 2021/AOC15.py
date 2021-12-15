@@ -1,6 +1,6 @@
 """
 Spent most of the time figuring out how to properly expand
-the grid in part 2. Runs in += 2 seconds for both parts,
+the grid in part 2. Runs in += 1.2 seconds for both parts,
 with bottleneck in part 2 Dijkstra.
 """
 
@@ -48,7 +48,8 @@ def least_risky_path(grid: dict, start: tuple, end: tuple):
 
             neighbors = get_neighbors(grid, current_node)
             for next_node in neighbors:
-                heapq.heappush(queue, (risk_level, next_node))
+                if next_node not in visited:
+                    heapq.heappush(queue, (risk_level, next_node))
 
     return -1
 
