@@ -1,25 +1,14 @@
-from _utils import read_input, timer
+"""
+One of the more challenging days for me. Forgot to operate on a
+subpacket, not the whole string, for one of the sub-operations
+(decoded_str = decoded_str[15 + subpacket_len :]).
+"""
 
-hexa_decoder_str = """0 = 0000
-1 = 0001
-2 = 0010
-3 = 0011
-4 = 0100
-5 = 0101
-6 = 0110
-7 = 0111
-8 = 1000
-9 = 1001
-A = 1010
-B = 1011
-C = 1100
-D = 1101
-E = 1110
-F = 1111"""
+from _utils import read_input, timer, product
 
 
-def create_decoder(hexa_decoder_str: str):
-    hexa_decoder_str = hexa_decoder_str.splitlines()
+def create_decoder():
+    hexa_decoder_str = read_input("hex_decoder_aoc16.txt")
     str_to_hex_decoder = {}
 
     for line in hexa_decoder_str:
@@ -48,14 +37,10 @@ def get_literal_value(decoded_str: str):
     return int(packed_bits, 2), ""
 
 
-def product(lst: list):
-    result = 1
-    for num in lst:
-        result *= num
-    return result
-
-
 def compute_value(operation_id: int, values: list):
+    """
+    Returns the result of an operation on the values list.
+    """
     if operation_id == 0:
         return sum(values)
     elif operation_id == 1:
@@ -77,50 +62,67 @@ def compute_value(operation_id: int, values: list):
 
 
 def parse_hex(decoded_str: str, version_sum: int = 0):
+    """
+    Parse a binary representation of a packet.
+
+    Returns the sum of packet versions contained in packet,
+    the value of the packet, the remaining un-parsed parts of
+    the binary rep (if applicable), and the packet_type_id.
+    """
     packet_version = int(decoded_str[:3], 2)
     packet_type_id = int(decoded_str[3:6], 2)
     decoded_str = decoded_str[6:]
     version_sum += packet_version
-    value = []
+    values = []
 
     if packet_type_id == 4:
         val, decoded_str = get_literal_value(decoded_str)
-        value.append(val)
+        values.append(val)
     else:
         length_type_id = decoded_str[0]
+        decoded_str = decoded_str[1:]
         if length_type_id == "0":
-            subpacket_len = int(decoded_str[1:16], 2)
-            subpacket = decoded_str[16 : 16 + subpacket_len]
+            subpacket_len = int(decoded_str[:15], 2)
+            subpacket = decoded_str[15 : 15 + subpacket_len]
             while subpacket:
                 packet_version, val, subpacket, _ = parse_hex(subpacket)
                 version_sum += packet_version
-                value.append(val)
-            decoded_str = decoded_str[16 + subpacket_len :]
+                values.append(val)
+            decoded_str = decoded_str[15 + subpacket_len :]
         elif length_type_id == "1":
-            subpacket_num = int(decoded_str[1:12], 2)
-            decoded_str = decoded_str[12:]
+            subpacket_num = int(decoded_str[:11], 2)
+            decoded_str = decoded_str[11:]
             for r in range(subpacket_num):
                 packet_version, val, decoded_str, _ = parse_hex(decoded_str)
-                value.append(val)
+                values.append(val)
                 version_sum += packet_version
 
-    value = compute_value(packet_type_id, value)
-    return version_sum, value, decoded_str, packet_type_id
+    val = compute_value(packet_type_id, values)
+    return version_sum, val, decoded_str, packet_type_id
 
 
+def get_solution(string: str):
+    """
+    Returns part 1 & 2 scores from an operator packet string.
 
-def decode_string(str_to_hex_decoder: dict, string: str):
+    Ex:
+        get_solution(string="9C0141080250320F1802104A08")
+        > (20, 1)
+    """
+    str_to_hex_decoder = create_decoder()
     decoded_str = "".join([str_to_hex_decoder[char] for char in string])
-    version_sum, value, _, packet_type_id = parse_hex(decoded_str)
-    return version_sum, value
+    sum_packet_version, value, *_ = parse_hex(decoded_str)
+    return sum_packet_version, value
 
 
 @timer
 def main(filepath: str):
+    """
+    Returns part 1 & 2 scores from a filepath.
+    """
     _input = read_input(filepath)
     string = _input[0]
-    str_to_hex_decoder = create_decoder(hexa_decoder_str)
-    part_1_score, part_2_score = decode_string(str_to_hex_decoder, string=string)
+    part_1_score, part_2_score = get_solution(string)
     return part_1_score, part_2_score
 
 
