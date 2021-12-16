@@ -20,3 +20,4 @@ This is my first year completing the puzzles "live" (sometimes at midnight, alwa
 | [13](https://adventofcode.com/2021/day/13) | Folding paper. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC13.py) |
 | [14](https://adventofcode.com/2021/day/14) | Count elements in rapidly growing sequence. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC14.py) |
 | [15](https://adventofcode.com/2021/day/15) | Shortest path. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC15.py) |
+| [16](https://adventofcode.com/2021/day/16) | Create mini-calculator that takes hexadecimal representations as input. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC16.py) |

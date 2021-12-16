@@ -41,24 +41,14 @@ def compute_value(operation_id: int, values: list):
     """
     Returns the result of an operation on the values list.
     """
-    if operation_id == 0:
-        return sum(values)
-    elif operation_id == 1:
-        return product(values)
-    elif operation_id == 2:
-        return min(values)
-    elif operation_id == 3:
-        return max(values)
-    elif operation_id == 4:
-        return values[0]
-    elif operation_id == 5:
-        return 1 if values[0] > values[1] else 0
-    elif operation_id == 6:
-        return 1 if values[0] < values[1] else 0
-    elif operation_id == 7:
-        return 1 if values[0] == values[1] else 0
-    else:
-        raise Exception(f"Unknown operation id: {operation_id}")
+    operations_list = [sum, product, min, max, sum, lambda x: int(x[0] > x[1]), lambda x: int(x[0] < x[1]),
+                            lambda x: int(x[0] == x[1])]
+    try:
+        return operations_list[operation_id](values)
+    except IndexError:
+        raise Exception(f"Operation {operation_id} is not implemented by calculator.")
+    except Exception as e:
+        raise e
 
 
 def parse_hex(decoded_str: str, version_sum: int = 0):
