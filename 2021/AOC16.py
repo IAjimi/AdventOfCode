@@ -48,51 +48,71 @@ def get_literal_value(decoded_str: str):
     return int(packed_bits, 2), ""
 
 
-def parse_hex(decoded_str: str, version_sum: int = 0):
-    if decoded_str:
-        total = 0
-        packet_version = int(decoded_str[:3], 2)
-        packet_type_id = int(decoded_str[3:6], 2)
-        decoded_str = decoded_str[6:]
-        version_sum += packet_version
+def product(lst: list):
+    result = 1
+    for num in lst:
+        result *= num
+    return result
 
-        # print(packet_version, packet_type_id, decoded_str[0], decoded_str)
 
-        if packet_type_id == 4:
-            total, decoded_str = get_literal_value(decoded_str)
-        else:
-            length_type_id = decoded_str[0]
-            if length_type_id == "0":
-                subpacket_len = int(decoded_str[1:16], 2)
-                subpacket = decoded_str[16 : 16 + subpacket_len]
-                while subpacket:
-                    packet_version, value, subpacket = parse_hex(subpacket)
-                    total += value
-                    version_sum += packet_version
-                decoded_str = decoded_str[16 + subpacket_len :]
-            elif length_type_id == "1":
-                subpacket_num = int(decoded_str[1:12], 2)
-                decoded_str = decoded_str[12:]
-                for r in range(subpacket_num):
-                    packet_version, value, decoded_str = parse_hex(decoded_str)
-                    total += value
-                    version_sum += packet_version
-
-        return version_sum, total, decoded_str
+def compute_value(operation_id: int, values: list):
+    if operation_id == 0:
+        return sum(values)
+    elif operation_id == 1:
+        return product(values)
+    elif operation_id == 2:
+        return min(values)
+    elif operation_id == 3:
+        return max(values)
+    elif operation_id == 4:
+        return values[0]
+    elif operation_id == 5:
+        return 1 if values[0] > values[1] else 0
+    elif operation_id == 6:
+        return 1 if values[0] < values[1] else 0
+    elif operation_id == 7:
+        return 1 if values[0] == values[1] else 0
     else:
-        return version_sum, 0, ""
+        raise Exception(f"Unknown operation id: {operation_id}")
+
+
+def parse_hex(decoded_str: str, version_sum: int = 0):
+    packet_version = int(decoded_str[:3], 2)
+    packet_type_id = int(decoded_str[3:6], 2)
+    decoded_str = decoded_str[6:]
+    version_sum += packet_version
+    value = []
+
+    if packet_type_id == 4:
+        val, decoded_str = get_literal_value(decoded_str)
+        value.append(val)
+    else:
+        length_type_id = decoded_str[0]
+        if length_type_id == "0":
+            subpacket_len = int(decoded_str[1:16], 2)
+            subpacket = decoded_str[16 : 16 + subpacket_len]
+            while subpacket:
+                packet_version, val, subpacket, _ = parse_hex(subpacket)
+                version_sum += packet_version
+                value.append(val)
+            decoded_str = decoded_str[16 + subpacket_len :]
+        elif length_type_id == "1":
+            subpacket_num = int(decoded_str[1:12], 2)
+            decoded_str = decoded_str[12:]
+            for r in range(subpacket_num):
+                packet_version, val, decoded_str, _ = parse_hex(decoded_str)
+                value.append(val)
+                version_sum += packet_version
+
+    value = compute_value(packet_type_id, value)
+    return version_sum, value, decoded_str, packet_type_id
+
 
 
 def decode_string(str_to_hex_decoder: dict, string: str):
     decoded_str = "".join([str_to_hex_decoder[char] for char in string])
-    version_sum = parse_hex(decoded_str)
-    return version_sum
-
-
-def part_1(string):
-    str_to_hex_decoder = create_decoder(hexa_decoder_str)
-    part_1_score, _, _ = decode_string(str_to_hex_decoder, string)
-    return part_1_score
+    version_sum, value, _, packet_type_id = parse_hex(decoded_str)
+    return version_sum, value
 
 
 @timer
@@ -100,12 +120,11 @@ def main(filepath: str):
     _input = read_input(filepath)
     string = _input[0]
     str_to_hex_decoder = create_decoder(hexa_decoder_str)
-    part_1_score, _, _ = decode_string(str_to_hex_decoder, string=string)  # 866
-    part_2_score = 0
+    part_1_score, part_2_score = decode_string(str_to_hex_decoder, string=string)
     return part_1_score, part_2_score
 
 
 if __name__ == "__main__":
     part_1_score, part_2_score = main("aoc16.txt")
-    print(f"PART 1: {part_1_score}")  # .
-    print(f"PART 2: {part_2_score}")  # .
+    print(f"PART 1: {part_1_score}")  # 866
+    print(f"PART 2: {part_2_score}")  # 1392637195518
