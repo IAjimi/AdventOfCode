@@ -3,9 +3,6 @@ Part 1 completed at 00:25:50, rank 2233.
 Part 2 completed at 00:32:24, rank 1384.
 
 Both handled with BFS.
-
-Code still needs to be cleaned up and optimized - runs in 0.64s
-for both parts (slowest AOC solution yet) after 1st cleanup.
 """
 
 from collections import defaultdict
@@ -43,7 +40,7 @@ def count_unique_paths(connections: dict, part_2: bool):
     valid_paths_counter = 0
 
     while queue:
-        current_node, visited, small_twice = queue.pop()
+        current_node, small_visited, small_twice = queue.pop()
 
         # Reached end
         if current_node == END:
@@ -53,16 +50,11 @@ def count_unique_paths(connections: dict, part_2: bool):
         elif current_node.isupper():
             next_nodes = connections[current_node]
         # Reached unvisited small cave
-        elif current_node not in visited:
+        elif current_node not in small_visited:
             next_nodes = connections[current_node]
-            visited.add(current_node)
+            small_visited.add(current_node)
         # If in part 2, reach 1st small cave to be visited 2x
-        elif (
-            part_2
-            and current_node.islower()
-            and current_node not in {START, END}
-            and not small_twice
-        ):
+        elif part_2 and current_node != START and not small_twice:
             next_nodes = connections[current_node]
             small_twice = True
         # Reached dead end (e.g., visited small cave)
@@ -70,7 +62,7 @@ def count_unique_paths(connections: dict, part_2: bool):
             next_nodes = []
 
         for node in next_nodes:
-            queue.append((node, visited.copy(), small_twice))
+            queue.append((node, small_visited.copy(), small_twice))
 
     return valid_paths_counter
 
