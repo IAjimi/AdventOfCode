@@ -26,7 +26,7 @@ class ProbeLauncher:
 
     def launch_projectile(self, x_velocity: int, y_velocity: int):
         x, y = 0, 0
-        max_y = -(10 ** 10)
+        max_y_reached = y
 
         for step in range(self.max_steps):
             # Update position and velocity of projectile
@@ -34,12 +34,12 @@ class ProbeLauncher:
                 x, y, x_velocity, y_velocity
             )
 
-            # Get max_y
-            max_y = max(max_y, y)
+            # Get max_y_reached
+            max_y_reached = max(max_y_reached, y)
 
             # In target range
             if (self.min_x <= x <= self.max_x) and (self.min_y <= y <= self.max_y):
-                return True, max_y
+                return True, max_y_reached
             # Target has overshot x range (moving too far right)
             elif x_velocity > 0 and x > self.max_x:
                 return False, 0
@@ -73,16 +73,16 @@ class ProbeLauncher:
             for vx in range(0, self.max_x + 1)  # for inputs where target x range >= 0
             for vy in range(self.min_y, 100)  # for inputs where target y <= 0
         ]
-        max_y = -(10 ** 10)
+        max_y_reached = 0
         reach_target_probes = set()
 
         for probe in test_probes:
             reaches_target, new_max_y = self.launch_projectile(probe[0], probe[1])
             if reaches_target:
                 reach_target_probes.add(probe)
-                max_y = max(max_y, new_max_y)
+                max_y_reached = max(max_y_reached, new_max_y)
 
-        return max_y, len(reach_target_probes)
+        return max_y_reached, len(reach_target_probes)
 
 
 @timer
