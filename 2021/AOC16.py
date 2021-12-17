@@ -8,10 +8,10 @@ from _utils import read_input, timer, product
 
 
 def create_decoder():
-    hexa_decoder_str = read_input("hex_decoder_aoc16.txt")
+    hex_decoder_str = read_input("hex_decoder_aoc16.txt")
     str_to_hex_decoder = {}
 
-    for line in hexa_decoder_str:
+    for line in hex_decoder_str:
         key, val = line.split(" = ")
         str_to_hex_decoder[key] = val
 
@@ -41,8 +41,16 @@ def compute_value(operation_id: int, values: list):
     """
     Returns the result of an operation on the values list.
     """
-    operations_list = [sum, product, min, max, sum, lambda x: int(x[0] > x[1]), lambda x: int(x[0] < x[1]),
-                            lambda x: int(x[0] == x[1])]
+    operations_list = [
+        sum,
+        product,
+        min,
+        max,
+        sum,
+        lambda x: int(x[0] > x[1]),
+        lambda x: int(x[0] < x[1]),
+        lambda x: int(x[0] == x[1]),
+    ]
     try:
         return operations_list[operation_id](values)
     except IndexError:
