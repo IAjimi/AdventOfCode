@@ -2,8 +2,9 @@ from _utils import read_input, timer
 import parse
 
 
-class Probe:
-    def __init__(self, _input: list, max_steps: int):
+class ProbeLauncher:
+    def __init__(self, filepath: str, max_steps: int = 180):
+        _input = read_input(filepath)
         string = _input[0]
         self.min_x, self.max_x, self.min_y, self.max_y = tuple(
             parse.parse("target area: x={:d}..{:d}, y={:d}..{:d}", string).fixed
@@ -39,6 +40,12 @@ class Probe:
             # In target range
             if (self.min_x <= x <= self.max_x) and (self.min_y <= y <= self.max_y):
                 return True, max_y
+            # Target has overshot x range (moving too far right)
+            elif x_velocity > 0 and x > self.max_x:
+                return False, 0
+            # Target has failed to reach x range (moving left without reaching x range)
+            elif x_velocity < 0 and x < self.max_x:
+                return False, 0
             # Outside of x target range & stopped moving
             elif x_velocity == 0 and (x < self.min_x or x > self.max_x):
                 return False, 0
@@ -49,11 +56,22 @@ class Probe:
         return False, 0
 
     def main(self):
-        max_range = 280
+        """
+        Finds the highest y that can be reached by a probe and
+        the number of probes that can reach the target area.
+
+        The list of test probe velocities (test_probes) is done as follows:
+            * for an input where the target x range is >= 0, the minimum x
+            velocity vx is += 0 (otherwise won't move in correct direction)
+            * the max x velocity of a probe must be the end of the target range,
+            since any higher velocity will overshoot it and miss the mark
+            * similarly, the min y velocity (with a < 0 y range) must be the
+            beginning of the y target range
+        """
         test_probes = [
             (vx, vy)
-            for vx in range(0, max_range)  # for inputs where target x range >= 0
-            for vy in range(self.min_y, max_range)  # for inputs where target y <= 0
+            for vx in range(0, self.max_x + 1)  # for inputs where target x range >= 0
+            for vy in range(self.min_y, 100)  # for inputs where target y <= 0
         ]
         max_y = -(10 ** 10)
         reach_target_probes = set()
@@ -63,7 +81,6 @@ class Probe:
             if reaches_target:
                 reach_target_probes.add(probe)
                 max_y = max(max_y, new_max_y)
-            # print(probe, reaches_target, step, max_y)
 
         return max_y, len(reach_target_probes)
 
@@ -73,8 +90,7 @@ def main(filepath: str):
     """
     Returns part 1 & 2 scores from a filepath.
     """
-    _input = read_input(filepath)
-    part_1_score, part_2_score = Probe(_input, max_steps=180).main()
+    part_1_score, part_2_score = ProbeLauncher(filepath, max_steps=180).main()
     return part_1_score, part_2_score
 
 
