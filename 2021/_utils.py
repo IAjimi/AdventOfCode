@@ -67,3 +67,10 @@ def get_median(lst: list):
     """
     lst.sort()
     return lst[len(lst) // 2]
+
+
+def product(lst: list):
+    result = 1
+    for num in lst:
+        result *= num
+    return result
