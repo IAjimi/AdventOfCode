@@ -17,8 +17,10 @@ This is my first year completing the puzzles "live" (sometimes at midnight, alwa
 | [10](https://adventofcode.com/2021/day/10) | Spotting open/closed character mismatch and correcting it. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC10.py) |
 | [11](https://adventofcode.com/2021/day/11) | Tracking flashing octopi. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC11.py) |
 | [12](https://adventofcode.com/2021/day/12) | Counting the number of unique paths between 2 points. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC12.py) |
-| [13](https://adventofcode.com/2021/day/13) | Folding paper. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC13.py) |
-| [14](https://adventofcode.com/2021/day/14) | Count elements in rapidly growing sequence. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC14.py) |
-| [15](https://adventofcode.com/2021/day/15) | Shortest path. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC15.py) |
-| [16](https://adventofcode.com/2021/day/16) | Create mini-calculator that takes hexadecimal representations as input. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC16.py) |
-| [17](https://adventofcode.com/2021/day/17) | Launching probes. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC17.py) |
+| [13](https://adventofcode.com/2021/day/13) | **Transparent Origami**: Folding paper. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC13.py) |
+| [14](https://adventofcode.com/2021/day/14) | **Extended Polymerizatio**: Count elements in rapidly growing sequence. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC14.py) |
+| [15](https://adventofcode.com/2021/day/15) | **Chiton**: Shortest path. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC15.py) |
+| [16](https://adventofcode.com/2021/day/16) | **Packet Decoder**: Create mini-calculator that takes hexadecimal representations as input. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC16.py) |
+| [17](https://adventofcode.com/2021/day/17) | **Trick Shot**: Launching probes. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC17.py) |
+| [18](https://adventofcode.com/2021/day/18) | **Snailfish**: Snail math (string parsing). | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC18.py) |
+| [19](https://adventofcode.com/2021/day/19) | **Beacon Scanner**: Determining location of scanners & beacons. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC19.py) |
