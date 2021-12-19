@@ -15,9 +15,8 @@ def parse_input(_input: list):
             scanner_num = int(scanner_num.replace("---", ""))
 
         elif "," in line:
-            coords = map(int, line.split(","))
-            x, y, z = coords
-            scanners[scanner_num].append((x, y, z))
+            coords = tuple(map(int, line.split(",")))
+            scanners[scanner_num].append(coords)
 
     return scanners
 
@@ -53,7 +52,6 @@ def find_transform(coords1: list, coords2: list):
     ]
 
     for perm in all_perms:
-        i, j, k = perm
         for sign in signs:
             prev_vector = None
             counter = 1
@@ -69,9 +67,9 @@ def find_transform(coords1: list, coords2: list):
 
                 if counter == 12:
                     trans_func = lambda x: (
-                        x[i] * sign[i] + vector[0],
-                        x[j] * sign[j] + vector[1],
-                        x[k] * sign[k] + vector[2],
+                        x[perm[0]] * sign[perm[0]] + vector[0],
+                        x[perm[1]] * sign[perm[1]] + vector[1],
+                        x[perm[2]] * sign[perm[2]] + vector[2],
                     )
                     return trans_func, vector
     return None, None
@@ -101,12 +99,12 @@ def find_common_beacons(d1: dict, d2: dict):
     common_beacons1 = []
     common_beacons2 = []
 
-    for coords1, coords1_distances in d1.items():
-        for coords2, coords2_distances in d2.items():
-            coords1_distances = set(coords1_distances)
-            coords2_distances = set(coords2_distances)
+    for coords1, c1_distances in d1.items():
+        for coords2, c2_distances in d2.items():
+            c1_distances = set(c1_distances)
+            c2_distances = set(c2_distances)
 
-            if len(coords1_distances.intersection(coords2_distances)) >= 11:
+            if len(c1_distances.intersection(c2_distances)) >= 11:
                 common_beacons1.append(coords1)
                 common_beacons2.append(coords2)
 
@@ -165,7 +163,7 @@ def translate_coordinates(
             steps += 1
             visited.add(node)
 
-            if node == 0 or 0 in visited:
+            if node == 0:
                 queue = []
             else:
                 next_nodes = path[node]
