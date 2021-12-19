@@ -38,16 +38,8 @@ def find_transform(coords1: list, coords2: list):
                         x[j] * sign[j] + vector[1],
                         x[k] * sign[k] + vector[2],
                     )
-                    reverse_trans_func = lambda x: (
-                        (x[curr_perm[i]] - vector[curr_perm[i]]) * sign[i],
-                        (x[curr_perm[j]] - vector[curr_perm[j]]) * sign[j],
-                        (x[curr_perm[k]] - vector[curr_perm[k]]) * sign[k],
-                    )
-                    # print(c1, trans_func(c2))
-                    # print(reverse_trans_func(c1), c2)
-                    # import pdb; pdb.set_trace()
-                    return trans_func
-    return None
+                    return trans_func, vector
+    return None, None
 
 
 def parse_input(_input: list):
@@ -60,8 +52,6 @@ def parse_input(_input: list):
 
         elif "," in line:
             coords = map(int, line.split(","))
-            # x,y = coords
-            # scanners[scanner_num].append((x,y))
             x, y, z = coords
             scanners[scanner_num].append((x, y, z))
 
@@ -78,8 +68,6 @@ def manhattan_distance(coord1, coord2, p=False):
     coord1 = [-x for x in coord1]
     zipped = zip(coord1, coord2)
     dist = [abs(sum(t)) for t in zipped]
-    if p:
-        print(dist)
     return sum(dist)
 
 
@@ -109,17 +97,18 @@ def find_common_beacons(d1: dict, d2: dict):
             if len(coords1_distances.intersection(coords2_distances)) >= 11:
                 common_beacons1.append(coords1)
                 common_beacons2.append(coords2)
-                # d1_to_d2_vector = vector(coords1, coords2)
                 counter += 1
 
-    transform_func = find_transform(common_beacons1, common_beacons2)
-    reverse_transform_func = find_transform(common_beacons2, common_beacons1)
+    transform_func, scanner_position = find_transform(common_beacons1, common_beacons2)
+    reverse_transform_func, reverse_scanner_position = find_transform(common_beacons2, common_beacons1)
     return (
         common_beacons1,
         common_beacons2,
         counter,
         transform_func,
         reverse_transform_func,
+        scanner_position,
+        reverse_scanner_position
     )
 
 
@@ -132,43 +121,47 @@ def main(filepath: str):
     scanners = parse_input(_input)
 
     # get all distances within scanner coords
+    print('read input')
     distance_dict = {}
     for key, val in scanners.items():
         distance_dict[key] = map_distances(val)
 
     # find scanners in common using distances
+    print('find scanners')
     path = defaultdict(list)
     trans_funcs = {}
-    all_translations = defaultdict(set)
+    rel_scanner_positions = {}
     MAX_IX = 1 + max(scanners.keys())
     for i in range(MAX_IX):
         for j in range(i + 1, MAX_IX):
-            cb1, cb2, counter, trans_func, reverse_trans_func = find_common_beacons(
+            cb1, cb2, counter, trans_func, reverse_trans_func, scanner_position, reverse_scanner_position = find_common_beacons(
                 distance_dict[i], distance_dict[j]
             )
             if counter == 12:
                 path[i].append(j)
                 path[j].append(i)
 
+                rel_scanner_positions[(j, i)] = scanner_position
+                rel_scanner_positions[(i, j)] = reverse_scanner_position
+
                 trans_funcs[(j, i)] = trans_func  # trans func from j to i
                 trans_funcs[(i, j)] = reverse_trans_func  # trans func from j to i
 
-                # translated = set(map(trans_func, scanners[j]))
-                # all_translations[i] = all_translations[i].union(translated)
-                print(i, j, counter)
-
     import heapq
-
+    print('translate everything')
     all_translations = {k: set(v) for k, v in scanners.items()}
+    scanner_pos = defaultdict(list)
+    for k, v in rel_scanner_positions.items():
+        scanner_pos[k[1]].extend([v])
 
     for k in range(1, MAX_IX):
+        print(f"translating {k} out of {MAX_IX}")
         queue = []
         heapq.heappush(queue, (0, k))
         visited = set()
 
         while queue:
             steps, node = heapq.heappop(queue)
-            print(f"initial node: {k}, current node: {node}")
             steps += 1
             visited.add(node)
 
@@ -177,11 +170,6 @@ def main(filepath: str):
             else:
                 next_nodes = path[node]
 
-                # if 0 in next_nodes:
-                #     new_node = 0
-                #     translated = set(map(trans_funcs[(node, new_node)], scanners[node]))
-                #     all_translations[new_node] = all_translations[new_node].union(translated)
-                # else:
                 for new_node in next_nodes:
                     if new_node not in visited:
                         translated = set(
@@ -190,14 +178,32 @@ def main(filepath: str):
                         all_translations[new_node] = all_translations[new_node].union(
                             translated
                         )
+                        translated_positions = list(
+                            map(trans_funcs[(node, new_node)], scanner_pos[node])
+                        )
+                        if translated_positions:
+                            scanner_pos[new_node].extend(
+                                        translated_positions
+                            )
+
                         heapq.heappush(queue, (steps, new_node))
 
     part_1_score = len(all_translations[0])
-    part_2_score = 0
+    print(f'part 1: {part_1_score}')
+
+    lst = scanner_pos[0]
+    max_d = 0
+    for ix, coords1 in enumerate(lst):
+        for jx, coords2 in enumerate(lst):
+            d = manhattan_distance(coords1, coords2)
+            max_d = max(d, max_d)
+
+    part_2_score = max_d
+
     return part_1_score, part_2_score
 
 
 if __name__ == "__main__":
-    part_1_score, part_2_score = main("test_aoc19.txt")
-    print(f"PART 1: {part_1_score}")  # .
+    part_1_score, part_2_score = main("aoc19.txt")
+    print(f"PART 1: {part_1_score}")  # 392
     print(f"PART 2: {part_2_score}")  # .
