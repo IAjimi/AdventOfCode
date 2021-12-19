@@ -3,6 +3,8 @@ from _utils import read_input, timer
 from collections import defaultdict
 from itertools import permutations
 
+import heapq
+
 
 def find_transform(coords1: list, coords2: list):
     perms = permutations([0, 1, 2])
@@ -111,23 +113,9 @@ def find_common_beacons(d1: dict, d2: dict):
     )
 
 
-@timer
-def main(filepath: str):
-    """
-    Returns part 1 & 2 scores from a filepath.
-    """
-    _input = read_input(filepath)
-    scanners = parse_input(_input)
-
-    # get all distances within scanner coords
-    distance_dict = {}
-    for key, val in scanners.items():
-        distance_dict[key] = map_distances(val)
-
-    # find scanners in common using distances
+def find_overlapping_scanners(scanners: dict, distance_dict: dict, MAX_IX: int):
     path = defaultdict(list)
     trans_funcs = {}
-    MAX_IX = 1 + max(scanners.keys())
     rel_scanner_positions = {}
     for i in range(MAX_IX):
         for j in range(i + 1, MAX_IX):
@@ -150,8 +138,16 @@ def main(filepath: str):
                 rel_scanner_positions[(j, i)] = scanner_position
                 rel_scanner_positions[(i, j)] = reverse_scanner_position
 
-    import heapq
+    return path, trans_funcs, rel_scanner_positions
 
+
+def translate_coordinates(
+    scanners: dict,
+    rel_scanner_positions: dict,
+    path: dict,
+    trans_funcs: dict,
+    MAX_IX: int,
+):
     all_translations = {k: set(v) for k, v in scanners.items()}
 
     scanner_pos = defaultdict(set)
@@ -191,16 +187,45 @@ def main(filepath: str):
 
                         heapq.heappush(queue, (steps, new_node))
 
-    part_1_score = len(all_translations[0])
+    return all_translations, scanner_pos
 
-    lst = scanner_pos[0]
+
+def max_distance(lst):
     max_d = 0
     for ix, coords1 in enumerate(lst):
         for jx, coords2 in enumerate(lst):
             d = manhattan_distance(coords1, coords2)
             max_d = max(d, max_d)
 
-    part_2_score = max_d
+    return max_d
+
+
+@timer
+def main(filepath: str):
+    """
+    Returns part 1 & 2 scores from a filepath.
+    """
+    _input = read_input(filepath)
+    scanners = parse_input(_input)
+    MAX_IX = 1 + max(scanners.keys())
+
+    # get all distances within scanner coords
+    distance_dict = {}
+    for key, val in scanners.items():
+        distance_dict[key] = map_distances(val)
+
+    # find scanners in common using distances
+    path, trans_funcs, rel_scanner_positions = find_overlapping_scanners(
+        scanners, distance_dict, MAX_IX
+    )
+
+    # translate all scanner & beacon coordinates
+    all_translations, scanner_pos = translate_coordinates(
+        scanners, rel_scanner_positions, path, trans_funcs, MAX_IX
+    )
+
+    part_1_score = len(all_translations[0])
+    part_2_score = max_distance(scanner_pos[0])
 
     return part_1_score, part_2_score
 
