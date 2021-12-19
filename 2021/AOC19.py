@@ -6,44 +6,6 @@ from itertools import permutations
 import heapq
 
 
-def find_transform(coords1: list, coords2: list):
-    perms = permutations([0, 1, 2])
-    signs = [
-        (x, y, z)
-        for x in range(-1, 2)
-        for y in range(-1, 2)
-        for z in range(-1, 2)
-        if x != 0 and y != 0 and z != 0
-    ]
-
-    for curr_perm in perms:
-        i, j, k = curr_perm
-        for sign in signs:
-            vector = None
-            counter = 1
-            for ix in range(len(coords1)):
-                c1 = coords1[ix]
-                c2 = coords2[ix]
-                tr_c2 = c2[i] * sign[i], c2[j] * sign[j], c2[k] * sign[k]
-                new_abs_val_vector = [c1[i] - tr_c2[i] for i in range(3)]
-
-                if not vector:
-                    vector = new_abs_val_vector
-                elif new_abs_val_vector != vector:
-                    break
-                else:
-                    counter += 1
-
-                if counter == 12:
-                    trans_func = lambda x: (
-                        x[i] * sign[i] + vector[0],
-                        x[j] * sign[j] + vector[1],
-                        x[k] * sign[k] + vector[2],
-                    )
-                    return trans_func, vector
-    return None, None
-
-
 def parse_input(_input: list):
     scanners = defaultdict(list)
 
@@ -61,35 +23,84 @@ def parse_input(_input: list):
 
 
 def manhattan_distance(coord1, coord2):
-    """Takes in 2 tuples of coordinates (x, y, z), returns
-    Manhattan Distance (sum of absolute value of the coordinates).
+    """
+    Takes in 2 tuples of coordinates & returns their Manhattan Distance
+    (sum of absolute value of the differences).
     :param coord: tuple[int], tuple[int]
     :return: int
     """
-    coord1 = [-x for x in coord1]
-    zipped = zip(coord1, coord2)
-    dist = [abs(sum(t)) for t in zipped]
+    dist = [abs(c1 - c2) for c1, c2 in zip(coord1, coord2)]
     return sum(dist)
+
+
+def find_transform(coords1: list, coords2: list):
+    """
+    Returns the transformation function that turns coordinates
+    from coords2 into coordinates of coords1.
+
+    This uses the fact that coords1 and coords2 are beacons
+    that both scanners have in common, identified earlier using
+    a distance fingerprint, so we *know* the correct transform
+    will map all 12 beacons from one system to another.
+    """
+    all_perms = permutations([0, 1, 2])
+    signs = [
+        (x, y, z)
+        for x in range(-1, 2)
+        for y in range(-1, 2)
+        for z in range(-1, 2)
+        if x != 0 and y != 0 and z != 0
+    ]
+
+    for perm in all_perms:
+        i, j, k = perm
+        for sign in signs:
+            prev_vector = None
+            counter = 1
+            for c1, c2 in zip(coords1, coords2):
+                vector = tuple([c1[r] - c2[perm[r]] * sign[perm[r]] for r in range(3)])
+
+                if not prev_vector:
+                    prev_vector = vector
+                elif prev_vector != vector:
+                    break
+                else:
+                    counter += 1
+
+                if counter == 12:
+                    trans_func = lambda x: (
+                        x[i] * sign[i] + vector[0],
+                        x[j] * sign[j] + vector[1],
+                        x[k] * sign[k] + vector[2],
+                    )
+                    return trans_func, vector
+    return None, None
 
 
 def map_distances(lst: list):
     distances = {}
 
-    for ix, coords1 in enumerate(lst):
-        all_d = []
-        for jx, coords2 in enumerate(lst):
-            d = manhattan_distance(coords1, coords2)
-            all_d.append(d)
-
-        distances[coords1] = all_d
+    for coords1 in lst:
+        distances[coords1] = [manhattan_distance(coords1, coords2) for coords2 in lst]
 
     return distances
 
 
 def find_common_beacons(d1: dict, d2: dict):
+    """
+    Find overlapping beacons between 2 scanners.
+    Scanners will always have an overlap of 12 beacons.
+
+    This uses the fact that beacons will have the same distance
+    to another beacon regardless of the transformation applied by
+    the scanner - the rule of thumb is at least 11 of the distances
+    between a beacon observed by 2 different scanners will match.
+    (11 if 2 points are at same distance from beacon, 13 bc we include
+    distance from beacon to itself).
+    """
     common_beacons1 = []
     common_beacons2 = []
-    counter = 0
+
     for coords1, coords1_distances in d1.items():
         for coords2, coords2_distances in d2.items():
             coords1_distances = set(coords1_distances)
@@ -98,22 +109,14 @@ def find_common_beacons(d1: dict, d2: dict):
             if len(coords1_distances.intersection(coords2_distances)) >= 11:
                 common_beacons1.append(coords1)
                 common_beacons2.append(coords2)
-                counter += 1
 
-    transform_func, v1 = find_transform(common_beacons1, common_beacons2)
-    reverse_transform_func, v2 = find_transform(common_beacons2, common_beacons1)
     return (
         common_beacons1,
         common_beacons2,
-        counter,
-        transform_func,
-        reverse_transform_func,
-        v1,
-        v2,
     )
 
 
-def find_overlapping_scanners(scanners: dict, distance_dict: dict, MAX_IX: int):
+def find_overlapping_scanners(distance_dict: dict, MAX_IX: int):
     path = defaultdict(list)
     trans_funcs = {}
     rel_scanner_positions = {}
@@ -122,15 +125,13 @@ def find_overlapping_scanners(scanners: dict, distance_dict: dict, MAX_IX: int):
             (
                 cb1,
                 cb2,
-                counter,
-                trans_func,
-                reverse_trans_func,
-                scanner_position,
-                reverse_scanner_position,
             ) = find_common_beacons(distance_dict[i], distance_dict[j])
-            if counter == 12:
+            if cb1 and cb2:
                 path[i].append(j)
                 path[j].append(i)
+
+                trans_func, scanner_position = find_transform(cb1, cb2)
+                reverse_trans_func, reverse_scanner_position = find_transform(cb2, cb1)
 
                 trans_funcs[(j, i)] = trans_func  # trans func from j to i
                 trans_funcs[(i, j)] = reverse_trans_func  # trans func from j to i
@@ -191,6 +192,9 @@ def translate_coordinates(
 
 
 def max_distance(lst):
+    """
+    Returns maximum distance between 2 points.
+    """
     max_d = 0
     for ix, coords1 in enumerate(lst):
         for jx, coords2 in enumerate(lst):
@@ -216,7 +220,7 @@ def main(filepath: str):
 
     # find scanners in common using distances
     path, trans_funcs, rel_scanner_positions = find_overlapping_scanners(
-        scanners, distance_dict, MAX_IX
+        distance_dict, MAX_IX
     )
 
     # translate all scanner & beacon coordinates
