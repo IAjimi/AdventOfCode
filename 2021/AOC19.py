@@ -58,10 +58,9 @@ def parse_input(_input: list):
     return scanners
 
 
-def manhattan_distance(coord1, coord2, p=False):
+def manhattan_distance(coord1, coord2):
     """Takes in 2 tuples of coordinates (x, y, z), returns
     Manhattan Distance (sum of absolute value of the coordinates).
-
     :param coord: tuple[int], tuple[int]
     :return: int
     """
@@ -99,16 +98,16 @@ def find_common_beacons(d1: dict, d2: dict):
                 common_beacons2.append(coords2)
                 counter += 1
 
-    transform_func, scanner_position = find_transform(common_beacons1, common_beacons2)
-    reverse_transform_func, reverse_scanner_position = find_transform(common_beacons2, common_beacons1)
+    transform_func, v1 = find_transform(common_beacons1, common_beacons2)
+    reverse_transform_func, v2 = find_transform(common_beacons2, common_beacons1)
     return (
         common_beacons1,
         common_beacons2,
         counter,
         transform_func,
         reverse_transform_func,
-        scanner_position,
-        reverse_scanner_position
+        v1,
+        v2,
     )
 
 
@@ -121,41 +120,45 @@ def main(filepath: str):
     scanners = parse_input(_input)
 
     # get all distances within scanner coords
-    print('read input')
     distance_dict = {}
     for key, val in scanners.items():
         distance_dict[key] = map_distances(val)
 
     # find scanners in common using distances
-    print('find scanners')
     path = defaultdict(list)
     trans_funcs = {}
-    rel_scanner_positions = {}
     MAX_IX = 1 + max(scanners.keys())
+    rel_scanner_positions = {}
     for i in range(MAX_IX):
         for j in range(i + 1, MAX_IX):
-            cb1, cb2, counter, trans_func, reverse_trans_func, scanner_position, reverse_scanner_position = find_common_beacons(
-                distance_dict[i], distance_dict[j]
-            )
+            (
+                cb1,
+                cb2,
+                counter,
+                trans_func,
+                reverse_trans_func,
+                scanner_position,
+                reverse_scanner_position,
+            ) = find_common_beacons(distance_dict[i], distance_dict[j])
             if counter == 12:
                 path[i].append(j)
                 path[j].append(i)
 
-                rel_scanner_positions[(j, i)] = scanner_position
-                rel_scanner_positions[(i, j)] = reverse_scanner_position
-
                 trans_funcs[(j, i)] = trans_func  # trans func from j to i
                 trans_funcs[(i, j)] = reverse_trans_func  # trans func from j to i
 
+                rel_scanner_positions[(j, i)] = scanner_position
+                rel_scanner_positions[(i, j)] = reverse_scanner_position
+
     import heapq
-    print('translate everything')
+
     all_translations = {k: set(v) for k, v in scanners.items()}
-    scanner_pos = defaultdict(list)
+
+    scanner_pos = defaultdict(set)
     for k, v in rel_scanner_positions.items():
-        scanner_pos[k[1]].extend([v])
+        scanner_pos[k[1]].add(tuple(v))
 
     for k in range(1, MAX_IX):
-        print(f"translating {k} out of {MAX_IX}")
         queue = []
         heapq.heappush(queue, (0, k))
         visited = set()
@@ -178,18 +181,17 @@ def main(filepath: str):
                         all_translations[new_node] = all_translations[new_node].union(
                             translated
                         )
-                        translated_positions = list(
+                        translated_positions = set(
                             map(trans_funcs[(node, new_node)], scanner_pos[node])
                         )
                         if translated_positions:
-                            scanner_pos[new_node].extend(
-                                        translated_positions
+                            scanner_pos[new_node] = scanner_pos[new_node].union(
+                                translated_positions
                             )
 
                         heapq.heappush(queue, (steps, new_node))
 
     part_1_score = len(all_translations[0])
-    print(f'part 1: {part_1_score}')
 
     lst = scanner_pos[0]
     max_d = 0
@@ -206,4 +208,4 @@ def main(filepath: str):
 if __name__ == "__main__":
     part_1_score, part_2_score = main("aoc19.txt")
     print(f"PART 1: {part_1_score}")  # 392
-    print(f"PART 2: {part_2_score}")  # .
+    print(f"PART 2: {part_2_score}")  # 13332
