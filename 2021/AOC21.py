@@ -2,11 +2,13 @@ from _utils import read_input, timer
 
 
 class Game:
-    def __init__(self, player1_start: int, player2_start: int):
+    def __init__(self, filepath: str):
+        _input = read_input(filepath)
+
         self.die = 1
         self.die_rolls = 0
-        self.player1_space = player1_start
-        self.player2_space = player2_start
+        self.player1_space = int(_input[0].split(": ")[1])
+        self.player2_space = int(_input[1].split(": ")[1])
         self.player1_score = 0
         self.player2_score = 0
         self.WINNING_SCORE = 1000
@@ -36,7 +38,7 @@ class Game:
 
         return None
 
-    def play_game(self):
+    def main(self):
         while True:
             score = self.game_turn()
             if score:
@@ -44,9 +46,13 @@ class Game:
 
 
 class QuantumGame:
-    def __init__(self, player1_start: int, player2_start: int):
-        self.player1_space = player1_start
-        self.player2_space = player2_start
+    def __init__(self, filepath: str):
+        _input = read_input(filepath)
+
+        self.die = 1
+        self.die_rolls = 0
+        self.player1_space = int(_input[0].split(": ")[1])
+        self.player2_space = int(_input[1].split(": ")[1])
         self.WINNING_SCORE = 21
         self.die_rolls = [
             x + y + z for x in range(1, 4) for y in range(1, 4) for z in range(1, 4)
@@ -105,7 +111,7 @@ class QuantumGame:
             self.cache[cache_key] = p1_wins, p2_wins
             return p1_wins, p2_wins
 
-    def compute_wins(self):
+    def main(self):
         player1_score = 0
         player2_score = 0
         p1_wins, p2_wins = self.play_game(
@@ -119,17 +125,8 @@ def main(filepath: str):
     """
     Returns part 1 & 2 scores from a filepath.
     """
-    _input = read_input(filepath)
-
-    player1_start = int(_input[0].split(": ")[1])
-    player2_start = int(_input[1].split(": ")[1])
-
-    part_1_score = Game(
-        player1_start=player1_start, player2_start=player2_start
-    ).play_game()
-    part_2_score = QuantumGame(
-        player1_start=player1_start, player2_start=player2_start
-    ).compute_wins()
+    part_1_score = Game(filepath).main()
+    part_2_score = QuantumGame(filepath).main()
     return part_1_score, part_2_score
 
 
