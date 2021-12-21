@@ -25,3 +25,4 @@ This is my first year completing the puzzles "live" (sometimes at midnight, alwa
 | [18](https://adventofcode.com/2021/day/18) | **Snailfish**: Snail math (string parsing). | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC18.py) |
 | [19](https://adventofcode.com/2021/day/19) | **Beacon Scanner**: Determining location of scanners & beacons. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC19.py) |
 | [20](https://adventofcode.com/2021/day/20) | **Trench Map**: Conway game of life in an infinite 2D plan with a twist. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC20.py) |
+| [21](https://adventofcode.com/2021/day/21) | **Dirak Dice**: Dice game w/ recursive element. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC21.py) |
