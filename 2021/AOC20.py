@@ -1,6 +1,7 @@
 from _utils import read_input, timer
 
-def parse_input(_input:list):
+
+def parse_input(_input: list):
     image_enhancement_algo = _input[0]
     _input = _input[2:]
     grid = {
@@ -8,12 +9,15 @@ def parse_input(_input:list):
     }
     return image_enhancement_algo, grid
 
+
 def get_neighbors(pos: tuple):
     """
     Returns the 9 positions centered around pos (x,y).
     Neighbors list should be ordered from top left to bottom right.
     """
-    neighbors = [(pos[0] + dx, pos[1] + dy) for dx in range(-1, 2) for dy in range(-1, 2)]
+    neighbors = [
+        (pos[0] + dx, pos[1] + dy) for dx in range(-1, 2) for dy in range(-1, 2)
+    ]
     return neighbors
 
 
@@ -58,8 +62,10 @@ def enhance_picture(grid: dict, image_enhancement_algo: str, step: int):
 
     return new_grid
 
+
 def count_lit_pixels(grid: dict):
     return sum([1 for v in grid.values() if v == "#"])
+
 
 @timer
 def main(filepath: str):
