@@ -1,9 +1,11 @@
+from typing import Tuple, List
+
 from _utils import read_input, sign, timer
 
 from collections import defaultdict
 
 
-def process_input(line):
+def process_input(line: str) -> Tuple[List[int], List[int]]:
     """
     Returns a tuple of x,y coordinates from a line of the input.
 
@@ -32,7 +34,7 @@ def turn_lines_to_points(line):
     return ((x1 + r * x_dir, y1 + r * y_dir) for r in range(abs_dist + 1))
 
 
-def count_overlapping_lines(_input: list):
+def count_overlapping_lines(_input: list) -> int:
     """
     Returns the number of points that have 2 segments
     going through them or more.
@@ -48,7 +50,7 @@ def count_overlapping_lines(_input: list):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     """
     Returns solution for AOC day 5 from input filepath.
     """

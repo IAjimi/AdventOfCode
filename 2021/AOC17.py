@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from _utils import read_input, timer
 import parse
 
@@ -11,7 +13,9 @@ class ProbeLauncher:
         )
         self.max_steps = max_steps
 
-    def adjust_projectile(self, x: int, y: int, x_velocity: int, y_velocity: int):
+    def adjust_projectile(
+        self, x: int, y: int, x_velocity: int, y_velocity: int
+    ) -> Tuple[int, int, int, int]:
         x += x_velocity
         y += y_velocity
 
@@ -24,7 +28,7 @@ class ProbeLauncher:
 
         return x, y, x_velocity, y_velocity
 
-    def launch_projectile(self, x_velocity: int, y_velocity: int):
+    def launch_projectile(self, x_velocity: int, y_velocity: int) -> Tuple[bool, int]:
         x, y = 0, 0
         max_y_reached = y
 
@@ -55,7 +59,7 @@ class ProbeLauncher:
 
         return False, 0
 
-    def main(self):
+    def main(self) -> Tuple[int, int]:
         """
         Finds the highest y that can be reached by a probe and
         the number of probes that can reach the target area.
@@ -86,7 +90,7 @@ class ProbeLauncher:
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     """
     Returns part 1 & 2 scores from a filepath.
     """

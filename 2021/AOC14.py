@@ -6,14 +6,14 @@ Had to quickly refactor part 2 because part 1 had been done inefficiently
 (dictionary with position, value). Realized positions were actually useless:
 just needed to track *pairs*.
 """
-
+from typing import Tuple, Dict, List
 
 from _utils import read_input, timer
 
 from collections import defaultdict
 
 
-def parse_rules(_input: list):
+def parse_rules(_input: List[str]) -> Dict[str, str]:
     rules = {}
     for line in _input:
         pair, new_letter = line.split(" -> ")
@@ -21,7 +21,7 @@ def parse_rules(_input: list):
     return rules
 
 
-def create_counters(template: str):
+def create_counters(template: str) -> Tuple[Dict[int, int], Dict[int, int]]:
     """
     Creates letter and pair counter dicts.
     Holds the counts of pairs and individual letters respectively.
@@ -38,14 +38,14 @@ def create_counters(template: str):
     return pair_counter, letter_counter
 
 
-def parse_input(_input: list):
+def parse_input(_input: list) -> Tuple[Dict[str, str], Dict[int, int], Dict[int, int]]:
     template, _input = _input[0], _input[2:]
     rules = parse_rules(_input)
     pair_counter, letter_counter = create_counters(template)
     return rules, pair_counter, letter_counter
 
 
-def get_solution(letter_counter: dict):
+def get_solution(letter_counter: dict) -> int:
     """
     Returns difference in count between most and least
     common letter.
@@ -61,7 +61,7 @@ def run_pair_insertion_program(
     letter_counter: dict,
     part_1_steps: int,
     part_2_steps: int,
-):
+) -> Tuple[int, int]:
     # Simulate pair insertion process for n steps
     for step in range(1, part_2_steps + 1):
         new_pair_counter = defaultdict(int)
@@ -87,7 +87,7 @@ def run_pair_insertion_program(
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     _input = read_input(filepath)
     rules, pair_counter, letter_counter = parse_input(_input)
     part_1_score, part_2_score = run_pair_insertion_program(

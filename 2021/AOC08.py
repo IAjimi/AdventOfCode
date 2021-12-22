@@ -1,12 +1,12 @@
 """
 Slower to do than previous days because required more involved logic, especially in part 2.
 """
-
+from typing import List, Dict, Tuple
 
 from _utils import read_input, timer
 
 
-def part_1(_input: list):
+def part_1(_input: List[str]) -> int:
     """
     Returns the number of signals that are of length 2, 3, 4, or 7
     (i.e., lengths that allow us to immediately map a signal to a digit).
@@ -19,7 +19,7 @@ def part_1(_input: list):
     return part_1_score
 
 
-def deduce_signals(full_line: list):
+def deduce_signals(full_line: list) -> Dict[int, set]:
     potential = {}
 
     # First, start with the signals we can immediately attribute to a number (unique length)
@@ -60,7 +60,7 @@ def deduce_signals(full_line: list):
     return potential
 
 
-def get_decoder(potential: dict):
+def get_decoder(potential: Dict[int, set]) -> Dict[str, int]:
     """
     Returns a dictionary that maps signal patterns to digits.
     Needs sorting so we can match with output.
@@ -74,7 +74,7 @@ def get_decoder(potential: dict):
     return decoder
 
 
-def get_output_code(line: str):
+def get_output_code(line: str) -> int:
     full_line = line.replace(" | ", " ").split(" ")
     potential = deduce_signals(full_line)  # get int -> set(str)
     decoder = get_decoder(potential)  # get str -> int
@@ -87,13 +87,13 @@ def get_output_code(line: str):
     return int("".join(output_code))
 
 
-def part_2(_input):
+def part_2(_input: List[str]) -> int:
     part_2_score = [get_output_code(line) for line in _input]
     return sum(part_2_score)
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     _input = read_input(filepath)
     part_1_score = part_1(_input)
     part_2_score = part_2(_input)

@@ -1,7 +1,9 @@
-from _utils import read_input, timer
+from typing import Tuple, List
+
+from _utils import read_input, timer, Point, GridDict
 
 
-def parse_input(_input: list):
+def parse_input(_input: List[str]) -> Tuple[str, GridDict]:
     image_enhancement_algo = _input[0]
     _input = _input[2:]
     grid = {
@@ -10,7 +12,7 @@ def parse_input(_input: list):
     return image_enhancement_algo, grid
 
 
-def get_neighbors(pos: tuple):
+def get_neighbors(pos: Point) -> List[Point]:
     """
     Returns the 9 positions centered around pos (x,y).
     Neighbors list should be ordered from top left to bottom right.
@@ -21,7 +23,7 @@ def get_neighbors(pos: tuple):
     return neighbors
 
 
-def expand_grid(grid: dict, step: int):
+def expand_grid(grid: GridDict, step: int) -> GridDict:
     """
     Expands grid dict to take into account relevant pixels.
 
@@ -39,7 +41,7 @@ def expand_grid(grid: dict, step: int):
     return new_grid
 
 
-def enhance_picture(grid: dict, image_enhancement_algo: str, step: int):
+def enhance_picture(grid: GridDict, image_enhancement_algo: str, step: int) -> GridDict:
     new_grid = {}
 
     for pos, pixel in grid.items():
@@ -63,12 +65,12 @@ def enhance_picture(grid: dict, image_enhancement_algo: str, step: int):
     return new_grid
 
 
-def count_lit_pixels(grid: dict):
+def count_lit_pixels(grid: GridDict) -> int:
     return sum([1 for v in grid.values() if v == "#"])
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     """
     Returns part 1 & 2 scores from a filepath.
     """

@@ -3,11 +3,12 @@ One of the more challenging days for me. Forgot to operate on a
 subpacket, not the whole string, for one of the sub-operations
 (decoded_str = decoded_str[15 + subpacket_len :]).
 """
+from typing import Tuple, Dict
 
 from _utils import read_input, timer, product
 
 
-def create_decoder():
+def create_decoder() -> Dict[str, str]:
     hex_decoder_str = read_input("hex_decoder_aoc16.txt")
     str_to_hex_decoder = {}
 
@@ -18,7 +19,7 @@ def create_decoder():
     return str_to_hex_decoder
 
 
-def get_literal_value(decoded_str: str):
+def get_literal_value(decoded_str: str) -> Tuple[int, str]:
     packed_bits = []
 
     for r in range(0, len(decoded_str), 5):
@@ -37,7 +38,7 @@ def get_literal_value(decoded_str: str):
     return int(packed_bits, 2), ""
 
 
-def compute_value(operation_id: int, values: list):
+def compute_value(operation_id: int, values: list) -> int:
     """
     Returns the result of an operation on the values list.
     """
@@ -59,7 +60,7 @@ def compute_value(operation_id: int, values: list):
         raise e
 
 
-def parse_hex(decoded_str: str, version_sum: int = 0):
+def parse_hex(decoded_str: str, version_sum: int = 0) -> Tuple[int, str, int, int]:
     """
     Parse a binary representation of a packet.
 
@@ -99,7 +100,7 @@ def parse_hex(decoded_str: str, version_sum: int = 0):
     return version_sum, val, decoded_str, packet_type_id
 
 
-def get_solution(string: str):
+def get_solution(string: str) -> Tuple[int, int]:
     """
     Returns part 1 & 2 scores from an operator packet string.
 
@@ -114,7 +115,7 @@ def get_solution(string: str):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     """
     Returns part 1 & 2 scores from a filepath.
     """

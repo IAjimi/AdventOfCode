@@ -3,14 +3,15 @@ Spent most of the time figuring out how to properly expand
 the grid in part 2. Runs in += 1.2 seconds for both parts,
 with bottleneck in part 2 Dijkstra.
 """
+from typing import Tuple, Dict, List
 
-from _utils import read_input, timer
+from _utils import read_input, timer, Point, GridDict
 
 
 import heapq
 
 
-def parse_input(_input: list):
+def parse_input(_input: list) -> Tuple[GridDict, int]:
     grid_size = len(_input)
     grid = {
         (x, y): int(_input[y][x]) for y in range(grid_size) for x in range(grid_size)
@@ -18,7 +19,7 @@ def parse_input(_input: list):
     return grid, grid_size
 
 
-def get_neighbors(grid: dict, pos: tuple):
+def get_neighbors(grid: GridDict, pos: Point) -> List[Point]:
     """
     Returns neighbors of a tile if only allowed movements
     are up, left, right, down (no diagonals).
@@ -29,7 +30,7 @@ def get_neighbors(grid: dict, pos: tuple):
     return neighbors
 
 
-def least_risky_path(grid: dict, start: tuple, end: tuple):
+def least_risky_path(grid: GridDict, start: Point, end: Point) -> int:
     """
     Returns risk level of least risky path. Djikstra algorithm.
     """
@@ -54,7 +55,7 @@ def least_risky_path(grid: dict, start: tuple, end: tuple):
     return -1
 
 
-def create_tiles(grid: dict):
+def create_tiles(grid: GridDict) -> Dict[int, GridDict]:
     """
     Returns all 9 tiles in a dict.
     The values in each tile in all 1 higher than
@@ -70,7 +71,7 @@ def create_tiles(grid: dict):
     return tiles
 
 
-def expand_grid(tiles: dict, grid: dict, grid_size: int):
+def expand_grid(tiles: Dict[int, GridDict], grid: GridDict, grid_size: int) -> GridDict:
     """
     Returns expanded grid dict.
 
@@ -89,7 +90,7 @@ def expand_grid(tiles: dict, grid: dict, grid_size: int):
     return grid
 
 
-def part_2(grid: dict, grid_size: int):
+def part_2(grid: GridDict, grid_size: int) -> int:
     """
     Returns part 2 solution.
 
@@ -124,7 +125,7 @@ def part_2(grid: dict, grid_size: int):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     _input = read_input(filepath)
     grid, grid_size = parse_input(_input)
 

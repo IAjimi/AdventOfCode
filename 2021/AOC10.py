@@ -1,7 +1,9 @@
+from typing import Tuple
+
 from _utils import read_input, timer, get_median
 
 
-def spell_checker(line: str):
+def spell_checker(line: str) -> Tuple[int, int]:
     """
     Returns a tuple of points: pt1_score, pt2_score.
     """
@@ -29,7 +31,7 @@ def spell_checker(line: str):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     _input = read_input(filepath)
 
     scores = [spell_checker(line) for line in _input]

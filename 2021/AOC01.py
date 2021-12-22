@@ -1,7 +1,9 @@
+from typing import List, Tuple
+
 from _utils import read_input, timer
 
 
-def process_input(filepath: str):
+def process_input(filepath: str) -> List[int]:
     """
     Open and read file at filepath, return list of integers.
     """
@@ -9,7 +11,7 @@ def process_input(filepath: str):
     return [int(i) for i in _input]
 
 
-def count_increase(_input: list):
+def count_increase(_input: List[int]) -> int:
     """
     Returns the number of times a number in the _input
     list is bigger than its predecessor.
@@ -26,7 +28,7 @@ def count_increase(_input: list):
     return counter
 
 
-def count_sliding_window_increase(_input: list):
+def count_sliding_window_increase(_input: List[int]) -> int:
     """
     Returns the number of times a sequence of 3 integers
     in the _input list is bigger than the previous sequence.
@@ -53,8 +55,8 @@ def count_sliding_window_increase(_input: list):
 
 
 @timer
-def main(filename: str):
-    _input = read_input(filename)
+def main(filename: str) -> Tuple[int, int]:
+    _input = process_input(filename)
     part_1_score = count_increase(_input)
     part_2_score = count_sliding_window_increase(_input)
     return part_1_score, part_2_score

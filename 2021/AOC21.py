@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from _utils import read_input, timer
 
 
@@ -13,12 +15,12 @@ class Game:
         self.player2_score = 0
         self.WINNING_SCORE = 1000
 
-    def roll_die(self):
+    def roll_die(self) -> int:
         self.die_rolls += 1
         self.die = (self.die + 1) % 100
         return self.die - 1
 
-    def move_player(self, initial_space: int):
+    def move_player(self, initial_space: int) -> int:
         dice_rolls = sum([self.roll_die() for _ in range(3)])
         new_space = (initial_space + dice_rolls) % 10
         return new_space
@@ -38,7 +40,7 @@ class Game:
 
         return None
 
-    def main(self):
+    def main(self) -> int:
         while True:
             score = self.game_turn()
             if score:
@@ -50,23 +52,16 @@ class QuantumGame:
         _input = read_input(filepath)
 
         self.die = 1
-        self.die_rolls = 0
         self.player1_space = int(_input[0].split(": ")[1])
         self.player2_space = int(_input[1].split(": ")[1])
         self.WINNING_SCORE = 21
         self.die_rolls = [
-            x + y + z for x in range(1, 4) for y in range(1, 4) for z in range(1, 4)
+            x + y + z for x in (1, 2, 3) for y in (1, 2, 3) for z in (1, 2, 3)
         ]
         self.cache = {}
 
-    def move_player(self, initial_space: int, dice: int):
-        new_space = initial_space + dice
-
-        if new_space % 10 == 0:
-            new_space = 10
-        elif new_space > 10 and new_space % 10 != 0:
-            new_space = new_space % 10
-
+    def move_player(self, initial_space: int, dice: int) -> int:
+        new_space = (initial_space + dice) % 10 or 10
         return new_space
 
     def play_game(
@@ -75,7 +70,7 @@ class QuantumGame:
         player1_score: int,
         player2_space: int,
         player2_score: int,
-    ):
+    ) -> Tuple[int, int]:
         # Check if this outcome is already in cache
         cache_key = (player1_space, player1_score, player2_space, player2_score)
         if cache_key in self.cache:
@@ -121,7 +116,7 @@ class QuantumGame:
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     """
     Returns part 1 & 2 scores from a filepath.
     """

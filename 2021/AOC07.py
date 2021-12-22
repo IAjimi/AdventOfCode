@@ -1,11 +1,12 @@
 """
 Completed in <10 minutes
 """
+from typing import Dict, Tuple
 
 from _utils import read_input, timer, count_occurrences
 
 
-def total_sum(n):
+def total_sum(n: int) -> int:
     """
     Sum of all numbers from 0 to n.
 
@@ -15,7 +16,7 @@ def total_sum(n):
     return n * (n + 1) // 2
 
 
-def solver(counter: dict, part_1: bool):
+def solver(counter: Dict[int, int], part_1: bool) -> int:
     fuel_needed = 10 ** 16
     max_position = max(counter.keys())
 
@@ -38,7 +39,7 @@ def solver(counter: dict, part_1: bool):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     _input = read_input(filepath)
     _input = [int(i) for i in _input[0].split(",")]
     counter = count_occurrences(_input)

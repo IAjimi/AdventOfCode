@@ -1,7 +1,9 @@
+from typing import Tuple, List
+
 from _utils import read_input, timer
 
 
-def parse_instructions(full_instruction_str: str):
+def parse_instructions(full_instruction_str: str) -> Tuple[int, int]:
     """
     Parse a string and return a tuple of ints.
     In part 1, the tuple represents (horizontal pos change, depth change).
@@ -20,7 +22,7 @@ def parse_instructions(full_instruction_str: str):
         raise Exception("Unrecognized instruction.")
 
 
-def process_input(filepath: str):
+def process_input(filepath: str) -> List[Tuple[int, int]]:
     """
     Open and read file at filepath, return list of tuples.
     """
@@ -28,14 +30,14 @@ def process_input(filepath: str):
     return [parse_instructions(i) for i in _input]
 
 
-def part_1(_input: list):
+def part_1(_input: List[Tuple[int, int]]) -> int:
     horizontal_change, depth_change = zip(
         *_input
     )  # unzip input into x changes and y changes
     return sum(horizontal_change) * sum(depth_change)
 
 
-def part_2(_input: list):
+def part_2(_input: List[Tuple[int, int]]) -> int:
     """
     Because of the way the _input tuple is constructed,
     tuples with x,0 correspond to 'forward' instructions
@@ -54,7 +56,7 @@ def part_2(_input: list):
 
 
 @timer
-def main(filename: str):
+def main(filename: str) -> Tuple[int, int]:
     _input = process_input(filename)
     part_1_score = part_1(_input)
     part_2_score = part_2(_input)

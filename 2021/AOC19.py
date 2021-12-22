@@ -1,3 +1,5 @@
+from typing import Dict, Tuple, List
+
 from _utils import read_input, timer
 
 from collections import defaultdict
@@ -5,8 +7,10 @@ from itertools import permutations
 
 import heapq
 
+Point = Tuple[int, int, int]  # override point def for 3D
 
-def parse_input(_input: list):
+
+def parse_input(_input: list) -> Dict[int, Point]:
     scanners = defaultdict(list)
 
     for line in _input:
@@ -21,7 +25,7 @@ def parse_input(_input: list):
     return scanners
 
 
-def manhattan_distance(coord1, coord2):
+def manhattan_distance(coord1: Point, coord2: Point):
     """
     Takes in 2 tuples of coordinates & returns their Manhattan Distance
     (sum of absolute value of the differences).
@@ -32,7 +36,7 @@ def manhattan_distance(coord1, coord2):
     return sum(dist)
 
 
-def find_transform(coords1: list, coords2: list):
+def find_transform(coords1: List[Point], coords2: List[Point]):
     """
     Returns the transformation function that turns coordinates
     from coords2 into coordinates of coords1.
@@ -75,7 +79,7 @@ def find_transform(coords1: list, coords2: list):
     return None, None
 
 
-def map_distances(lst: list):
+def map_distances(lst: List[Point]) -> Dict[Point, List[int]]:
     distances = {}
 
     for coords1 in lst:
@@ -179,17 +183,16 @@ def translate_coordinates(
                         translated_positions = set(
                             map(trans_funcs[(node, new_node)], scanner_pos[node])
                         )
-                        if translated_positions:
-                            scanner_pos[new_node] = scanner_pos[new_node].union(
-                                translated_positions
-                            )
+                        scanner_pos[new_node] = scanner_pos[new_node].union(
+                            translated_positions
+                        )
 
                         heapq.heappush(queue, (steps, new_node))
 
     return all_translations, scanner_pos
 
 
-def max_distance(lst):
+def max_distance(lst: List[Point]) -> int:
     """
     Returns maximum distance between 2 points.
     """
@@ -203,7 +206,7 @@ def max_distance(lst):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     """
     Returns part 1 & 2 scores from a filepath.
     """

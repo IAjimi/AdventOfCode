@@ -1,14 +1,16 @@
-from _utils import read_input, timer, create_grid
+from typing import List, Tuple
+
+from _utils import read_input, timer, create_grid, Point, GridDict
 
 
-def get_neighbors(grid: dict, pos: tuple):
+def get_neighbors(grid: GridDict, pos: Point) -> List[Point]:
     x, y = pos
     neighbors = [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
     neighbors = [n for n in neighbors if n in grid]
     return neighbors
 
 
-def find_low_points(grid: dict):
+def find_low_points(grid: GridDict) -> List[Point]:
     low_points = []
 
     for pos, val in grid.items():
@@ -21,7 +23,7 @@ def find_low_points(grid: dict):
     return low_points
 
 
-def bfs(grid: dict, point: tuple):
+def bfs(grid: GridDict, point: Point) -> int:
     queue = [point]
     visited = set()
     steps = 0
@@ -40,13 +42,13 @@ def bfs(grid: dict, point: tuple):
     return steps
 
 
-def part_1(grid: dict):
+def part_1(grid: GridDict) -> Tuple[int, List[Point]]:
     low_points = find_low_points(grid)
     part_1_score = [grid[point] + 1 for point in low_points]
     return sum(part_1_score), low_points
 
 
-def part_2(grid: dict, low_points: list):
+def part_2(grid: GridDict, low_points: List[Point]) -> int:
     bassin_size = []
 
     for point in low_points:
@@ -59,7 +61,7 @@ def part_2(grid: dict, low_points: list):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     _input = read_input(filepath)
     grid = create_grid(_input)
     part_1_score, low_points = part_1(grid)

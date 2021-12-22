@@ -4,6 +4,7 @@ Ended up using a mix of 2 existing solutions:
     * regex parsing (explode func): https://www.reddit.com/r/adventofcode/comments/rizw2c/comment/hp11644/?utm_source=share&utm_medium=web2x&context=3
     * general handling (add func): https://github.com/benediktwerner/AdventOfCode/blob/master/2021/day18/sol.py
 """
+from typing import Tuple, List
 
 from _utils import read_input, timer
 
@@ -11,14 +12,14 @@ import math
 import re
 
 
-def get_split(num: int):
+def get_split(num: int) -> str:
     half = num / 2
     left_split = math.floor(half)
     right_split = math.ceil(half)
     return f"[{left_split},{right_split}]"
 
 
-def sub(s, n, ind):
+def sub(s, n, ind) -> str:
     matches = list(re.finditer("\d+", s))
     if matches:
         start, end = matches[ind].span()
@@ -26,7 +27,7 @@ def sub(s, n, ind):
     return s
 
 
-def explode(line: str):
+def explode(line: str) -> Tuple[bool, str]:
     for match in re.finditer("\[(\d+),(\d+)\]", line):
         pre, post = line[: match.start(0)], line[match.end(0) :]
         x, y = map(int, match.groups())
@@ -36,7 +37,7 @@ def explode(line: str):
     return False, line
 
 
-def split(line: str):
+def split(line: str) -> Tuple[bool, str]:
     for match in re.finditer("\d+", line):
         pre, post = line[: match.start(0)], line[match.end(0) :]
         x = int(match.group())
@@ -46,7 +47,7 @@ def split(line: str):
     return False, line
 
 
-def reduce(line: str):
+def reduce(line: str) -> str:
     while True:
         change, line = explode(line)
         if change:
@@ -57,12 +58,12 @@ def reduce(line: str):
     return line
 
 
-def add(x: str, y: str):
+def add(x: str, y: str) -> str:
     line = f"[{x},{y}]"
     return reduce(line)
 
 
-def magnitude(line: str):
+def magnitude(line: str) -> Tuple[bool, str]:
     for match in re.finditer("\[(\d+),(\d+)\]", line):
         pre, post = line[: match.start(0)], line[match.end(0) :]
         x, y = map(int, match.groups())
@@ -72,7 +73,7 @@ def magnitude(line: str):
     return False, line
 
 
-def compute_magnitude(line: str):
+def compute_magnitude(line: str) -> int:
     while True:
         change, line = magnitude(line)
         if not change:
@@ -80,7 +81,7 @@ def compute_magnitude(line: str):
     return int(line)
 
 
-def maximize_magnitude(_input: list):
+def maximize_magnitude(_input: list) -> int:
     max_m = 0
 
     for i in range(len(_input)):
@@ -93,7 +94,7 @@ def maximize_magnitude(_input: list):
     return max_m
 
 
-def get_final_sum(_input):
+def get_final_sum(_input: List[str]) -> str:
     line = _input[0]
 
     for ix, newline in enumerate(_input[1:]):
@@ -103,7 +104,7 @@ def get_final_sum(_input):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     """
     Returns part 1 & 2 scores from a filepath.
     """

@@ -6,13 +6,16 @@ Both handled with BFS.
 """
 
 from collections import defaultdict
+
+from typing import Dict, List, Tuple
+
 from _utils import read_input, timer
 
 START = "start"
 END = "end"
 
 
-def parse_input(_input: list):
+def parse_input(_input: List[str]) -> Dict[str, List[str]]:
     """
     Return dictionary, with key as node name and value the list
     of nodes that can be reached through the key node.
@@ -25,7 +28,7 @@ def parse_input(_input: list):
     return connections
 
 
-def count_unique_paths(connections: dict, part_2: bool):
+def count_unique_paths(connections: Dict[str, List[str]], part_2: bool) -> int:
     """
     Counts the number of unique paths that connect the
     start to the end. Nodes with uppercase names can be
@@ -68,7 +71,7 @@ def count_unique_paths(connections: dict, part_2: bool):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     _input = read_input(filepath)
     connections = parse_input(_input)
     part_1_score = count_unique_paths(connections, part_2=False)

@@ -3,14 +3,16 @@ Thought iterating over the whole board to check that the number is there would
 be slow so tried to use different data structure to speed that check + verifying
 whether a board is complete or not. Runs in about 0.009 seconds locally.
 """
-
+from typing import List, Dict, Tuple
 
 from _utils import read_input, timer
 
 import re
 
 
-def parse_input(_input: list):
+def parse_input(
+    _input: List[str],
+) -> Tuple[List[int], Dict[int, dict], Dict[int, List[List[int]]]]:
     """
     Returns data structures used to solve the puzzle.
 
@@ -49,12 +51,18 @@ def parse_input(_input: list):
     return bingo_numbers, all_boards, bingo_grid
 
 
-def get_bingo_score(all_boards: dict, board_number: int, called: set, bingo_num: int):
+def get_bingo_score(
+    all_boards: Dict[int, dict], board_number: int, called: set, bingo_num: int
+) -> int:
     winning_sum = sum([k for k in all_boards[board_number].keys() if k not in called])
     return bingo_num * winning_sum
 
 
-def play_bingo(bingo_numbers: list, all_boards: dict, bingo_grid: dict):
+def play_bingo(
+    bingo_numbers: List[int],
+    all_boards: Dict[int, dict],
+    bingo_grid: Dict[int, List[List[int]]],
+) -> Tuple[int, int]:
     """
     Returns part 1 score (score from 1st completed board) and part 2 score
     (score from last completed score).
@@ -92,7 +100,7 @@ def play_bingo(bingo_numbers: list, all_boards: dict, bingo_grid: dict):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     """
     Returns solution for AOC day 4 from filepath.
     """

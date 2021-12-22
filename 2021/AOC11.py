@@ -3,18 +3,19 @@
 Was able to reuse some code from day 9 for the grid + get_neighbors function.
 Using a queue to keep track of 'flashing' octopi.
 """
+from typing import Tuple, List, Dict
 
-from _utils import read_input, timer, create_grid
+from _utils import read_input, timer, create_grid, Point, GridDict
 
 
-def get_neighbors(grid: dict, pos: tuple):
+def get_neighbors(grid: GridDict, pos: Point) -> List[Point]:
     x, y = pos
     neighbors = [(x + dx, y + dy) for dx in range(-1, 2) for dy in range(-1, 2)]
     neighbors = [n for n in neighbors if n in grid and n != pos]
     return neighbors
 
 
-def run_step(grid):
+def run_step(grid: GridDict) -> Tuple[GridDict, int]:
     grid = {pos: val + 1 for pos, val in grid.items()}
     flash_queue = [pos for pos, val in grid.items() if val > 9]
     has_flashed = set()
@@ -39,7 +40,7 @@ def run_step(grid):
     return grid, len(has_flashed)
 
 
-def simulate_octopi(grid):
+def simulate_octopi(grid: GridDict) -> Tuple[int, int]:
     """
     Returns tuple of part_1_score, part_2_score.
 
@@ -58,7 +59,7 @@ def simulate_octopi(grid):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     _input = read_input(filepath)
     grid = create_grid(_input)
     part_1_score, part_2_score = simulate_octopi(grid)

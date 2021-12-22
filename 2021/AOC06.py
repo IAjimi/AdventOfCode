@@ -9,12 +9,13 @@ Luckily the position of the lanternfish didn't play a role in either
 part 1 or 2, which allowed me to complete part 2 without having to
 change my code at all (besides adjusting the max number of turns).
 """
+from typing import List, Dict, Tuple
 
 from _utils import read_input, count_occurrences, timer
 from collections import defaultdict
 
 
-def parse_input(_input: list):
+def parse_input(_input: List[str]) -> Dict[int, int]:
     """
     Open and read file at filepath, return dictionary holding
     the number of lanternfish of a certain age.
@@ -24,7 +25,7 @@ def parse_input(_input: list):
     return counter
 
 
-def simulate_lanternfish_growth(counter: dict, max_days: int):
+def simulate_lanternfish_growth(counter: Dict[int, int], max_days: int):
     """
     Return the total number of lanternfish after growing for
     max_days.
@@ -48,7 +49,7 @@ def simulate_lanternfish_growth(counter: dict, max_days: int):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, int]:
     """
     Returns solution for AOC day 6 from input filepath.
     """

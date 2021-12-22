@@ -1,7 +1,9 @@
+from typing import Tuple, List
+
 from _utils import read_input, timer
 
 
-def most_common_bit(bin_list: list, ix: int):
+def most_common_bit(bin_list: List[str], ix: int) -> str:
     """
     Returns the most common bit as str in position i of the list
     of binary numbers _input.
@@ -15,7 +17,7 @@ def most_common_bit(bin_list: list, ix: int):
         return "0"
 
 
-def find_rating(_input: list, most_common: bool):
+def find_rating(_input: List[str], most_common: bool) -> str:
     """
     Returns the binary number that represents the submarine's rating.
 
@@ -43,7 +45,7 @@ def find_rating(_input: list, most_common: bool):
     raise Exception("Issue found with filtering in found_rating.")
 
 
-def compute_answer(bin_1: str, bin_2: str):
+def compute_answer(bin_1: str, bin_2: str) -> int:
     """
     Returns the product of two binary numbers.
     """
@@ -52,7 +54,7 @@ def compute_answer(bin_1: str, bin_2: str):
     return bin_to_int_1 * bin_to_int_2
 
 
-def part_1(_input: list):
+def part_1(_input: List[str]) -> int:
     """
     Returns the product of the gamma and epsilon rates.
 
@@ -68,7 +70,7 @@ def part_1(_input: list):
     return compute_answer(gamma_rate, epsilon_rate)
 
 
-def part_2(_input: list):
+def part_2(_input: List[str]) -> int:
     """
     Returns the product of the oxygen generator rating
     and CO2 scrubber rating.
@@ -79,7 +81,7 @@ def part_2(_input: list):
 
 
 @timer
-def main(filename: str):
+def main(filename: str) -> Tuple[int, int]:
     _input = read_input(filename)
     part_1_score = part_1(_input)
     part_2_score = part_2(_input)

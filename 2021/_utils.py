@@ -3,8 +3,13 @@ import time
 
 from collections import defaultdict
 
+from typing import Dict, List, Tuple
 
-def read_input(filepath: str):
+Point = Tuple[int, int]
+GridDict = Dict[Point, int]
+
+
+def read_input(filepath: str) -> List[str]:
     """
     Open and read file at filepath, return list of strings.
     """
@@ -30,16 +35,16 @@ def timer(func):
     return wrap_func
 
 
-def sign(num):
+def sign(num: int) -> int:
     if num == 0:
         return 0
     elif num < 0:
         return -1
-    elif num > 0:
+    else:
         return 1
 
 
-def create_grid(_input: list):
+def create_grid(_input: list) -> GridDict:
     """
     Turns raw input into a grid dict (key: position).
     """
@@ -50,7 +55,7 @@ def create_grid(_input: list):
     return grid
 
 
-def count_occurrences(_input):
+def count_occurrences(_input: List[int]) -> Dict[int, int]:
     """
     Return number of occurrences of all values in
     _input.
@@ -61,7 +66,7 @@ def count_occurrences(_input):
     return counter
 
 
-def get_median(lst: list):
+def get_median(lst: List[int]) -> int:
     """
     Return median value of an unsorted list.
     """
@@ -69,7 +74,7 @@ def get_median(lst: list):
     return lst[len(lst) // 2]
 
 
-def product(lst: list):
+def product(lst: list) -> int:
     result = 1
     for num in lst:
         result *= num

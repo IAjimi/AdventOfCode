@@ -1,7 +1,9 @@
-from _utils import read_input, timer
+from typing import List, Set, Tuple
+
+from _utils import read_input, timer, Point
 
 
-def parse_input(_input: list):
+def parse_input(_input: List[str]) -> Tuple[Set[Point], List[str]]:
     grid = set()
     instructions = []
 
@@ -15,7 +17,7 @@ def parse_input(_input: list):
     return grid, instructions
 
 
-def vertical_flip(grid: set, flip_val: int):
+def vertical_flip(grid: Set[Point], flip_val: int) -> Set[Point]:
     new_grid = set()
     for x, y in grid:
         if y > flip_val:
@@ -26,7 +28,7 @@ def vertical_flip(grid: set, flip_val: int):
     return new_grid
 
 
-def horizontal_flip(grid: set, flip_val: int):
+def horizontal_flip(grid: Set[Point], flip_val: int) -> Set[Point]:
     new_grid = set()
     for x, y in grid:
         if x > flip_val:
@@ -37,7 +39,7 @@ def horizontal_flip(grid: set, flip_val: int):
     return new_grid
 
 
-def print_grid(grid: set):
+def print_grid(grid: Set[Point]) -> str:
     grid_str = ""
     max_x = 1 + max((pos[0] for pos in grid))
     max_y = 1 + max((pos[1] for pos in grid))
@@ -51,7 +53,7 @@ def print_grid(grid: set):
 
 
 @timer
-def main(filepath: str):
+def main(filepath: str) -> Tuple[int, Set[Point]]:
     _input = read_input(filepath)
     grid, instructions = parse_input(_input)
 
