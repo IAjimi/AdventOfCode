@@ -1,11 +1,13 @@
-from typing import Tuple, List
+from typing import Tuple
 
-from _utils import read_input, sign, timer
+from _utils import read_input, sign, timer, Point
 
 from collections import defaultdict
 
+import parse
 
-def process_input(line: str) -> Tuple[List[int], List[int]]:
+
+def process_input(line: str) -> Tuple[Point, Point]:
     """
     Returns a tuple of x,y coordinates from a line of the input.
 
@@ -13,10 +15,8 @@ def process_input(line: str) -> Tuple[List[int], List[int]]:
         process_input("0,9 -> 5,9")
         > ([0,9], [5,9])
     """
-    coords1, coords2 = line.split(" -> ")
-    coords1 = [int(i) for i in coords1.split(",")]
-    coords2 = [int(i) for i in coords2.split(",")]
-    return coords1, coords2
+    x1, y1, x2, y2 = tuple(parse.parse("{:d},{:d} -> {:d},{:d}", line).fixed)
+    return (x1, y1), (x2, y2)
 
 
 def turn_lines_to_points(line):
