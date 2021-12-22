@@ -1,4 +1,4 @@
-from AOC1 import process_input, count_increase, count_sliding_window_increase
+from AOC01 import process_input, count_increase, count_sliding_window_increase
 
 
 def test_count_increase():

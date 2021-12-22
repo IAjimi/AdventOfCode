@@ -1,5 +1,5 @@
 from _utils import read_input
-from AOC3 import part_1, part_2
+from AOC03 import part_1, part_2
 
 
 def test_part_1():

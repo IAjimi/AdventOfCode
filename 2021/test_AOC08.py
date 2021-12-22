@@ -1,4 +1,4 @@
-from AOC8 import main, get_output_code
+from AOC08 import main, get_output_code
 from _utils import read_input
 
 

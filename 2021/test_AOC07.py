@@ -1,4 +1,4 @@
-from AOC7 import main
+from AOC07 import main
 
 
 def test_main():

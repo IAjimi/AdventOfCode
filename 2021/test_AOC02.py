@@ -1,4 +1,4 @@
-from AOC2 import process_input, part_1, part_2
+from AOC02 import process_input, part_1, part_2
 
 
 def test_part_1():
