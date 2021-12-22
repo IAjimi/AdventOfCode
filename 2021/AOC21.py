@@ -51,7 +51,6 @@ class QuantumGame:
     def __init__(self, filepath: str):
         _input = read_input(filepath)
 
-        self.die = 1
         self.player1_space = int(_input[0].split(": ")[1])
         self.player2_space = int(_input[1].split(": ")[1])
         self.WINNING_SCORE = 21
