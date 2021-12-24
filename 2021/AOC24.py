@@ -107,6 +107,7 @@ def recompiled_code(w: int, z: int, a: int, b: int, c: int) -> int:
         z += w + c
     return z
 
+
 def compute_z(module_number: str):
     module_number = [int(c) for c in module_number]
     zipped = zip(instructions, module_number)
@@ -118,6 +119,7 @@ def compute_z(module_number: str):
 
     return z
 
+
 @timer
 def main():
     """
@@ -128,6 +130,7 @@ def main():
     assert compute_z(str(part_1_solution)) == 0
     assert compute_z(str(part_2_solution)) == 0
     return part_1_solution, part_2_solution
+
 
 if __name__ == "__main__":
     part_1_score, part_2_score = main()

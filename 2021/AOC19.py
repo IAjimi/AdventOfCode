@@ -1,4 +1,4 @@
-from typing import Dict, Tuple, List
+from typing import Dict, Tuple, List, Callable
 
 from _utils import read_input, timer
 
@@ -25,7 +25,7 @@ def parse_input(_input: list) -> Dict[int, Point]:
     return scanners
 
 
-def manhattan_distance(coord1: Point, coord2: Point):
+def manhattan_distance(coord1: Point, coord2: Point) -> int:
     """
     Takes in 2 tuples of coordinates & returns their Manhattan Distance
     (sum of absolute value of the differences).
@@ -36,7 +36,9 @@ def manhattan_distance(coord1: Point, coord2: Point):
     return sum(dist)
 
 
-def find_transform(coords1: List[Point], coords2: List[Point]):
+def find_transform(
+    coords1: List[Point], coords2: List[Point]
+) -> Tuple[Callable[[Point], Point], Point]:
     """
     Returns the transformation function that turns coordinates
     from coords2 into coordinates of coords1.
@@ -88,7 +90,9 @@ def map_distances(lst: List[Point]) -> Dict[Point, List[int]]:
     return distances
 
 
-def find_common_beacons(d1: dict, d2: dict):
+def find_common_beacons(
+    d1: Dict[Point, List[int]], d2: Dict[Point, List[int]]
+) -> Tuple[List[Point], List[Point]]:
     """
     Find overlapping beacons between 2 scanners.
     Scanners will always have an overlap of 12 beacons.
@@ -118,7 +122,9 @@ def find_common_beacons(d1: dict, d2: dict):
     )
 
 
-def find_overlapping_scanners(distance_dict: dict, MAX_IX: int):
+def find_overlapping_scanners(
+    distance_dict: Dict[int, Dict[Point, List[int]]], MAX_IX: int
+):
     path = defaultdict(list)
     trans_funcs = {}
     rel_scanner_positions = {}
