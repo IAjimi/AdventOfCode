@@ -6,4 +6,4 @@ def test_main():
     assert part_1_score == 58
 
     part_1_score = main("aoc25.txt")
-    assert part_1_score == 205
+    assert part_1_score == 305
