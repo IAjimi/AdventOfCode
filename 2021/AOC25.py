@@ -27,6 +27,25 @@ def parse_input(filepath: str):
     return horizontal, vertical, width, height
 
 
+def move_sea_cucumber_herd(
+    current_herd: Set[Point], other_herd: Set[Point], move_func
+) -> Tuple[bool, Set[Point]]:
+    changed = False
+    new_herd = current_herd.copy()
+
+    for pos in current_herd:
+        # get next location of sea cucumber
+        next_pos = move_func(pos)
+
+        # move if new space is empty
+        if next_pos not in current_herd and next_pos not in other_herd:
+            new_herd.remove(pos)
+            new_herd.add(next_pos)
+            changed = True
+
+    return changed, new_herd
+
+
 def migrate(
     horizontal: Set[Point], vertical: Set[Point], width: int, height: int
 ) -> Tuple[bool, Set[Point], Set[Point]]:
@@ -34,40 +53,16 @@ def migrate(
     Return changed position of east-facing and south-facing sea
     cucumbers.
     """
-    changed = False
-
-    # Consider all east-facing sea cucumbers
-    new_horizontal = horizontal.copy()
-
-    for pos in horizontal:
-        # get next location of sea cucumber (wrap around if necessary)
-        next_x = (pos[0] + 1) % width
-        next_pos = (next_x, pos[1])
-
-        # move if new space is empty
-        if next_pos not in horizontal and next_pos not in vertical:
-            new_horizontal.remove(pos)
-            new_horizontal.add(next_pos)
-            changed = True
-
-    # update set after move
-    horizontal = new_horizontal
+    # move all east-facing sea cucumbers
+    move_func = lambda x: ((x[0] + 1) % width, x[1])
+    hor_changed, horizontal = move_sea_cucumber_herd(horizontal, vertical, move_func)
 
     # consider all south-facing sea cucumbers
-    new_vertical = vertical.copy()
+    move_func = lambda x: (x[0], (x[1] + 1) % height)
+    ver_changed, vertical = move_sea_cucumber_herd(vertical, horizontal, move_func)
 
-    for pos in vertical:
-        # get next location of sea cucumber (wrap around if necessary)
-        next_y = (pos[1] + 1) % height
-        next_pos = (pos[0], next_y)
-
-        # move if new space is empty
-        if next_pos not in horizontal and next_pos not in vertical:
-            new_vertical.remove(pos)
-            new_vertical.add(next_pos)
-            changed = True
-
-    vertical = new_vertical
+    # update bool to account for both
+    changed = hor_changed or ver_changed
 
     return changed, horizontal, vertical
 
@@ -93,7 +88,7 @@ def observe_migration(
 @timer
 def main(filepath: str) -> int:
     """
-     Returns part 1 score from a filepath.
+    Returns part 1 score from a filepath.
     (Day 25 doesn't have a part 2.)
     """
     horizontal, vertical, width, height = parse_input(filepath)
