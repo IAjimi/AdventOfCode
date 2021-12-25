@@ -4,11 +4,12 @@ Very straightforward!
 """
 
 from typing import Tuple, Set
+from collections.abc import Callable
 
 from _utils import read_input, timer, Point
 
 
-def parse_input(filepath: str):
+def parse_input(filepath: str) -> Tuple[Set[Point], Set[Point], int, int]:
     _input = read_input(filepath)
 
     height = len(_input)
@@ -28,7 +29,7 @@ def parse_input(filepath: str):
 
 
 def move_sea_cucumber_herd(
-    current_herd: Set[Point], other_herd: Set[Point], move_func
+    current_herd: Set[Point], other_herd: Set[Point], move_func: Callable[Point, Point]
 ) -> Tuple[bool, Set[Point]]:
     changed = False
     new_herd = current_herd.copy()
