@@ -29,3 +29,4 @@ This is my first year completing the puzzles "live" (sometimes at midnight, alwa
 | [22](https://adventofcode.com/2021/day/22) | **Reactor Reboot**: Calculate volume of cubes in space. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC22.py) |
 | [23](https://adventofcode.com/2021/day/23) | **Amphipod**: Find optimal way to reorder amphipod across a series of rooms. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC23.py) |
 | [24](https://adventofcode.com/2021/day/24) | **Arithmetic Logic Unit**: Decompile Intcode program by hand. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC24.py) |
+| [25](https://adventofcode.com/2021/day/25) | **Sea Cucumber**: Observing the move of herds of sea-cucumbers. | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2021/AOC25.py) |
