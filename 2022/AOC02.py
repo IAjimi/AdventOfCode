@@ -6,6 +6,16 @@ from _utils import read_input, timer
 ROCK = 1
 PAPER = 2
 SCISSORS = 3
+LOSES_TO = {
+    ROCK: PAPER,
+    SCISSORS: ROCK,
+    PAPER: SCISSORS,
+}  # cleaner as linked list?
+WINS_AGAINST = {
+    ROCK: SCISSORS,
+    SCISSORS: PAPER,
+    PAPER: ROCK,
+}
 
 WIN = 6
 DRAW = 3
@@ -38,44 +48,25 @@ def process_input(_input: List[str]) -> List[Tuple[int, int]]:
 
 
 def part_1(opp: int, you: int) -> int:
-    if opp == you:
+    if you == opp:
         return DRAW + you
-    elif opp == ROCK and you == SCISSORS:
+    elif you == WINS_AGAINST[opp]:
         return LOSS + you
-    elif opp == SCISSORS and you == PAPER:
-        return LOSS + you
-    elif opp == PAPER and you == ROCK:
-        return LOSS + you
-    elif you == ROCK and opp == SCISSORS:
-        return WIN + you
-    elif you == SCISSORS and opp == PAPER:
-        return WIN + you
-    elif you == PAPER and opp == ROCK:
+    elif you == LOSES_TO[opp]:
         return WIN + you
     else:
-        raise Exception
+        raise Exception(f"Unknown instruction: {you}.")
 
 
 def part_2(opp: int, you: int) -> int:
-    # need to lose
-    if opp == ROCK and you == ROCK:
-        return LOSS + SCISSORS
-    elif opp == SCISSORS and you == ROCK:
-        return LOSS + PAPER
-    elif opp == PAPER and you == ROCK:
-        return LOSS + ROCK
-    # need to draw
+    if you == ROCK:
+        return LOSS + WINS_AGAINST[opp]
     elif you == PAPER:
         return DRAW + opp
-    # need to win
-    elif opp == ROCK and you == SCISSORS:
-        return WIN + PAPER
-    elif opp == SCISSORS and you == SCISSORS:
-        return WIN + ROCK
-    elif opp == PAPER and you == SCISSORS:
-        return WIN + SCISSORS
+    elif you == SCISSORS:
+        return WIN + LOSES_TO[opp]
     else:
-        raise Exception
+        raise Exception(f"Unknown instruction: {you}.")
 
 
 @timer

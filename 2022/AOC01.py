@@ -1,10 +1,8 @@
 from typing import Tuple, List
 
-from _utils import read_input, sign, timer, Point, create_grid, get_median
+from _utils import read_input, timer
 
 from collections import defaultdict
-
-import parse
 
 
 def process_input(_input: List[str]) -> List[int]:
