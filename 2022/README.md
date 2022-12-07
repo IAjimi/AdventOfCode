@@ -9,3 +9,4 @@ This repository contains Python solutions to the 2022 edition of [Advent of Code
 | [4](https://adventofcode.com/2022/day/4) | **Camp Cleanup** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC04.py) | 
 | [5](https://adventofcode.com/2022/day/5) | **Supply Stacks** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC05.py) | 
 | [6](https://adventofcode.com/2022/day/6) | **Tuning Trouble** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC06.py) | 
+| [7](https://adventofcode.com/2022/day/7) | **No Space Left On Device** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC07.py) | 
