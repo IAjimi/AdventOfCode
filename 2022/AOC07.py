@@ -17,12 +17,10 @@ class Node:
         """
         Add file to current dir and parents.
         """
-        queue = [self]
-        while queue:
-            node = queue.pop()
+        node = self
+        while node:
             node.size += file_size
-            if node.parent:
-                queue.append(node.parent)
+            node = node.parent
 
     def __repr__(self):
         return f"Node('{self.name}', {self.size})"

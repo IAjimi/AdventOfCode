@@ -4,10 +4,6 @@ from _utils import read_input, timer, Solution
 
 
 def process_input(filepath: str) -> str:
-    """
-    Programmatically parsing the crates would've taken too much time so
-    hardcoded my input instead (for now).
-    """
     _input = read_input(filepath)
     return _input[0]
 
