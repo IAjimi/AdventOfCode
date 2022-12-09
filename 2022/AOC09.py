@@ -1,11 +1,6 @@
 from typing import List, Tuple, Set
 
-from _utils import read_input, timer, Solution, Point
-
-
-def process_input(filename: str):
-    _input = read_input(filename)
-    return _input
+from _utils import read_input, timer, Solution, Point, sign
 
 
 def get_neighbors(head: Point, tail: Point) -> bool:
@@ -29,27 +24,14 @@ def move_head(direction: str, x: int, y: int) -> Point:
 
 
 def adjust_tail(head: Point, tail: Point) -> Point:
-    x, y = head
-    x2, y2 = tail
-
     if get_neighbors(head, tail):
         return tail
-    elif x >= x2 and y <= y2:  # top right
-        x2 += x > x2  # right
-        y2 -= y < y2  # up
-    elif x >= x2 and y >= y2:  # bottom right
-        x2 += x > x2  # right
-        y2 += y > y2  # down
-    elif x <= x2 and y >= y2:  # bottom left
-        x2 -= x < x2  # left
-        y2 += y > y2  # down
-    elif x <= x2 and y <= y2:  # top left
-        x2 -= x < x2  # left
-        y2 -= y < y2  # up
     else:
-        raise Exception
-
-    return (x2, y2)
+        x1, y1 = head
+        x2, y2 = tail
+        x2 += sign(x1 - x2)
+        y2 += sign(y1 - y2)
+        return (x2, y2)
 
 
 def simulate(_input: List[str], len_rope: int = 2) -> int:
@@ -68,7 +50,7 @@ def simulate(_input: List[str], len_rope: int = 2) -> int:
 
 @timer
 def main(filename: str) -> Solution:
-    _input = process_input(filename)
+    _input = read_input(filename)
     part_1_solution = simulate(_input, len_rope=2)
     part_2_solution = simulate(_input, len_rope=10)
     return part_1_solution, part_2_solution
