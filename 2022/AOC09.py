@@ -23,6 +23,8 @@ def move_head(direction: str, x: int, y: int) -> Point:
         y -= 1
     elif direction == "D":
         y += 1
+    else:
+        raise NotImplementedError(f"Unrecognized direction: {direction}.")
     return x, y
 
 
@@ -32,26 +34,18 @@ def adjust_tail(head: Point, tail: Point) -> Point:
 
     if get_neighbors(head, tail):
         return tail
-    elif (y == y2) and x2 - x == 2:
-        x2 -= 1  # right
-    elif (y == y2) and x - x2 == 2:
-        x2 += 1  # left
-    elif (x == x2) and y - y2 == 2:
-        y2 += 1  # down
-    elif (x == x2) and y2 - y == 2:
-        y2 -= 1  # up
-    elif x > x2 and y < y2:  # top right
-        x2 += 1  # right
-        y2 -= 1  # up
-    elif x > x2 and y > y2:  # bottom right
-        x2 += 1  # right
-        y2 += 1  # down
-    elif x < x2 and y > y2:  # bottom left
-        x2 -= 1  # left
-        y2 += 1  # down
-    elif x < x2 and y < y2:  # top left
-        x2 -= 1  # left
-        y2 -= 1  # up
+    elif x >= x2 and y <= y2:  # top right
+        x2 += x > x2  # right
+        y2 -= y < y2  # up
+    elif x >= x2 and y >= y2:  # bottom right
+        x2 += x > x2  # right
+        y2 += y > y2  # down
+    elif x <= x2 and y >= y2:  # bottom left
+        x2 -= x < x2  # left
+        y2 += y > y2  # down
+    elif x <= x2 and y <= y2:  # top left
+        x2 -= x < x2  # left
+        y2 -= y < y2  # up
     else:
         raise Exception
 
@@ -65,12 +59,10 @@ def simulate(_input: List[str], len_rope: int = 2) -> int:
     for line in _input:
         direction, step = line.split(" ")
         for r in range(int(step)):
-            new_knots = [k for k in knots]
-            new_knots[0] = move_head(direction, *new_knots[0])
+            knots[0] = move_head(direction, *knots[0])
             for i in range(1, len_rope):
-                new_knots[i] = adjust_tail(new_knots[i - 1], new_knots[i])
-            visited.add(new_knots[-1])
-            knots = new_knots
+                knots[i] = adjust_tail(knots[i - 1], knots[i])
+            visited.add(knots[-1])
     return len(visited)
 
 
