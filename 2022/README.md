@@ -11,3 +11,5 @@ This repository contains Python solutions to the 2022 edition of [Advent of Code
 | [6](https://adventofcode.com/2022/day/6) | **Tuning Trouble** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC06.py) | 
 | [7](https://adventofcode.com/2022/day/7) | **No Space Left On Device** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC07.py) | 
 | [8](https://adventofcode.com/2022/day/8) | **Treetop Tree House** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC08.py) | 
+| [9](https://adventofcode.com/2022/day/9) | **Rope Bridge** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC09.py) | 
+| [10](https://adventofcode.com/2022/day/10) | **Cathode-Ray Tube** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC10.py) | 
