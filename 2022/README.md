@@ -15,3 +15,4 @@ This repository contains Python solutions to the 2022 edition of [Advent of Code
 | [10](https://adventofcode.com/2022/day/10) | **Cathode-Ray Tube** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC10.py) | 
 | [11](https://adventofcode.com/2022/day/11) | **Monkey in the Middle** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC11.py) | 
 | [12](https://adventofcode.com/2022/day/12) | **Hill Climbing Algorithm** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC12.py) | 
+| [13](https://adventofcode.com/2022/day/13) | **Distress Signal** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC13.py) | 
