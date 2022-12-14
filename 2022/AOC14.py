@@ -2,9 +2,7 @@ from typing import Tuple
 
 from _utils import read_input, timer, Solution, GridDict
 
-SAND = 0
-ROCK = 1
-
+SAND, ROCK = 0, 1
 SAND_START_X, SAND_START_Y = 500, 0
 
 
@@ -20,16 +18,11 @@ def process_input(filename: str) -> GridDict:
             x1, y1 = map(int, r1.split(","))
             x2, y2 = map(int, r2.split(","))
 
-            if x1 == x2:
-                min_y, max_y = min(y1, y2), max(y1, y2)
+            min_x, max_x = min(x1, x2), max(x1, x2)
+            min_y, max_y = min(y1, y2), max(y1, y2)
+            for x in range(min_x, max_x + 1):
                 for y in range(min_y, max_y + 1):
-                    grid[(x1, y)] = ROCK
-            elif y1 == y2:
-                min_x, max_x = min(x1, x2), max(x1, x2)
-                for x in range(min_x, max_x + 1):
-                    grid[(x, y1)] = ROCK
-            else:
-                raise Exception
+                    grid[(x, y)] = ROCK
 
     return grid
 
@@ -61,13 +54,16 @@ def part_1_simulation(grid: GridDict) -> int:
             return len({k for k, v in grid.items() if v == SAND})
 
 
-def part_2_simulation(grid: GridDict) -> int:
-    max_y = max({k[1] for k in grid}) + 2
-
-    # add bottom line
+def add_bottom_rock_line(grid: GridDict, max_y: int) -> GridDict:
     max_x = max({k[0] for k in grid})
     for x in range(0, max_x + 200):
         grid[(x, max_y)] = ROCK
+    return grid
+
+
+def part_2_simulation(grid: GridDict) -> int:
+    max_y = max({k[1] for k in grid}) + 2
+    grid = add_bottom_rock_line(grid, max_y)
 
     while True:
         x, y, at_rest = pour_sand(grid, SAND_START_X, SAND_START_Y, max_y)
