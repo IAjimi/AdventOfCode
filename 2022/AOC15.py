@@ -1,5 +1,4 @@
-import datetime
-from typing import List, Tuple, Set, Dict
+from typing import List, Dict
 import parse
 from _utils import read_input, timer, Solution, Point
 
@@ -7,11 +6,10 @@ from _utils import read_input, timer, Solution, Point
 MAX_Y = 4_000_000
 
 
-def process_input(filename: str) -> Tuple[Dict[Point, int], Set[Point]]:
+def process_input(filename: str) -> Dict[Point, int]:
     _input = read_input(filename)
 
     sensors = {}
-    beacons = set()
     for line in _input:
         x1, y1, x2, y2 = tuple(
             parse.parse(
@@ -20,8 +18,7 @@ def process_input(filename: str) -> Tuple[Dict[Point, int], Set[Point]]:
         )
 
         sensors[(x1, y1)] = manhattan_distance((x1, y1), (x2, y2))
-        beacons.add((x2, y2))
-    return sensors, beacons
+    return sensors
 
 
 def manhattan_distance(t1: Point, t2: Point) -> int:
@@ -30,8 +27,8 @@ def manhattan_distance(t1: Point, t2: Point) -> int:
     return abs(x1 - x2) + abs(y1 - y2)
 
 
-class Solution:
-    def merge(self, intervals: List[List[Point]]) -> List[List[Point]]:
+class Intervals:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         intervals = sorted(intervals, key=lambda i: i[0])
         l, r = 0, 1
 
@@ -47,7 +44,7 @@ class Solution:
         return intervals
 
 
-def check_line(sensors: Dict[Point, int], Y: int, part1: bool) -> List[List[Point]]:
+def check_line(sensors: Dict[Point, int], Y: int, part1: bool) -> List[List[int]]:
     intervals = []
 
     for pos, distance in sensors.items():
@@ -64,7 +61,7 @@ def check_line(sensors: Dict[Point, int], Y: int, part1: bool) -> List[List[Poin
                 if min_x <= MAX_Y:
                     intervals.append([min_x, max_x])
 
-    return Solution().merge(intervals)
+    return Intervals().merge(intervals)
 
 
 def part1(sensors: Dict[Point, int]):
@@ -78,13 +75,13 @@ def part2(sensors: Dict[Point, int]):
         intervals = check_line(sensors, y, part1=False)
         if len(intervals) != 1:
             x = intervals[0][1] + 1
-            return x * MAX_Y + y
+            return x * 4_000_000 + y
     return 0
 
 
 @timer
 def main(filename: str) -> Solution:
-    sensors, beacons = process_input(filename)
+    sensors = process_input(filename)
     part_1_solution = part1(sensors)
     part_2_solution = part2(sensors)
     return part_1_solution, part_2_solution
