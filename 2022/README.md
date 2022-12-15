@@ -17,3 +17,4 @@ This repository contains Python solutions to the 2022 edition of [Advent of Code
 | [12](https://adventofcode.com/2022/day/12) | **Hill Climbing Algorithm** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC12.py) | 
 | [13](https://adventofcode.com/2022/day/13) | **Distress Signal** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC13.py) | 
 | [14](https://adventofcode.com/2022/day/14) | **Regolith Reservoir** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC14.py) | 
+| [15](https://adventofcode.com/2022/day/15) | **Beacon Exclusion Zone** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC15.py) | 
