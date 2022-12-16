@@ -1,8 +1,5 @@
-import functools
 import heapq
 import itertools
-from collections import defaultdict
-
 import parse
 from typing import List, Tuple, Set
 
@@ -65,22 +62,25 @@ def build_network(valves, network):
                     (end, 1 + dist, pressure)
                 )  # +1 for opening valve
 
-    return enhanced_network
+    return enhanced_network, valves
 
 
 def part1(valves, network):
-    network = build_network(valves, network)
+    network, valves = build_network(valves, network)
 
-    def find_path(t: int, valve: str, state) -> int:
-        # TODO USE CACHE
+    def find_path(t: int, valve: str, state: Tuple[str, int], seen) -> int:
         current_pressure = sum(
-            (opened_time - t) * pressure for pressure, opened_time in state.values()
+            (opened_time - t) * valves[v] for v, opened_time in state
         )
-        if t <= 0:
+        if seen.get((t, valve), -1) >= current_pressure:
+            return 0
+        seen[t, valve] = current_pressure
+
+        if t <= 0 or len(state) == len(valves):
             return current_pressure
 
         # choice 1: wait
-        wait = find_path(t - 1, valve, state)
+        wait = find_path(t - 1, valve, state, seen)
 
         # choice 2: move to unopened valve and open it
         # (!important: only USEFUL valves + eliminate state where move solely!)
@@ -88,15 +88,20 @@ def part1(valves, network):
         max_new_valve = 0
         neighbors = network[valve]
         for new_valve, dist, p in neighbors:
-            if new_valve not in state and t - dist > 0:
-                new_state = state.copy()
-                new_state[new_valve] = p, t - dist  # valve pressure, time opened
-                new_pressure = find_path(t - dist, new_valve, new_state)
+            opened_valves = [v for v, _ in state]
+            if new_valve not in opened_valves and t - dist > 0:
+                new_state = [
+                    (v, tt) for v, tt in state
+                ]  # convert tuple to list to add new element
+                new_state.append((new_valve, t - dist))
+                new_pressure = find_path(
+                    t - dist, new_valve, tuple(new_state), seen
+                )  # convert back
                 max_new_valve = max(max_new_valve, new_pressure)
 
         return max(wait, max_new_valve)
 
-    return find_path(30, "AA", {})
+    return find_path(27, "AA", (), {})
 
 
 @timer
@@ -108,6 +113,6 @@ def main(filename: str) -> Solution:
 
 
 if __name__ == "__main__":
-    part_1_solution, part_2_solution = main("aoc16.txt")  # 6:54
-    print(f"PART 1: {part_1_solution}")  #
+    part_1_solution, part_2_solution = main("aoc16.txt")
+    print(f"PART 1: {part_1_solution}")  # 1789
     print(f"PART 2: {part_2_solution}")  #
