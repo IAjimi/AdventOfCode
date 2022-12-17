@@ -101,18 +101,95 @@ def part1(valves, network):
 
         return max(wait, max_new_valve)
 
-    return find_path(27, "AA", (), {})
+    return find_path(30, "AA", (), {})
+
+
+def part2(valves, network, max_t=26):
+    def find_path(t: int, valve_a: str, valve_b: str, state, seen) -> int:
+        current_pressure = sum(
+            (opened_time - t) * valves[v] for v, opened_time in state
+        )
+        if seen.get((t, valve_a, valve_b), -1) >= current_pressure:
+            return 0
+        seen[t, valve_a, valve_b] = current_pressure
+
+        if t <= 0 or len(state) == len(valves):
+            return current_pressure
+
+        options = [0]
+        opened_valves = [v for v, _ in state]
+
+        # consider all options
+        for new_valve_a in network[valve_a] + [valve_a]:
+            # player A opens current valve
+            if (
+                valve_a == new_valve_a
+                and valve_a not in opened_valves
+                and valves[valve_a] > 0
+            ):
+                for new_valve_b in network[valve_b] + [valve_b]:
+                    # update state
+                    new_state = [(v, tt) for v, tt in state]
+                    new_state.append((new_valve_a, t))
+
+                    # A - player E moves to new valve
+                    future_value = find_path(
+                        t - 1, new_valve_a, new_valve_b, new_state, seen
+                    )
+                    options.append(future_value)
+
+                    # B - player E opens current valve
+                    if (
+                        valve_b == new_valve_b
+                        and new_valve_b != new_valve_a
+                        and new_valve_b not in opened_valves
+                        and valves[new_valve_b] > 0
+                    ):
+                        new_state.append((new_valve_b, t))
+                        future_value = find_path(
+                            t - 1, new_valve_a, new_valve_b, new_state, seen
+                        )
+                        options.append(future_value)
+                        new_state.pop()
+            # player A moves to new valve
+            else:
+                for new_valve_b in network[valve_b] + [valve_b]:
+                    # A - player E moves to new valve
+                    future_value = find_path(
+                        t - 1, new_valve_a, new_valve_b, state, seen
+                    )
+                    options.append(future_value)
+
+                    # B - player E opens current valve
+                    if (
+                        valve_b == new_valve_b
+                        and new_valve_b != new_valve_a
+                        and new_valve_b not in opened_valves
+                        and valves[new_valve_b] > 0
+                    ):
+                        # update state
+                        new_state = [(v, tt) for v, tt in state]
+                        new_state.append((new_valve_b, t))
+                        future_value = find_path(
+                            t - 1, new_valve_a, new_valve_b, new_state, seen
+                        )
+                        options.append(future_value)
+                        new_state.pop()
+
+        return max(options)
+
+    return find_path(max_t - 1, "AA", "AA", (), {})
 
 
 @timer
 def main(filename: str) -> Solution:
     valves, network = process_input(filename)
     part_1_solution = part1(valves, network)
-    part_2_solution = 0
+    part_2_solution = part2(valves, network)
     return part_1_solution, part_2_solution
 
 
 if __name__ == "__main__":
     part_1_solution, part_2_solution = main("aoc16.txt")
     print(f"PART 1: {part_1_solution}")  # 1789
-    print(f"PART 2: {part_2_solution}")  #
+    print(f"PART 2: {part_2_solution}")  # 2496
