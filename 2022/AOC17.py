@@ -38,9 +38,11 @@ def fall(rock: List[Point]) -> List[Point]:
 
 
 def has_collided(rock: List[Point], chamber):
-    if any([block in chamber for block in rock]):
+    if any(block in chamber for block in rock):
         return True
-    elif any([y == -1 for x, y in rock]):
+    elif any(y == -1 for x, y in rock):
+        return True
+    elif any(x < 0 or x > 6 for x, y in rock):
         return True
     else:
         return False
@@ -53,7 +55,7 @@ def print_chamber(grid: Set[Point]) -> str:
     max_x = 7
     max_y = max(pos[1] for pos in grid)
 
-    for y in range(max_y + 1):
+    for y in range(max_y + 1, -1, -1):
         line = ["#" if (x, y) in grid else "." for x in range(max_x)]
         grid_str += " ".join(line)
         grid_str += "\n"
@@ -65,40 +67,41 @@ def print_chamber(grid: Set[Point]) -> str:
 def tetris(jet_air: List[int], max_rocks: int):
     max_y = -1
     jet_air_ix = 0
-    rock_ix, rock_rounds, total_rocks = 0, 0, 0
+    rock_ix, total_rocks = 0, 0
     rock = [(x + 2, y + max_y + 4) for x, y in SHAPES[rock_ix]]
-    chamber = {}
+    chamber = set()
     while total_rocks <= max_rocks:
-        # either push l/r or go down
-        if rock_rounds % 2 == 0:
-            jet_air_ix = jet_air_ix % len(jet_air)
-            new_rock = pushed_by_jet_air(rock, jet_air[jet_air_ix])
-            jet_air_ix += 1
-        else:
-            new_rock = fall(rock)
+        # first push l/r
+        jet_air_ix = jet_air_ix % len(jet_air)
+        new_rock = pushed_by_jet_air(rock, jet_air[jet_air_ix])
+        jet_air_ix += 1
 
-        # check for collision with wall
+        # reset rock if out of X bounds
         if min(x for x, y in new_rock) < 0:
             new_rock = rock
         elif max(x for x, y in new_rock) > 6:
             new_rock = rock
+        elif has_collided(new_rock, chamber):
+            new_rock = rock
 
-        # check for collision with rock
+        rock = new_rock
+
+        # go down
+        new_rock = fall(rock)
+
+        # check for collision with rock ONLY IF is falling
         if has_collided(new_rock, chamber):
             # save prev rock position
             for block in rock:
-                chamber[block] = "#"
+                chamber.add(block)
 
             # manage state
-            # print(print_chamber(chamber.keys()))
             total_rocks += 1
-            rock_rounds = 0
             max_y = max(y for x, y in chamber)
             rock_ix = (rock_ix + 1) % len(SHAPES)
             rock = [(x + 2, y + max_y + 4) for x, y in SHAPES[rock_ix]]
         else:
             rock = new_rock
-            rock_rounds += 1
 
     return chamber
 
@@ -107,12 +110,12 @@ def tetris(jet_air: List[int], max_rocks: int):
 def main(filename: str) -> Solution:
     jet_air = process_input(filename)
     chamber = tetris(jet_air, max_rocks=2022)
-    part_1_solution = max(y for x, y in chamber)
+    part_1_solution = max(y for x, y in chamber) - 1
     part_2_solution = 0
     return part_1_solution, part_2_solution
 
 
 if __name__ == "__main__":
     part_1_solution, part_2_solution = main("aoc17.txt")
-    print(f"PART 1: {part_1_solution}")  #
+    print(f"PART 1: {part_1_solution}")  # 3188
     print(f"PART 2: {part_2_solution}")  #
