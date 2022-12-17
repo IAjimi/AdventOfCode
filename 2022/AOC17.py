@@ -15,17 +15,13 @@ SHAPES = [
     ((0, 0), (0, 1), (0, 2), (0, 3)),
     ((0, 0), (1, 0), (0, 1), (1, 1)),
 ]
+SHAPES = [(x + 2, y) for x, y in SHAPES]
 
 
 def process_input(filename: str):
     _input = read_input(filename)
 
-    jet_air = []
-    for char in _input[0]:
-        if char == ">":
-            jet_air.append(1)
-        else:
-            jet_air.append(-1)
+    jet_air = [1 if char == ">" else -1 for char in _input[0]]
     return jet_air
 
 
@@ -40,9 +36,7 @@ def fall(rock: List[Point]) -> List[Point]:
 def has_collided(rock: List[Point], chamber):
     if any(block in chamber for block in rock):
         return True
-    elif any(y == -1 for x, y in rock):
-        return True
-    elif any(x < 0 or x > 6 for x, y in rock):
+    elif any(x < 0 or x > 6 or y < 0 for x, y in rock):
         return True
     else:
         return False
@@ -68,7 +62,7 @@ def tetris(jet_air: List[int], max_rocks: int):
     max_y = -1
     jet_air_ix = 0
     rock_ix, total_rocks = 0, 0
-    rock = [(x + 2, y + max_y + 4) for x, y in SHAPES[rock_ix]]
+    rock = [(x, y + max_y + 4) for x, y in SHAPES[rock_ix]]
     chamber = set()
     while total_rocks <= max_rocks:
         # first push l/r
@@ -77,11 +71,7 @@ def tetris(jet_air: List[int], max_rocks: int):
         jet_air_ix += 1
 
         # reset rock if out of X bounds
-        if min(x for x, y in new_rock) < 0:
-            new_rock = rock
-        elif max(x for x, y in new_rock) > 6:
-            new_rock = rock
-        elif has_collided(new_rock, chamber):
+        if has_collided(new_rock, chamber):
             new_rock = rock
 
         rock = new_rock
@@ -99,7 +89,7 @@ def tetris(jet_air: List[int], max_rocks: int):
             total_rocks += 1
             max_y = max(y for x, y in chamber)
             rock_ix = (rock_ix + 1) % len(SHAPES)
-            rock = [(x + 2, y + max_y + 4) for x, y in SHAPES[rock_ix]]
+            rock = [(x, y + max_y + 4) for x, y in SHAPES[rock_ix]]
         else:
             rock = new_rock
 
