@@ -1,8 +1,5 @@
-import datetime
 import functools
 import parse
-from collections import defaultdict
-from typing import List, Tuple, Set
 
 from _utils import read_input, timer, Solution
 
@@ -136,13 +133,12 @@ def part1(blueprints):
 
 
 def part2(blueprints):
-    all_geodes = []
-    print(f"{datetime.datetime.now()} - start")
-    for i, bp in enumerate(blueprints, start=1):
+    solution = 1
+    for i, bp in enumerate(blueprints[:3], start=1):
         geodes = collect_geodes(32, 1, 0, 0, 0, 0, 0, 0, 0, bp)
-        print(f"{datetime.datetime.now()} - max geodes collected with blueprint {i} are {geodes}")
-        all_geodes.append(geodes)
-    return sum(all_geodes)
+        print(f"max geodes collected with blueprint {i} are {geodes}")
+        solution *= geodes
+    return solution
 
 @timer
 def main(filename: str) -> Solution:
@@ -155,4 +151,4 @@ def main(filename: str) -> Solution:
 if __name__ == "__main__":
     part_1_solution, part_2_solution = main("aoc19.txt")
     print(f"PART 1: {part_1_solution}")  # 1092
-    print(f"PART 2: {part_2_solution}")  #
+    print(f"PART 2: {part_2_solution}")  # 3542
