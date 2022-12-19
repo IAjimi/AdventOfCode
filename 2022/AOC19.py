@@ -1,5 +1,7 @@
+import datetime
 import functools
 import parse
+from collections import defaultdict
 from typing import List, Tuple, Set
 
 from _utils import read_input, timer, Solution
@@ -15,8 +17,8 @@ def process_input(filename: str):
 
 @functools.lru_cache(maxsize=None)
 def collect_geodes(
-    t: int, ore_robot: int, clay_robot: int, obs_robot: int, geode_robot: int, ore: int, clay: int, obisidian: int, geode: int, blueprint
-) -> int:
+    t, ore_robot, clay_robot, obs_robot, geode_robot, ore, clay, obisidian, geode, blueprint
+):
     if t <= 0:
         return geode
 
@@ -67,7 +69,7 @@ def collect_geodes(
         )
 
         # build new ore robot
-        if blueprint[0][0] <= ore:
+        if blueprint[0][0] <= ore and ore_robot < max_ore_spend:
             options.append(
                 collect_geodes(
                     t - 1,
@@ -84,7 +86,7 @@ def collect_geodes(
             )
 
         # build new clay robot
-        if blueprint[1][0] <= ore:
+        if blueprint[1][0] <= ore and clay_robot < max_clay_spend:
             options.append(
                 collect_geodes(
                     t - 1,
@@ -104,6 +106,7 @@ def collect_geodes(
         if (
             blueprint[2][0] <= ore
             and blueprint[2][1] <= clay
+            and obs_robot < max_obs_spend
         ):
             options.append(
                 collect_geodes(
@@ -123,8 +126,7 @@ def collect_geodes(
     return max(options)
 
 
-def part1(blueprints) -> int:
-    # 43 seconds for 2 blueprints.. -> expected to run for 10 min
+def part1(blueprints):
     quality_levels = []
     for i, bp in enumerate(blueprints, start=1):
         geodes = collect_geodes(24, 1, 0, 0, 0, 0, 0, 0, 0, bp)
@@ -132,11 +134,21 @@ def part1(blueprints) -> int:
         quality_levels.append((i)*geodes)
     return sum(quality_levels)
 
+
+def part2(blueprints):
+    all_geodes = []
+    print(f"{datetime.datetime.now()} - start")
+    for i, bp in enumerate(blueprints, start=1):
+        geodes = collect_geodes(32, 1, 0, 0, 0, 0, 0, 0, 0, bp)
+        print(f"{datetime.datetime.now()} - max geodes collected with blueprint {i} are {geodes}")
+        all_geodes.append(geodes)
+    return sum(all_geodes)
+
 @timer
 def main(filename: str) -> Solution:
     blueprints = process_input(filename)
     part_1_solution = part1(blueprints)
-    part_2_solution = 0
+    part_2_solution = part2(blueprints)
     return part_1_solution, part_2_solution
 
 
