@@ -18,3 +18,7 @@ This repository contains Python solutions to the 2022 edition of [Advent of Code
 | [13](https://adventofcode.com/2022/day/13) | **Distress Signal** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC13.py) | 
 | [14](https://adventofcode.com/2022/day/14) | **Regolith Reservoir** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC14.py) | 
 | [15](https://adventofcode.com/2022/day/15) | **Beacon Exclusion Zone** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC15.py) | 
+| [16](https://adventofcode.com/2022/day/16) | **Proboscidea Volcanium** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC16.py) | 
+| [17](https://adventofcode.com/2022/day/17) | **Pyroclastic Flow**: Tetris emulator | [:star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC17.py) | 
+| [18](https://adventofcode.com/2022/day/18) | **Boiling Boulders**: Exploring 3D grid | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC18.py) | 
+| [19](https://adventofcode.com/2022/day/19) | **Not Enough Minerals** | [:star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC19.py) | 
