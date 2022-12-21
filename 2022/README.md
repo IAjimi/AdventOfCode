@@ -23,3 +23,4 @@ This repository contains Python solutions to the 2022 edition of [Advent of Code
 | [18](https://adventofcode.com/2022/day/18) | **Boiling Boulders**: Exploring 3D grid | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC18.py) | 
 | [19](https://adventofcode.com/2022/day/19) | **Not Enough Minerals** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC19.py) | 
 | [20](https://adventofcode.com/2022/day/20) | **Grove Positioning System** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC20.py) | 
+| [21](https://adventofcode.com/2022/day/21) | **Monkey Math** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC21.py) | 
