@@ -54,12 +54,12 @@ def get_neighbors(pos) -> List[Point]:
     return neighbors
 
 
-def shortest_path(grid, blizzards_timelapse, start, end) -> int:
+def shortest_path(grid, blizzards_timelapse, start, end, start_time=0) -> int:
     """
     Returns shortest path to destination. Djikstra algorithm.
     """
     queue = []
-    heapq.heappush(queue, (0, start))
+    heapq.heappush(queue, (start_time, start))
     visited = set()
 
     while queue:
@@ -69,13 +69,11 @@ def shortest_path(grid, blizzards_timelapse, start, end) -> int:
         else:
             visited.add((minutes, current_node))
 
-        if minutes % 20 == 0:
-            print(minutes, current_node)
         visited.add((minutes, current_node))
         current_blizzards = blizzards_timelapse[minutes]
 
         if current_node == end:
-            return minutes - 1
+            return minutes - start_time - 1
 
         # try moving
         neighbors = get_neighbors(current_node)
@@ -128,9 +126,8 @@ def main(filename: str) -> Solution:
     grid, blizzards = process_input(filename)
 
     blizzards_timelapse = [blizzards]
+    # TODO find cycle
     for t in range(1000):
-        # print(print_grid(blizzards))
-        # print({k:v for k,v in blizzards.items() if v})
         new_blizzards = move_blizzards(grid, blizzards)
         blizzards_timelapse.append(new_blizzards)
         blizzards = new_blizzards
@@ -139,12 +136,17 @@ def main(filename: str) -> Solution:
     start = min(x for x, y in grid if y == 0), 0
     end = max(x for x, y in grid if y == max_y), max_y
 
-    part_1_solution = shortest_path(grid, blizzards_timelapse, start, end)
-    part_2_solution = 0
+    trip1 = shortest_path(grid, blizzards_timelapse, start, end)
+    trip2 = shortest_path(grid, blizzards_timelapse, end, start, start_time=trip1)
+    trip3 = shortest_path(
+        grid, blizzards_timelapse, start, end, start_time=trip1 + trip2
+    )
+    part_1_solution = trip1
+    part_2_solution = trip1 + trip2 + trip3
     return part_1_solution, part_2_solution
 
 
 if __name__ == "__main__":
     part_1_solution, part_2_solution = main("aoc24.txt")
     print(f"PART 1: {part_1_solution}")  # 271
-    print(f"PART 2: {part_2_solution}")  #
+    print(f"PART 2: {part_2_solution}")  # 813
