@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from _utils import read_input, timer, Score
+from _utils import read_input, timer, Solution
 
 
 def parse_line(line: str) -> Tuple[int, int, int, int]:
@@ -10,7 +10,7 @@ def parse_line(line: str) -> Tuple[int, int, int, int]:
     return x1, x2, y1, y2
 
 
-def process_input(filepath: str) -> Score:
+def process_input(filepath: str) -> Solution:
     _input = read_input(filepath)
 
     fully_contained = 0
@@ -29,14 +29,14 @@ def process_input(filepath: str) -> Score:
 
 
 @timer
-def main(filename: str) -> Score:
+def main(filename: str) -> Solution:
     fully_contained, overlap = process_input(filename)
-    part_1_score = fully_contained
-    part_2_score = overlap
-    return part_1_score, part_2_score
+    part_1_solution = fully_contained
+    part_2_solution = overlap
+    return part_1_solution, part_2_solution
 
 
 if __name__ == "__main__":
-    part_1_score, part_2_score = main("aoc4.txt")
-    print(f"PART 1: {part_1_score}")  # 448
-    print(f"PART 2: {part_2_score}")  # 794
+    part_1_solution, part_2_solution = main("aoc4.txt")
+    print(f"PART 1: {part_1_solution}")  # 448
+    print(f"PART 2: {part_2_solution}")  # 794

@@ -4,12 +4,12 @@ Reused existing code from 2021 day 15.
 """
 
 import heapq
-from typing import List, Tuple, Set
+from typing import List, Tuple
 
 from _utils import read_input, timer, Solution, GridDict, Point
 
 
-def process_input(filename: str):
+def process_input(filename: str) -> Tuple[Point, Point, GridDict]:
     _input = read_input(filename)
     grid = {}
     for x, line in enumerate(_input):

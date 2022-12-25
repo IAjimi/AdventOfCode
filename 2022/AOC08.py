@@ -1,6 +1,6 @@
 from typing import List, Set
 
-from _utils import read_input, timer, Solution, product, Point
+from _utils import read_input, timer, Solution, Point
 
 
 def process_input(filename: str) -> List[List[int]]:
@@ -22,7 +22,7 @@ def find_visible_trees(_input: List[List[int]]) -> Set[Point]:
                 visible.add((x, y))
             else:
                 left_max = safe_max(_input[x][:y])
-                right_max = safe_max(_input[x][y + 1:])
+                right_max = safe_max(_input[x][y + 1 :])
                 top_max = safe_max([_input[i][y] for i in range(x)])
                 bottom_max = safe_max([_input[i][y] for i in range(x + 1, max_x + 1)])
                 if (
@@ -62,11 +62,7 @@ def compute_scenic_score(start: Point, _input: List[List[int]]) -> int:
 
 
 def find_best_view(_input: List[List[int]], visible_trees: Set[Point]) -> int:
-    max_score = 0
-    for pos in visible_trees:
-        score = compute_scenic_score(pos, _input)
-        max_score = max(max_score, score)
-    return max_score
+    return max([compute_scenic_score(pos, _input) for pos in visible_trees])
 
 
 @timer

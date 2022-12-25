@@ -1,9 +1,9 @@
-from typing import List, Tuple, Set
+from typing import List
 
 from _utils import read_input, timer, Solution, Point, sign
 
 
-def get_neighbors(head: Point, tail: Point) -> bool:
+def are_neighbors(head: Point, tail: Point) -> bool:
     x, y = head
     neighbors = [(x + dx, y + dy) for dx in range(-1, 2) for dy in range(-1, 2)]
     return tail in neighbors
@@ -24,7 +24,7 @@ def move_head(direction: str, x: int, y: int) -> Point:
 
 
 def adjust_tail(head: Point, tail: Point) -> Point:
-    if get_neighbors(head, tail):
+    if are_neighbors(head, tail):
         return tail
     else:
         x1, y1 = head

@@ -1,34 +1,31 @@
-from typing import Tuple, List
+from typing import List
 
-from _utils import read_input, timer
-
-from collections import defaultdict
+from _utils import read_input, timer, Solution
 
 
 def process_input(_input: List[str]) -> List[int]:
-    i = 0
-    inventory = defaultdict(int)
+    inventory = [0]
+
     for line in _input:
         if line == "":
-            i += 1
+            inventory.append(0)
         else:
-            inventory[i] += int(line)
+            inventory[-1] += int(line)
 
-    calories = list(inventory.values())
-    calories.sort()
-    return calories
+    inventory.sort()
+    return inventory
 
 
 @timer
-def main(filename: str) -> Tuple[int, int]:
+def main(filename: str) -> Solution:
     _input = read_input(filename)
     calories = process_input(_input)
-    part_1_score = calories[-1]
-    part_2_score = sum(calories[-3:])
-    return part_1_score, part_2_score
+    part_1_solution = calories[-1]
+    part_2_solution = sum(calories[-3:])
+    return part_1_solution, part_2_solution
 
 
 if __name__ == "__main__":
-    part_1_score, part_2_score = main("aoc1.txt")
-    print(f"PART 1: {part_1_score}")  # 74394
-    print(f"PART 2: {part_2_score}")  # 212836
+    part_1_solution, part_2_solution = main("aoc1.txt")
+    print(f"PART 1: {part_1_solution}")  # 74394
+    print(f"PART 2: {part_2_solution}")  # 212836

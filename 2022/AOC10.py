@@ -3,11 +3,6 @@ from typing import List
 from _utils import read_input, timer, Solution
 
 
-def process_input(filename: str) -> List[str]:
-    _input = read_input(filename)
-    return _input
-
-
 def process_instructions(_input: List[str]) -> List[int]:
     X = [1]
 
@@ -35,7 +30,7 @@ def produce_image(X: List[int]) -> str:
 
 @timer
 def main(filename: str) -> Solution:
-    _input = process_input(filename)
+    _input = read_input(filename)
     X = process_instructions(_input)
     part_1_solution = sum([X[i - 1] * i for i in range(20, 220 + 1, 40)])
     part_2_solution = produce_image(X)
