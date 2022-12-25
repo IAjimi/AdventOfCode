@@ -10,4 +10,4 @@ This repository contains Python solutions to [Advent of Code puzzles](https://ad
 | [2019](https://adventofcode.com/2019) | 2, 5, 7, 9, 12-15, 17-21, 23, 25 | [46 :star:](https://github.com/IAjimi/AdventOfCode2020/tree/master/2019) |
 | [2020](https://adventofcode.com/2020) | 1-25 | [46 :star:](https://github.com/IAjimi/AdventOfCode2020/tree/master/2020) |
 | [2021](https://adventofcode.com/2021) | 1-25 | [50 :star:](https://github.com/IAjimi/AdventOfCode2020/tree/master/2021) |
-| [2022](https://adventofcode.com/2022) | 1-12 | [24 :star:](https://github.com/IAjimi/AdventOfCode2020/tree/master/2022) |
+| [2022](https://adventofcode.com/2022) | 1-25 | [50 :star:](https://github.com/IAjimi/AdventOfCode2020/tree/master/2022) |

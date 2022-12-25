@@ -27,3 +27,4 @@ This repository contains Python solutions to the 2022 edition of [Advent of Code
 | [22](https://adventofcode.com/2022/day/22) | **Monkey Map** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC22.py) | 
 | [23](https://adventofcode.com/2022/day/23) | **Unstable Diffusion** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC23.py) | 
 | [24](https://adventofcode.com/2022/day/24) | **Blizzard Basin** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC24.py) | 
+| [25](https://adventofcode.com/2022/day/25) | **Full of Hot Air** | [:star::star:](https://github.com/IAjimi/AdventOfCode/blob/master/2022/AOC25.py) | 
